@@ -7,3 +7,7 @@ Programs installed
 
 Relevant links
 
+NOTES
+* To run player with SICK 
+$ player ~/playertest/laser.cfg -d 99
+$ playerv -h localhost
