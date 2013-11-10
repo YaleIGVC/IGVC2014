@@ -10,7 +10,7 @@ Hhigh = 180
 Slow = 0
 Shigh = 125
 Vlow = 50
-Vhigh = 150
+Vhigh = 255
 
 Offset = 0
 
@@ -24,12 +24,49 @@ def max_min_box(box):
     return [minx, maxx, miny, maxy]
 
 def replace_contour(largest_contour, img):
+<<<<<<< HEAD
     ## Find the box excompassing the largest red blob
     moment = cv2.moments(largest_contour)
     print moment["m00"]
     if moment["m00"] > 80:
 
         pheight, pwidth, pdepth = img.shape
+=======
+        ## Find the box excompassing the largest red blob
+        moment = cv2.moments(largest_contour)
+        print moment["m00"]
+        if moment["m00"] > 150:
+
+            pheight, pwidth, pdepth = img.shape
+
+            rect = cv2.minAreaRect(largest_contour)
+            box = cv2.cv.BoxPoints(rect)
+            box = np.int0(box)
+            # if (not_min_size(cv2.contourArea(largest_contour))): # minimum threshold
+            #         return img
+            # print box
+            print largest_contour
+            [minx,maxx,miny,maxy] = max_min_box(box)
+
+            box_width = maxx-minx
+            box_height = maxy-miny
+
+            # vx, vy, cx, cy = cv2.fitLine(largest_contour, cv2.cv.CV_DIST_L2, 0, 0.1, 0.1)
+            # cv2.line(img, (int(cx-vx*width), int(cy-vy*width)), (int(cx+vx*width), int(cy+vy*width)), (0, 0, 255))
+            ## Replace pixels in blob
+            for xy in largest_contour:
+            	x = xy[0][0]
+            	y = xy[0][1]
+            	img[y][x] = [0, 0, 0]
+            # for x in range (minx, maxx):
+            #          for y in range (miny, maxy):
+            #                  # if y > 0 and y < s and x > 0 and x < w :
+            #                          # print img.shape, y, x
+            #                 px = img[y][x]
+            #                 if (px[0] >= Hlow and px[1] >= Slow and px[2] >= Vlow and px[0] <= Hhigh and px[1] <= Shigh and px[2] <= Vhigh): 
+            #                         img[y][x] = [0, 0, 0]
+        return img
+>>>>>>> parent of b20c330... threshold values change
 
         rect = cv2.minAreaRect(largest_contour)
         box = cv2.cv.BoxPoints(rect)
