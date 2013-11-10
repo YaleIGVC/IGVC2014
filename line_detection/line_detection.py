@@ -10,7 +10,7 @@ Hhigh = 180
 Slow = 0
 Shigh = 125
 Vlow = 50
-Vhigh = 255
+Vhigh = 150
 
 Offset = 0
 
@@ -27,7 +27,7 @@ def replace_contour(largest_contour, img):
         ## Find the box excompassing the largest red blob
         moment = cv2.moments(largest_contour)
         print moment["m00"]
-        if moment["m00"] > 150:
+        if moment["m00"] > 80:
 
             pheight, pwidth, pdepth = img.shape
 
