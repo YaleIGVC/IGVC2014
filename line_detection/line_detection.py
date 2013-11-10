@@ -43,6 +43,8 @@ def replace_contour(largest_contour, img):
             box_width = maxx-minx
             box_height = maxy-miny
 
+            # vx, vy, cx, cy = cv2.fitLine(largest_contour, cv2.cv.CV_DIST_L2, 0, 0.1, 0.1)
+            # cv2.line(img, (int(cx-vx*width), int(cy-vy*width)), (int(cx+vx*width), int(cy+vy*width)), (0, 0, 255))
             ## Replace pixels in blob
             for xy in largest_contour:
             	x = xy[0][0]
