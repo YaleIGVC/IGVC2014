@@ -1,0 +1,5 @@
+To run line detection :
+1. Have OPENCV installed
+2.run cmake 
+3.run make
+4.run executable lines on image
