@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="LinuxEciDemo" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="debug">
+				<Option output="../../../bin/$(TARGET_NAME)/LinuxEciDemo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../obj/$(TARGET_NAME)/$(PROJECT_NAME)/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="../../../bin/debug" />
+				</Linker>
+			</Target>
+			<Target title="release">
+				<Option output="../../../bin/$(TARGET_NAME)/LinuxEciDemo" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../obj/$(TARGET_NAME)/$(PROJECT_NAME)/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add directory="../../../bin/release" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../../EciDrivers/common/ECI" />
+			<Add directory="../../EciDrivers/OsDrvLinux" />
+			<Add directory="../../EciDemos" />
+			<Add directory="../../../inc" />
+		</Compiler>
+		<Linker>
+			<Add library="eci002DriverLinux" />
+			<Add library="eci003DriverLinux" />
+			<Add library="eci005DriverLinux" />
+			<Add library="eci101DriverLinux" />
+			<Add library="eci102DriverLinux" />
+			<Add library="eci105DriverLinux" />
+			<Add library="eci109DriverLinux" />
+			<Add library="eci10ADriverLinux" />
+			<Add library="eci10EDriverLinux" />
+			<Add library="eci111DriverLinux" />
+		</Linker>
+		<Unit filename="../EciDemo002.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo002.h" />
+		<Unit filename="../EciDemo003.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo003.h" />
+		<Unit filename="../EciDemo005.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo005.h" />
+		<Unit filename="../EciDemo101.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo101.h" />
+		<Unit filename="../EciDemo102.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo102.h" />
+		<Unit filename="../EciDemo105.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo105.h" />
+		<Unit filename="../EciDemo109.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo109.h" />
+		<Unit filename="../EciDemo10A.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo10A.h" />
+		<Unit filename="../EciDemo10E.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo10E.h" />
+		<Unit filename="../EciDemo111.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemo111.h" />
+		<Unit filename="../EciDemoCommon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../EciDemoCommon.h" />
+		<Unit filename="LinuxEciDemo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
