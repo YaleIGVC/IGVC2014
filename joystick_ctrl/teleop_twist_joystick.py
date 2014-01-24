@@ -33,7 +33,7 @@ def getKey():
 	return key
 
 def getAxis():
-	pygame.event.get()
+	pygame.event.pump()
 	left = joystick.get_axis(2)
 	right = joystick.get_axis(5)
 	#print (left,right)
