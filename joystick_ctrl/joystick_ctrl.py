@@ -9,7 +9,7 @@ pygame.joystick.init()
 
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
-print joystick.get_numballs()
+print joystick.get_numaxes()
 
 while True:
     c = sys.stdin.read(1)
