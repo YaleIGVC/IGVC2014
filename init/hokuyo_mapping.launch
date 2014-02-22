@@ -1,0 +1,11 @@
+<launch>
+    <node name="hokuyo_lrf" pkg="urg_node" type="urg_node" />
+    <node name="hokuyo_lrf_tf" pkg="tf" type="static_transform_publisher" args=".553 .114 .342 0 0 0 base_link laser 1000" />
+    <node name="robot_hector_tf" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 odom base_link 1000" />
+    <node name="odometry" pkg="hector_mapping" type="hector_mapping">
+        <param name="map_pub_period" value="0.5" />
+        <param name="map_update_angle_thresh" value="0.2" />
+        <param name="laser_min_dist" value=".1" />
+    </node>
+    <node name="gui" pkg="rviz" type="rviz" args="hokuyo_mapping.rviz" />
+</launch>
