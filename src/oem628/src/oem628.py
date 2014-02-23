@@ -11,14 +11,15 @@ class Gps:
         rospy.init_node('oem628')
 
         self.BAUD = 9600
+        self.POLL_PERIOD = .5
         p = subprocess.Popen(['./getusb.sh'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
         usb = out[:-1]
-        rospy.loginfo("Detected USB is /dev"+usb)
+        rospy.loginfo("Detected USB is /dev/"+usb)
         self.ser = serial.Serial('/dev/'+usb,9600)
 
         # Start reporting GPS position
-        self.ser.write("log bestposa ontime 1\n")
+        self.ser.write("log bestposa ontime "+str(self.POLL_PERIOD)+"\n")
 
     def talker(self):
         while not rospy.is_shutdown():
