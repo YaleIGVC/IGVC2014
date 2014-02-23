@@ -1,3 +1,0 @@
-[submodule "segway-rmp-ros-pkg"]
-	path = segway-rmp-ros-pkg
-	url = git://github.com/segwayrmp/segway-rmp-ros-pkg.git
