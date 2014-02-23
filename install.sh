@@ -3,10 +3,10 @@ sudo apt-get install ros-hydro-hector-mapping ros-hydro-hector-slam ros-hydro-ho
 sudo pip install pyserial
 
 echo "source /opt/ros/hydro/setup.bash" >> ~/.bashrc
-echo "source ~/catkin_workspace/devel/setup.bash" >> ~/.bashrc
-echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/catkin_workspace" >> ~/.bashrc
+echo "source ~/IGVC2014/devel/setup.bash" >> ~/.bashrc
+echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/IGVC2014" >> ~/.bashrc
 
-catkindirpath="~/catkin_workspace/src"
+catkindirpath="~/IGVC2014/src"
 username=`whoami`
 
 # Add ourselves to dialout so that we don't need to chmod USB devices
