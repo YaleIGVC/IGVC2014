@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import pygame
+import curses
 import roslib; roslib.load_manifest('teleop_twist_keyboard')
 import rospy
+
 
 from geometry_msgs.msg import Twist
 
@@ -31,6 +33,11 @@ def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)
 
 if __name__=="__main__":
+    stdscr=curses.initscr()
+    stdscr.keypad(1)
+    stdscr.nodelay(1)
+    stdscr.leaveok(1)
+
     settings = termios.tcgetattr(sys.stdin)
 
     pub = rospy.Publisher('cmd_vel', Twist)
@@ -44,6 +51,8 @@ if __name__=="__main__":
         print msg
         print vels(speed,turn)
         while(1):
+            if stdscr.getch()==ord('q'):
+                break
             joy = getAxis()
             x = -1 * joy[0]
             th = joy[1]
@@ -51,6 +60,7 @@ if __name__=="__main__":
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
             pub.publish(twist)
+        stdscr.keypad(0)
     except:
         print e
 
