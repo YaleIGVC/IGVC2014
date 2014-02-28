@@ -38,6 +38,9 @@ if __name__=="__main__":
     stdscr.nodelay(1)
     stdscr.leaveok(1)
 
+    curses.noecho()
+    curses.cbreak()
+
     settings = termios.tcgetattr(sys.stdin)
 
     pub = rospy.Publisher('cmd_vel', Twist)
@@ -47,9 +50,12 @@ if __name__=="__main__":
     th = 0
     status = 0
 
+    pad = curses.newpad(100, 100)
+
     try:
-        print msg
-        print vels(speed,turn)
+        pad.addstr(0,0, "msg: ");pad.addstr(0,15,msg)
+        pad.addstr(1,0, "vels: ");pad.addstr(0,15,msg)
+        #print vels(speed,turn)
         while(1):
             if stdscr.getch()==ord('q'):
                 break
@@ -60,6 +66,8 @@ if __name__=="__main__":
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
             pub.publish(twist)
+            stdscr.refresh()
+            pad.refresh(0,0,5,5,20,75)
         stdscr.keypad(0)
     except:
         print e
