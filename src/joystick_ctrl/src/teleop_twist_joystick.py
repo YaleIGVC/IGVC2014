@@ -20,7 +20,7 @@ Reading from the joystick!
 def getAxis():
     pygame.event.pump()
     left = joystick.get_axis(1)
-    right = joystick.get_axis(4)
+    right = joystick.get_axis(3)
     #print (left,right)
     return (left,right)
 
@@ -45,7 +45,7 @@ if __name__=="__main__":
         print vels(speed,turn)
         while(1):
             joy = getAxis()
-            x = joy[0]
+            x = -1 * joy[0]
             th = joy[1]
             twist = Twist()
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0
