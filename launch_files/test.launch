@@ -6,7 +6,7 @@
         <param name="angle_min" value="-1.571" />
         <param name="angle_max" value="1.571" />
     </node>
-    <node pkg="tf" type="static_transform_publisher" name="laser_base_tf" args=".553 .114 .342 0 0 0 base_footprint laser 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="laser_base_tf" args=".553 .133 .114 0 0 0 base_footprint laser 1000" />
     <node pkg="segway_rmp" type="segway_rmp_node" name="segway" args="_serial_port:=/dev/ttyUSB1" />
     <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="kalman_filter">
         <remap to="segway/odom" from="odom" />
