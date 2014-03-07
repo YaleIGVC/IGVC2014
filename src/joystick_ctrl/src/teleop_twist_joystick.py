@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import pygame
-import curses
+import math
 import roslib; roslib.load_manifest('teleop_twist_keyboard')
 import rospy
 
@@ -24,22 +24,17 @@ def getAxis():
     left = joystick.get_axis(1)
     right = joystick.get_axis(3)
     #print (left,right)
+    left = left if math.fabs(left) > 0.2 else 0
+    right = right if math.fabs(right) > 0.2 else 0
     return (left,right)
 
-speed = 10
-turn = 5
+speed = 1
+turn = 3
 
 def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)
 
 if __name__=="__main__":
-    stdscr=curses.initscr()
-    stdscr.keypad(1)
-    stdscr.nodelay(1)
-    stdscr.leaveok(1)
-
-    curses.noecho()
-    curses.cbreak()
 
     settings = termios.tcgetattr(sys.stdin)
 
@@ -50,15 +45,10 @@ if __name__=="__main__":
     th = 0
     status = 0
 
-    pad = curses.newpad(100, 100)
 
     try:
-        pad.addstr(0,0, "msg: ");pad.addstr(0,15,msg)
-        pad.addstr(1,0, "vels: ");pad.addstr(0,15,msg)
-        #print vels(speed,turn)
+        print vels(speed,turn)
         while(1):
-            if stdscr.getch()==ord('q'):
-                break
             joy = getAxis()
             x = -1 * joy[0]
             th = joy[1]
@@ -66,9 +56,6 @@ if __name__=="__main__":
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
             pub.publish(twist)
-            stdscr.refresh()
-            pad.refresh(0,0,5,5,20,75)
-        stdscr.keypad(0)
     except:
         print e
 
