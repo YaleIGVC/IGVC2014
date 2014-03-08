@@ -1,0 +1,5 @@
+   <param name="base_global_planner" value="SBPLLatticePlanner"/>
+   <param name = "SBPLLatticePlanner/primitive_filename" value = "$(find sbpl)/matlab/mprim/pr2.mprim" />
+
+
+  <rosparam file="./config_files/sbpl_global_params.yaml" command="load" />
