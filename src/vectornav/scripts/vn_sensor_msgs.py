@@ -42,23 +42,28 @@ from vectornav.msg    import sensors
 
 
 
-def sub_imuCB(msg_in): 
+def sub_imuCB(msg_in):
   global pub_imu
   global pub_mag
   global pub_temp
   global pub_baro
-  
+
+
+
+
+
+
   global msg_imu
   msg_imu.header.stamp          = msg_in.header.stamp
   msg_imu.header.frame_id       = msg_in.header.frame_id
-  msg_imu.angular_velocity.x    = msg_in.Accel.x
-  msg_imu.angular_velocity.y    = msg_in.Accel.y
-  msg_imu.angular_velocity.z    = msg_in.Accel.z
-  msg_imu.linear_acceleration.x = msg_in.Gyro.x
-  msg_imu.linear_acceleration.y = msg_in.Gyro.y
-  msg_imu.linear_acceleration.z = msg_in.Gyro.z
-  pub_imu.publish(msg_imu)               
-  
+  msg_imu.angular_velocity.x    = msg_in.Gyro.x
+  msg_imu.angular_velocity.y    = msg_in.Gyro.y
+  msg_imu.angular_velocity.z    = msg_in.Gyro.z
+  msg_imu.linear_acceleration.x = msg_in.Accel.x
+  msg_imu.linear_acceleration.y = msg_in.Accel.y
+  msg_imu.linear_acceleration.z = msg_in.Accel.z
+  pub_imu.publish(msg_imu)
+
   msg_mag = MagneticField()
   msg_mag.header.stamp     = msg_in.header.stamp
   msg_mag.header.frame_id  = msg_in.header.frame_id
@@ -66,30 +71,30 @@ def sub_imuCB(msg_in):
   msg_mag.magnetic_field.y = msg_in.Mag.y
   msg_mag.magnetic_field.z = msg_in.Mag.z
   pub_mag.publish(msg_mag)
-  
+
   msg_temp = Temperature()
   msg_temp.header.stamp     = msg_in.header.stamp
   msg_temp.header.frame_id  = msg_in.header.frame_id
   msg_temp.temperature      = msg_in.Temp
   pub_temp.publish(msg_temp)
-  
+
   msg_baro = FluidPressure()
   msg_baro.header.stamp     = msg_in.header.stamp
   msg_baro.header.frame_id  = msg_in.header.frame_id
   msg_baro.fluid_pressure   = msg_in.Pressure / 1000.0
   pub_baro.publish(msg_baro)
-  
 
 
-def sub_insCB(msg_in): 
+
+def sub_insCB(msg_in):
   global pub_imu
   global pub_gps
-  
+
   global msg_imu
-  
+
   msg_imu.header.stamp          = msg_in.header.stamp
   msg_imu.header.frame_id       = msg_in.header.frame_id
-  
+
   roll  = msg_in.RPY.x
   pitch = msg_in.RPY.y
   yaw   = msg_in.RPY.z
@@ -98,10 +103,10 @@ def sub_insCB(msg_in):
   msg_imu.orientation.y = q[1]
   msg_imu.orientation.z = q[2]
   msg_imu.orientation.w = q[3]
-         
+
   pub_imu.publish(msg_imu)
-  
-                                                 
+
+
   msg_gps                 = NavSatFix()
   msg_gps.header          = msg_in.header
   msg_gps.status.status   = NavSatStatus.STATUS_FIX # TODO - fix this
@@ -112,48 +117,39 @@ def sub_insCB(msg_in):
   msg_gps.position_covariance_type  = NavSatFix.COVARIANCE_TYPE_APPROXIMATED
   msg_gps.position_covariance[0]    = msg_in.PosUncerainty
   pub_gps.publish(msg_gps)
-  
-  
+
+
   msg_time = TimeReference()
   msg_time.header.stamp     = msg_in.header.stamp
   msg_time.header.frame_id  = msg_in.header.frame_id
   unix_time = 315964800 + (msg_in.Week * 7 * 24 * 3600) + msg_in.Time
   msg_time.time_ref = rospy.Time.from_sec(unix_time)
   pub_time.publish(msg_time)
-  
+
 
 
 if __name__ == '__main__':
   rospy.init_node('vectornav_sensor_msgs')
-  
+
   global pub_imu
   global pub_mag
   global pub_temp
   global pub_baro
   global pub_gps
   global pub_time
-  
+
   global msg_imu
-    
+
   msg_imu = Imu()
-  
+
   pub_imu  = rospy.Publisher("/Imu"          , Imu)
   pub_mag  = rospy.Publisher("/MagneticField", MagneticField)
   pub_temp = rospy.Publisher("/Temerature"   , Temperature)
   pub_baro = rospy.Publisher("/FluidPressure", FluidPressure)
   pub_gps  = rospy.Publisher("/NavSatFix"    , NavSatFix)
   pub_time = rospy.Publisher("/TimeRef"      , TimeReference)
-  
+
   #TODO: Only subscribe when we have subscribers
   rospy.Subscriber("/vectornav_vn200/imu", sensors,  sub_imuCB)
   rospy.Subscriber("/vectornav_vn200/ins", ins,      sub_insCB)
   rospy.spin()
-  
-  
-  
-  
-  
-  
-  
-  
-  
