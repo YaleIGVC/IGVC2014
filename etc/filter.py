@@ -1,5 +1,6 @@
 import fileinput
 import tf
+import time
 
 itera = -1
 valArr = [0] * 4
@@ -14,7 +15,7 @@ for line in fileinput.input():
         yaw = euler[2]
         itera = -1
         valArr = [0] * 4
-        print "Roll: %s, Pitch: %s, Yaw: %s" %(roll, pitch, yaw)
+        print "%s %s %s %f" %(roll, pitch, yaw, time.time())
     elif (itera > -1):
         valArr[itera] = line.split(": ")[1]
         itera = itera + 1

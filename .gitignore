@@ -1,4 +1,7 @@
 .*.swp
+*.log
+*.gv
+frames.pdf
 \#*
 build/
 devel/
