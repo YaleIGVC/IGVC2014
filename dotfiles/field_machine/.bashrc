@@ -249,14 +249,14 @@ case ${TERM} in
         # User@Host (with connection type info):
         PS1=${PS1}"\[${SU}\]\u\[${NC}\]@\[${CNX}\]\h\[${NC}\] "
         # PWD (with 'disk space' info):
-        PS1=${PS1}"\[\$(disk_color)\]\W]\[${NC}\] "
+        PS1=${PS1}"\[\$(disk_color)\]\w]\[${NC}\] "
         # Prompt (with 'job' info):
         PS1=${PS1}"\[\$(job_color)\]$\[${NC}\] "
         # Set title of current xterm:
         PS1=${PS1}"\[\e]0;[\u@\h] \w\a\]"
         ;;
     *)
-        PS1="(\A \u@\h \W) $ " # --> PS1="(\A \u@\h \w) > "
+        PS1="(\A \u@\h \w) $ " # --> PS1="(\A \u@\h \w) > "
                                # --> Shows full pathname of current dir.
         ;;
 esac
