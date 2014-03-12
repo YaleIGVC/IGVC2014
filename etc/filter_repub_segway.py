@@ -29,9 +29,9 @@ def callback(msg_in):
     pub.publish(msg_imu)
 
 if __name__=='__main__':
-    rospy.init_node('odom_repub',anonymous=True)
+    rospy.init_node('odom_repub_segway',anonymous=True)
     global pub
-    pub = rospy.Publisher("/odom_repub", Imu)
+    pub = rospy.Publisher("/odom_repub_segway", Imu)
     rospy.Subscriber("/segway_rmp_node/odom", Odometry, callback)
     rospy.loginfo("init")
     rospy.spin()
