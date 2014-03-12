@@ -20,4 +20,6 @@
     <node pkg="gmapping" type="slam_gmapping" name="mapping">
         <param name="odom_frame" value="odom" />
     </node>
+    <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
+
 </launch>
