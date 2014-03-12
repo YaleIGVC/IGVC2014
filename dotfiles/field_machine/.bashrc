@@ -267,3 +267,5 @@ alias ls="ls --color"
 source /opt/ros/hydro/setup.bash
 source ~/IGVC2014/devel/setup.bash
 export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/IGVC2014
+export ROS_MASTER_URI=http://localhost:11311
+export ROS_IP=192.168.1.109
