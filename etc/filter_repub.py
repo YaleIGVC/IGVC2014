@@ -17,9 +17,10 @@ def callback(msg_in):
     msg_imu.header.frame_id       = msg_in.header.frame_id
 
     # HACK: Use angular_velocity field to represent orientation!!!
-    msg_imu.angular_velocity.x    = q[0]
-    msg_imu.angular_velocity.y    = q[1]
-    msg_imu.angular_velocity.z    = q[2]
+    PI = 3.141592653589
+    msg_imu.angular_velocity.x    = (q[0] * 180.0) / PI
+    msg_imu.angular_velocity.y    = (q[1] * 180.0)/ PI
+    msg_imu.angular_velocity.z    = (q[2] * 180.0) / PI
 
     msg_imu.linear_acceleration.x = msg_in.twist.twist.linear.x
     msg_imu.linear_acceleration.y = msg_in.twist.twist.linear.y
