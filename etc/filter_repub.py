@@ -4,8 +4,6 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Imu
 
 def callback(msg_in):
-    print "wat"
-    rospy.loginfo("In callback!!!!")
     a  = msg_in.pose.pose.orientation.x
     i  = msg_in.pose.pose.orientation.y
     j  = msg_in.pose.pose.orientation.z
