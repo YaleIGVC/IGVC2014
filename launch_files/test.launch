@@ -1,8 +1,9 @@
 <launch>
     <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=/dev/ttyUSB0" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vectornav_data_convert" />
-    <node pkg="tf" type="static_transform_publisher" name="baselink_basefootprint" args="0 0 -0.5 0 0 0 base_link base_footprint 1000" />
-    <node pkg="tf" type="static_transform_publisher" name="imu_base_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
+
+    <node pkg="tf" type="static_transform_publisher" name="basefootprint_baselink_tf" args="0 0 0.5 0 0 0 base_footprint base_link 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="imu_base_tf" args="0 0 0.5 0 0 0 base_footprint LLA 1000" />
     <node pkg="urg_node" type="urg_node" name="short_range_laser">
         <param name="angle_min" value="-1.571" />
         <param name="angle_max" value="1.571" />
