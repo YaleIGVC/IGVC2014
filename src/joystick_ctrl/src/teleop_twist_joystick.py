@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pygame
+import time
 import math
 import roslib; roslib.load_manifest('teleop_twist_keyboard')
 import rospy
@@ -29,7 +30,7 @@ def getAxis():
     return (left,right)
 
 speed = 1
-turn = 3
+turn = 1
 
 def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)
@@ -51,11 +52,12 @@ if __name__=="__main__":
         while(1):
             joy = getAxis()
             x = -1 * joy[0]
-            th = joy[1]
+            th = -1 * joy[1]
             twist = Twist()
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
             pub.publish(twist)
+            time.sleep(0.05)
     except:
         print e
 
