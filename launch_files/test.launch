@@ -1,17 +1,15 @@
 <launch>
-    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=/dev/ttyUSB0" />
+    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vectornav_data_convert" />
-
-    <node pkg="tf" type="static_transform_publisher" name="basefootprint_baselink_tf" args="0 0 0.5 0 0 0 base_footprint base_link 1000" />
-    <node pkg="tf" type="static_transform_publisher" name="imu_base_tf" args="0 0 0.5 0 0 0 base_footprint LLA 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="imu_base_tf" args="0 0 0 0 0 0 base_footprint LLA 1000" />
     <node pkg="urg_node" type="urg_node" name="short_range_laser">
         <param name="angle_min" value="-1.571" />
         <param name="angle_max" value="1.571" />
     </node>
-    <node pkg="tf" type="static_transform_publisher" name="laser_base_tf" args=".553 .133 .114 0 0 0 base_link laser 1000" />
-    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" />
+    <node pkg="tf" type="static_transform_publisher" name="laser_base_tf" args=".553 .114 .342 0 0 0 base_footprint laser 1000" />
+    <node pkg="segway_rmp" type="segway_rmp_node" name="segway" args="_serial_port:=/dev/ttyUSB1" />
     <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="kalman_filter">
-        <remap to="segway_rmp_node/odom" from="odom" />
+        <remap to="segway/odom" from="odom" />
         <remap to="Imu" from="imu_data" />
         <param name="sensor_timeout" value="1.0" />
         <param name="odom_used" value="true" />
@@ -22,5 +20,4 @@
     <node pkg="gmapping" type="slam_gmapping" name="mapping">
         <param name="odom_frame" value="odom" />
     </node>
-    <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
 </launch>
