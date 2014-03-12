@@ -1,6 +1,6 @@
 import rospy
 import tf
-from nav_msgs.msg import PoseWithCovarianceStamped
+from geometry_msgs.msg import PoseWithCovarianceStamped
 from sensor_msgs.msg import Imu
 
 def callback(msg_in):
@@ -22,9 +22,9 @@ def callback(msg_in):
     msg_imu.angular_velocity.y    = (q[1] * 180.0)/ PI
     msg_imu.angular_velocity.z    = (q[2] * 180.0) / PI
 
-    msg_imu.linear_acceleration.x = msg_in.twist.twist.linear.x
-    msg_imu.linear_acceleration.y = msg_in.twist.twist.linear.y
-    msg_imu.linear_acceleration.z = msg_in.twist.twist.linear.z
+    msg_imu.linear_acceleration.x = 0
+    msg_imu.linear_acceleration.y = 0
+    msg_imu.linear_acceleration.z = 0
     global pub
     pub.publish(msg_imu)
 
