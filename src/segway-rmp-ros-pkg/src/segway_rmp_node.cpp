@@ -462,9 +462,9 @@ private:
         // Get frame id parameter
         n->param("frame_id", frame_id, std::string("base_link"));
         this->sss_msg.header.frame_id = this->frame_id;
-        this->odom_trans.header.frame_id = "odom";
+        this->odom_trans.header.frame_id = "wheelodom";
         this->odom_trans.child_frame_id = this->frame_id;
-        this->odom_msg.header.frame_id = "odom";
+        this->odom_msg.header.frame_id = "wheelodom";
         this->odom_msg.child_frame_id = this->frame_id;
         // Get cmd_vel inversion parameters
         n->param("invert_linear_vel_cmds", invert_x, false);
