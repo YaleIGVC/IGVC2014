@@ -3,10 +3,7 @@
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
     <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" />
 
-    <node pkg="urg_node" type="urg_node" name="short_range_laser">
-        <param name="angle_min" value="-1.571" />
-        <param name="angle_max" value="1.571" />
-    </node>
+    <node pkg="urg_node" type="urg_node" name="short_range_laser"/>
 
     <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
