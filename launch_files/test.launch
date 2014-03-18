@@ -14,14 +14,15 @@
     <!--<node pkg="tf" type="static_transform_publisher" name="laser_base_tf" args="0 0 0 0 0 0 base_link odom 1000" />-->
 
 
-    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <!--<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
         <remap from="odom" to="segway_rmp_node/odom"/>
         <param name="sensor_timeout" value="1.0" />
         <param name="odom_used" value="true" />
         <param name="imu_used" value="true" />
         <param name="freq" value="40" />
         <param name="output_frame" value="odom_combined" />
-    </node>
+    </node>-->
+    <node pkg="odom_combined" type="odom_combined.py" name="odom_combined"/>
 
     <node pkg="gmapping" type="slam_gmapping" name="mapping">
         <param name="odom_frame" value="odom_combined" />
