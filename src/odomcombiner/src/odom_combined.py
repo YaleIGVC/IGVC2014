@@ -53,8 +53,8 @@ def callback_imu(msg_in):
     t.header.stamp = rospy.Time.now()
 
     t.child_frame_id = "base_link"
-    t.transform.translation.x = x # GLOBAL! From callback_odom
-    t.transform.translation.y = y # GLOBAL! From callback_odom
+    t.transform.translation.x = y # GLOBAL! From callback_odom
+    t.transform.translation.y = x # GLOBAL! From callback_odom
     t.transform.translation.z = 0.0
 
     # Vars from above. From imu_data
@@ -73,6 +73,7 @@ def callback_odom(msg_in):
     global x_vel
     global y_vel
     global twist_yaw
+
     x = msg_in.pose.pose.position.x
     y = msg_in.pose.pose.position.y
     x_vel = msg_in.twist.twist.linear.x
@@ -93,6 +94,7 @@ if __name__=='__main__':
     x = y = x_vel = y_vel = twist_yaw = 0.0
 
     global covariance
+    covariance = [0] * 36
     global yaw
 
     pub = rospy.Publisher("/odom_combined", Odometry)
