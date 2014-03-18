@@ -17,7 +17,7 @@ def callback_imu(msg_in):
     msg_out = Odometry()
     msg_out.header.stamp          = msg_in.header.stamp
     msg_out.header.frame_id       = 'odom_combined'
-    msg_out.header.child_frame_id       = 'base_footprint'
+    msg_out.child_frame_id       = 'base_footprint'
 
     global x
     global y
