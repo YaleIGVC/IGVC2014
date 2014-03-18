@@ -53,7 +53,7 @@ def callback_imu(msg_in):
     t.header.frame_id = msg_out.header.frame_id
     t.header.stamp = rospy.Time.now()
 
-    t.frame_id = "odom_combined"
+    t.header.frame_id = "odom_combined"
     t.child_frame_id = "base_footprint"
     t.transform.translation.x = y # GLOBAL! From callback_odom
     t.transform.translation.y = x # GLOBAL! From callback_odom
