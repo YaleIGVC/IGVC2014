@@ -97,9 +97,11 @@ def sub_insCB(msg_in):
   msg_imu.header.stamp          = msg_in.header.stamp
   msg_imu.header.frame_id       = msg_in.header.frame_id
 
+  roll  =      (math.pi * msg_in.RPY.x) / 180.0 # Convert degrees into radians
+  pitch =      (math.pi * msg_in.RPY.y) / 180.0 # Convert degrees into radians
   #FIXME: TEMPORARY Hack to negate the yaw
   yaw   = -1 * (math.pi * msg_in.RPY.z) / 180.0 # Convert degrees into radians
-  q = tf.transformations.quaternion_from_euler(0, 0, yaw)
+  q = tf.transformations.quaternion_from_euler(roll, pitch, yaw)
   msg_imu.orientation.x = q[0]
   msg_imu.orientation.y = q[1]
   msg_imu.orientation.z = q[2]
