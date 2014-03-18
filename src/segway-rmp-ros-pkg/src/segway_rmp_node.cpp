@@ -309,7 +309,7 @@ public:
             this->odom_trans.transform.rotation = quat;
             
             //send the transform
-            this->odom_broadcaster.sendTransform(this->odom_trans);
+            //this->odom_broadcaster.sendTransform(this->odom_trans);
         }
         
         // Publish Odometry
@@ -464,8 +464,8 @@ private:
         this->sss_msg.header.frame_id = this->frame_id;
         this->odom_trans.header.frame_id = "wheelodom";
         this->odom_trans.child_frame_id = this->frame_id;
-        this->odom_msg.header.frame_id = "wheelodom";
-        this->odom_msg.child_frame_id = this->frame_id;
+        this->odom_msg.header.frame_id = "odom_combined";
+        this->odom_msg.child_frame_id = "base_footprint";
         // Get cmd_vel inversion parameters
         n->param("invert_linear_vel_cmds", invert_x, false);
         n->param("invert_angular_vel_cmds", invert_z, false);
