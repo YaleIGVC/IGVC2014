@@ -16,7 +16,8 @@ def callback_imu(msg_in):
 
     msg_out = Odometry()
     msg_out.header.stamp          = msg_in.header.stamp
-    msg_out.header.frame_id       = 'odom_frame'
+    msg_out.header.frame_id       = 'odom_combined'
+    msg_out.header.child_frame_id       = 'base_footprint'
 
     global x
     global y
@@ -52,7 +53,8 @@ def callback_imu(msg_in):
     t.header.frame_id = msg_out.header.frame_id
     t.header.stamp = rospy.Time.now()
 
-    t.child_frame_id = "base_link"
+    t.frame_id = "odom_combined"
+    t.child_frame_id = "base_footprint"
     t.transform.translation.x = y # GLOBAL! From callback_odom
     t.transform.translation.y = x # GLOBAL! From callback_odom
     t.transform.translation.z = 0.0
