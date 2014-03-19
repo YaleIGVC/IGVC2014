@@ -3,9 +3,14 @@
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
     <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" />
 
-    <node pkg="urg_node" type="urg_node" name="short_range_laser"/>
+    <node pkg="urg_node" type="urg_node" name="short_range_laser">
+        <param name="angle_min" value="-1.4" />
+        <param name="angle_max" value="1.4" />
+    </node>
 
-    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />
+
+    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />-->
+    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".47 .095 .342 0 0 0 base_link laser 1000" />
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
     <node pkg="tf" type="static_transform_publisher" name="basefoot_baselink_tf" args="0 0 0.25 0 0 0 base_footprint base_link 1000" />
 
@@ -20,11 +25,16 @@
     </node>
 
     <node pkg="gmapping" type="slam_gmapping" name="mapping">
+        <!--<param name="srr" value="0"/>-->
+        <!--<param name="srt" value="0"/>-->
+        <!--<param name="str" value="0"/>-->
+        <!--<param name="stt" value="0"/>-->
         <param name="odom_frame" value="odom_combined" />
-        <param name="map_update_interval" value="0.5"/>
-        <param name="linearUpdate" value="0.05"/>
-        <param name="angularUpdate" value="0.02"/>
-        <param name="transform_publish_period" value="0.03"/>
+        <!--<param name="map_update_interval" value="0.5"/>-->
+        <!--<param name="linearUpdate" value="0.05"/>-->
+        <!--<param name="angularUpdate" value="0.02"/>-->
+        <!--<param name="transform_publish_period" value="0.05"/>-->
+        <!--<param name="delta" value="0.02" />-->
     </node>
 
     <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
