@@ -31,6 +31,6 @@ if __name__=='__main__':
     rospy.init_node('odom_repub_vectornav',anonymous=True)
     global pub
     pub = rospy.Publisher("/odom_repub_vectornav", Imu)
-    rospy.Subscriber("/Imu", Imu, callback)
+    rospy.Subscriber("/imu_data", Imu, callback)
     rospy.loginfo("init")
     rospy.spin()

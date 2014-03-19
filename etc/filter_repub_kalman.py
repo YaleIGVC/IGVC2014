@@ -32,6 +32,6 @@ if __name__=='__main__':
     rospy.init_node('odom_repub_kalman',anonymous=True)
     global pub
     pub = rospy.Publisher("/odom_repub_kalman", Imu)
-    rospy.Subscriber("/kalman_filter/odom", PoseWithCovarianceStamped, callback)
+    rospy.Subscriber("/robot_pose_ekf/odom_combined", PoseWithCovarianceStamped, callback)
     rospy.loginfo("init")
     rospy.spin()
