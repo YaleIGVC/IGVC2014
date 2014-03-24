@@ -10,7 +10,10 @@
 
 
     <!--<node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />-->
-    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".47 .095 .342 0 0 0 base_link laser 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="baselink_laserbase_tf" args=".47 .095 .342 0 0 0 base_link laser_base 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="laserbase_laser_tf" args="0 0 0 0 0 0 laser_base laser 1000" />
+    <!--laser_base reperesents center of pitch rotation of lrf, and laser represents center of lrf-->
+
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
     <node pkg="tf" type="static_transform_publisher" name="basefoot_baselink_tf" args="0 0 0.25 0 0 0 base_footprint base_link 1000" />
 
