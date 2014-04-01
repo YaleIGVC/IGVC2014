@@ -3,6 +3,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 static const std::string OPENCV_WINDOW = "Image window";
 
@@ -37,8 +38,24 @@ class ImageConverter {
 };
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "image_converter");
-    ImageConverter ic;
+    // Initialize ROS node
+    ros::init(argc, argv, "image_unwarp");
+    ros::NodeHandle nh;
+
+    // Get calibration parameters
+    if (!(nh.hasParam("center_x") && nh.hasParam("center_y")
+            && nh.hasParam("polynomial"))) {
+        ROS_ERROR("Could not find calibration parameters. Did you run image"
+                "calibrate?");
+    }
+    int center_x, center_y;
+    std::vector<double> polynomial;
+    nh.getParam("center_x", center_x);
+    nh.getParam("center_y", center_y);
+    nh.getParam("polynomial", polynomial);
+
+    image_transport::ImageTransport it(nh);
+
     ros::spin();
     return 0;
 }

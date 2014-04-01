@@ -105,14 +105,22 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-add_executable(image_unwarp_node src/image_unwarp_node.cpp)
+add_executable(calibrate src/calibrate.cpp)
+
+## Declare a cpp executable
+add_executable(image_unwarp src/image_unwarp.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(image_unwarp_node image_unwarp_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(image_unwarp_node
+target_link_libraries(calibrate
+  ${catkin_LIBRARIES}
+)
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(image_unwarp
   ${catkin_LIBRARIES}
 )
 
