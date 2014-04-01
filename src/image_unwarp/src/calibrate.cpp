@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
     polynomial.push_back(0.0);
     polynomial.push_back(1.1);
     polynomial.push_back(2.2);
-    nh.setParam("center_x", 0);
-    nh.setParam("center_y", 0);
-    nh.setParam("polynomial", polynomial);
+    nh.setParam("/image_unwarp/center_x", 0);
+    nh.setParam("/image_unwarp/center_y", 0);
+    nh.setParam("/image_unwarp/polynomial", polynomial);
 }
