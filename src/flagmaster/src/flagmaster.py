@@ -1,10 +1,5 @@
 #!/usr/bin/env python
-
-
-cv2.destroyAllWindows()
-
-
-import roslib; roslib.load_manifest('rbx1_vision')
+import roslib
 import rospy
 import sys
 import cv2
@@ -13,36 +8,37 @@ from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
+
 class flagmaster():
     def __init__(self):
         self.node_name = "flagmaster_flash"
-        
+
         rospy.init_node(self.node_name)
-        
+
         # What we do during shutdown
         rospy.on_shutdown(self.cleanup)
-        
+
         # Create the OpenCV display window for the RGB image
         self.cv_window_name = self.node_name
         cv.NamedWindow(self.cv_window_name, cv.CV_WINDOW_NORMAL)
         cv.MoveWindow(self.cv_window_name, 25, 75)
-        
-        
+
+
         # Create the cv_bridge object
         self.bridge = CvBridge()
-        
+
         # Subscribe to the camera image
         self.image_sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.image_callback)
-        
+
         rospy.loginfo("Waiting for image topics...")
 
     def image_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
         try:
-            frame = self.bridge.imgmsg_to_cv(ros_image, "bgr8")
+            frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         except CvBridgeError, e:
             print e
-        
+
         # Convert the image to a Numpy array since most cv2 functions
         # require Numpy arrays.
         frame = np.array(frame, dtype=np.uint8)
