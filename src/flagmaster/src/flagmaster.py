@@ -33,7 +33,7 @@ class flagmaster():
         # Subscribe to the camera image
         self.image_sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.image_callback)
 
-        rospy.loginfo("Waiting for image topics...")
+        rospy.loginfo("Waiting for image topic...")
 
     def image_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
