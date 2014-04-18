@@ -44,15 +44,15 @@ class flagmaster():
 
         # Convert the image to a Numpy array since most cv2 functions
         # require Numpy arrays.
-        frame = np.array(frame, dtype=np.uint8, encoding="bgr8")
+        frame = np.array(frame, dtype=np.uint8)
         
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
 
-        #matcvimg = cv.fromarray(display_image)
+        nvimg = cv2.cvtColor(contourImg, cv2.cv.CV_HSV2BGR)
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(display_image, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
 
