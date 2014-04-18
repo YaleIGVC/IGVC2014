@@ -49,7 +49,7 @@ class flagmaster():
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
 
-         try:
+        try:
             rosimgpub = self.bridge.cv2_to_imgmsg(display_image, "bgr8")
         except CvBridgeError, e:
             print e
