@@ -44,7 +44,7 @@ class flagmaster():
 
         # Convert the image to a Numpy array since most cv2 functions
         # require Numpy arrays.
-        frame = np.array(frame, dtype=np.uint8)
+        frame = np.array(frame, dtype=np.uint8, encoding="bgr8")
         
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
