@@ -12,8 +12,11 @@ import numpy as np
 class flagmaster():
     def __init__(self):
         self.node_name = "flagmaster_flash"
+        self.pub = rospy.Publisher("/flagtopic", Image)
 
         rospy.init_node(self.node_name)
+
+
 
         # What we do during shutdown
         rospy.on_shutdown(self.cleanup)
@@ -69,6 +72,13 @@ class flagmaster():
 
         # Bitwise-AND mask and original image
         res = cv2.bitwise_and(frame,frame, mask= mask)
+
+        try:
+            rosimgpub = self.bridge.cv2_to_imgmsg(mask, "bgr8")
+        except CvBridgeError, e:
+            print e
+
+        self.pub.publish(rosimgpub)
 
         #cv2.imshow('frame',frame)
         #cv2.imshow('mask',mask)
