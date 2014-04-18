@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=/dev/ttyUSB0" />
+    <node pkg="vectornav" type="vn_sensor_msgs.py" name="vectornav_data_convert" />
+</launch>
