@@ -49,7 +49,7 @@ class flagmaster():
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
 
-        nvimg = cv2.cvtColor(contourImg, cv2.cv.CV_HSV2BGR)
+        nvimg = cv2.cvtColor(nvimg, cv2.cv.CV_HSV2BGR)
 
         try:
             rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
