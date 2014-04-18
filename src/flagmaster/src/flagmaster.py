@@ -49,10 +49,10 @@ class flagmaster():
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
 
-        matcvimg = cv.fromarray(display_image)
+        #matcvimg = cv.fromarray(display_image)
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(matcvimg, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(display_image, "bgr8")
         except CvBridgeError, e:
             print e
 
