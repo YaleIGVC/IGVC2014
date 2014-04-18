@@ -48,6 +48,13 @@ class flagmaster():
         
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
+
+         try:
+            rosimgpub = self.bridge.cv2_to_imgmsg(display_image, "bgr8")
+        except CvBridgeError, e:
+            print e
+
+        self.pub.publish(rosimgpub)
                        
         # Display the image.
         cv2.imshow(self.node_name, display_image)
@@ -72,13 +79,6 @@ class flagmaster():
 
         # Bitwise-AND mask and original image
         res = cv2.bitwise_and(frame,frame, mask= mask)
-
-        try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(mask, "bgr8")
-        except CvBridgeError, e:
-            print e
-
-        self.pub.publish(rosimgpub)
 
         #cv2.imshow('frame',frame)
         #cv2.imshow('mask',mask)
