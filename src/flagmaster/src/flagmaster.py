@@ -49,8 +49,12 @@ class flagmaster():
         # Process the frame using the process_image() function
         display_image = self.process_image(frame)
 
+        bitmap = cv.CreateImageHeader((display_image.shape[1], display_image.shape[0]), cv.IPL_DEPTH_8U, 3)
+        cv.SetData(bitmap, source.tostring(), 
+           source.dtype.itemsize * 3 * source.shape[1])
+
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(display_image, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(bitmap, "bgr8")
         except CvBridgeError, e:
             print e
 
