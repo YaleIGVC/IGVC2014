@@ -12,8 +12,8 @@ import numpy as np
 class flagmaster():
     def __init__(self):
         self.node_name = "flagmaster_flash"
-        self.redpub = rospy.Publisher("/blueflag", Image)
-        self.bluepub = rospy.Publisher("/redflag", Image)
+        self.redpub = rospy.Publisher("/redflag", Image)
+        self.bluepub = rospy.Publisher("/blueflag", Image)
 
         rospy.init_node(self.node_name)
 
