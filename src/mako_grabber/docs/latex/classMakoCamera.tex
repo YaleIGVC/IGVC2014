@@ -1,0 +1,1888 @@
+\hypertarget{classMakoCamera}{\section{Mako\-Camera Class Reference}
+\label{classMakoCamera}\index{Mako\-Camera@{Mako\-Camera}}
+}
+Inheritance diagram for Mako\-Camera\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classMakoCamera}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries \-\_\-\-Acquisition\-Mode\-Enum} \{ {\bfseries Acquisition\-Mode\-\_\-\-Continuous} = 1, 
+{\bfseries Acquisition\-Mode\-\_\-\-Single\-Frame} = 2, 
+{\bfseries Acquisition\-Mode\-\_\-\-Multi\-Frame} = 3, 
+{\bfseries Acquisition\-Mode\-\_\-\-Recorder} = 4
+ \}
+\item 
+enum {\bfseries \-\_\-\-Balance\-Ratio\-Selector\-Enum} \{ {\bfseries Balance\-Ratio\-Selector\-\_\-\-Red} = 0, 
+{\bfseries Balance\-Ratio\-Selector\-\_\-\-Blue} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Balance\-White\-Auto\-Enum} \{ {\bfseries Balance\-White\-Auto\-\_\-\-Off} = 1, 
+{\bfseries Balance\-White\-Auto\-\_\-\-Continuous} = 2, 
+{\bfseries Balance\-White\-Auto\-\_\-\-Once} = 3
+ \}
+\item 
+enum {\bfseries \-\_\-\-Bandwidth\-Control\-Mode\-Enum} \{ {\bfseries Bandwidth\-Control\-Mode\-\_\-\-Stream\-Bytes\-Per\-Second} = 0, 
+{\bfseries Bandwidth\-Control\-Mode\-\_\-\-S\-C\-P\-D} = 1, 
+{\bfseries Bandwidth\-Control\-Mode\-\_\-\-Both} = 2
+ \}
+\item 
+enum {\bfseries \-\_\-\-Black\-Level\-Selector\-Enum} \{ {\bfseries Black\-Level\-Selector\-\_\-\-All} = 0
+ \}
+\item 
+enum {\bfseries \-\_\-\-Color\-Transformation\-Mode\-Enum} \{ {\bfseries Color\-Transformation\-Mode\-\_\-\-Off} = 0, 
+{\bfseries Color\-Transformation\-Mode\-\_\-\-Manual} = 1, 
+{\bfseries Color\-Transformation\-Mode\-\_\-\-Temp6500\-K} = 2
+ \}
+\item 
+enum {\bfseries \-\_\-\-Color\-Transformation\-Selector\-Enum} \{ {\bfseries Color\-Transformation\-Selector\-\_\-\-R\-G\-Bto\-R\-G\-B} = 0
+ \}
+\item 
+enum {\bfseries \-\_\-\-Color\-Transformation\-Value\-Selector\-Enum} \{ \\*
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain00} = 0, 
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain01} = 1, 
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain02} = 2, 
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain10} = 3, 
+\\*
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain11} = 4, 
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain12} = 5, 
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain20} = 6, 
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain21} = 7, 
+\\*
+{\bfseries Color\-Transformation\-Value\-Selector\-\_\-\-Gain22} = 8
+ \}
+\item 
+enum {\bfseries \-\_\-\-Defect\-Mask\-Column\-Enable\-Enum} \{ {\bfseries Defect\-Mask\-Column\-Enable\-\_\-\-Disabled} = 0, 
+{\bfseries Defect\-Mask\-Column\-Enable\-\_\-\-Enabled} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Device\-Scan\-Type\-Enum} \{ {\bfseries Device\-Scan\-Type\-\_\-\-Areascan} = 0
+ \}
+\item 
+enum {\bfseries \-\_\-\-Device\-Temperature\-Selector\-Enum} \{ {\bfseries Device\-Temperature\-Selector\-\_\-\-Sensor} = 0, 
+{\bfseries Device\-Temperature\-Selector\-\_\-\-Main} = 1, 
+{\bfseries Device\-Temperature\-Selector\-\_\-\-Power} = 2
+ \}
+\item 
+enum {\bfseries \-\_\-\-Event\-Notification\-Enum} \{ {\bfseries Event\-Notification\-\_\-\-Off} = 0, 
+{\bfseries Event\-Notification\-\_\-\-On} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Event\-Selector\-Enum} \{ \\*
+{\bfseries Event\-Selector\-\_\-\-Acquisition\-Start} = 40000, 
+{\bfseries Event\-Selector\-\_\-\-Acquisition\-End} = 40001, 
+{\bfseries Event\-Selector\-\_\-\-Frame\-Trigger} = 40002, 
+{\bfseries Event\-Selector\-\_\-\-Exposure\-End} = 40003, 
+\\*
+{\bfseries Event\-Selector\-\_\-\-Acquisition\-Record\-Trigger} = 40004, 
+{\bfseries Event\-Selector\-\_\-\-Ptp\-Sync\-Lost} = 40005, 
+{\bfseries Event\-Selector\-\_\-\-Ptp\-Sync\-Locked} = 40006, 
+{\bfseries Event\-Selector\-\_\-\-Line1\-Rising\-Edge} = 40010, 
+\\*
+{\bfseries Event\-Selector\-\_\-\-Line1\-Falling\-Edge} = 40011, 
+{\bfseries Event\-Selector\-\_\-\-Line2\-Rising\-Edge} = 40012, 
+{\bfseries Event\-Selector\-\_\-\-Line2\-Falling\-Edge} = 40013, 
+{\bfseries Event\-Selector\-\_\-\-Line3\-Rising\-Edge} = 40014, 
+\\*
+{\bfseries Event\-Selector\-\_\-\-Line3\-Falling\-Edge} = 40015, 
+{\bfseries Event\-Selector\-\_\-\-Line4\-Rising\-Edge} = 40016, 
+{\bfseries Event\-Selector\-\_\-\-Line4\-Falling\-Edge} = 40017, 
+{\bfseries Event\-Selector\-\_\-\-Frame\-Trigger\-Ready} = 40018
+ \}
+\item 
+enum {\bfseries \-\_\-\-Exposure\-Auto\-Enum} \{ {\bfseries Exposure\-Auto\-\_\-\-Off} = 1, 
+{\bfseries Exposure\-Auto\-\_\-\-Continuous} = 2, 
+{\bfseries Exposure\-Auto\-\_\-\-Once} = 3, 
+{\bfseries Exposure\-Auto\-\_\-other} = 4
+ \}
+\item 
+enum {\bfseries \-\_\-\-Exposure\-Auto\-Alg\-Enum} \{ {\bfseries Exposure\-Auto\-Alg\-\_\-\-Mean} = 0, 
+{\bfseries Exposure\-Auto\-Alg\-\_\-\-Fit\-Range} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Exposure\-Mode\-Enum} \{ {\bfseries Exposure\-Mode\-\_\-\-Timed} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-G\-V\-S\-P\-Driver\-Enum} \{ {\bfseries G\-V\-S\-P\-Driver\-\_\-\-Socket} = 0, 
+{\bfseries G\-V\-S\-P\-Driver\-\_\-\-Filter} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Gain\-Auto\-Enum} \{ {\bfseries Gain\-Auto\-\_\-\-Off} = 1, 
+{\bfseries Gain\-Auto\-\_\-\-Continuous} = 2, 
+{\bfseries Gain\-Auto\-\_\-\-Once} = 3
+ \}
+\item 
+enum {\bfseries \-\_\-\-Gain\-Selector\-Enum} \{ {\bfseries Gain\-Selector\-\_\-\-All} = 0
+ \}
+\item 
+enum {\bfseries \-\_\-\-Gev\-I\-P\-Configuration\-Mode\-Enum} \{ {\bfseries Gev\-I\-P\-Configuration\-Mode\-\_\-\-L\-L\-A} = 4, 
+{\bfseries Gev\-I\-P\-Configuration\-Mode\-\_\-\-Persistent} = 5, 
+{\bfseries Gev\-I\-P\-Configuration\-Mode\-\_\-\-D\-H\-C\-P} = 6
+ \}
+\item 
+enum {\bfseries \-\_\-\-L\-U\-T\-Mode\-Enum} \{ {\bfseries L\-U\-T\-Mode\-\_\-\-Luminance} = 0, 
+{\bfseries L\-U\-T\-Mode\-\_\-\-Red} = 1, 
+{\bfseries L\-U\-T\-Mode\-\_\-\-Green} = 2, 
+{\bfseries L\-U\-T\-Mode\-\_\-\-Blue} = 3
+ \}
+\item 
+enum {\bfseries \-\_\-\-L\-U\-T\-Selector\-Enum} \{ \\*
+{\bfseries L\-U\-T\-Selector\-\_\-\-L\-U\-T1} = 0, 
+{\bfseries L\-U\-T\-Selector\-\_\-\-L\-U\-T2} = 1, 
+{\bfseries L\-U\-T\-Selector\-\_\-\-L\-U\-T3} = 2, 
+{\bfseries L\-U\-T\-Selector\-\_\-\-L\-U\-T4} = 3, 
+\\*
+{\bfseries L\-U\-T\-Selector\-\_\-\-L\-U\-T5} = 4
+ \}
+\item 
+enum {\bfseries \-\_\-\-Pixel\-Format\-Enum} \{ \\*
+{\bfseries Pixel\-Format\-\_\-\-Mono8} = 17301505, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-G\-R8} = 17301512, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-R\-G8} = 17301513, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-G\-B8} = 17301514, 
+\\*
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-B\-G8} = 17301515, 
+{\bfseries Pixel\-Format\-\_\-\-Mono12\-Packed} = 17563654, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-G\-R12\-Packed} = 17563690, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-R\-G12\-Packed} = 17563691, 
+\\*
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-G\-B12\-Packed} = 17563692, 
+{\bfseries Pixel\-Format\-\_\-\-Mono10} = 17825795, 
+{\bfseries Pixel\-Format\-\_\-\-Mono12} = 17825797, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-B\-G10} = 17825807, 
+\\*
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-G\-R12} = 17825808, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-R\-G12} = 17825809, 
+{\bfseries Pixel\-Format\-\_\-\-Bayer\-G\-B12} = 17825810, 
+{\bfseries Pixel\-Format\-\_\-\-Mono14} = 17825829, 
+\\*
+{\bfseries Pixel\-Format\-\_\-\-Y\-U\-V411\-Packed} = 34340894, 
+{\bfseries Pixel\-Format\-\_\-\-Y\-U\-V422\-Packed} = 34603039, 
+{\bfseries Pixel\-Format\-\_\-\-R\-G\-B8\-Packed} = 35127316, 
+{\bfseries Pixel\-Format\-\_\-\-B\-G\-R8\-Packed} = 35127317, 
+\\*
+{\bfseries Pixel\-Format\-\_\-\-Y\-U\-V444\-Packed} = 35127328, 
+{\bfseries Pixel\-Format\-\_\-\-R\-G\-B\-A8\-Packed} = 35651606, 
+{\bfseries Pixel\-Format\-\_\-\-B\-G\-R\-A8\-Packed} = 35651607, 
+{\bfseries Pixel\-Format\-\_\-\-R\-G\-B10\-Packed} = 36700184, 
+\\*
+{\bfseries Pixel\-Format\-\_\-\-R\-G\-B12\-Packed} = 36700186
+ \}
+\item 
+enum {\bfseries \-\_\-\-Sensor\-Type\-Enum} \{ {\bfseries Sensor\-Type\-\_\-\-Mono} = 0, 
+{\bfseries Sensor\-Type\-\_\-\-Bayer} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Stream\-Hold\-Enable\-Enum} \{ {\bfseries Stream\-Hold\-Enable\-\_\-\-Off} = 0, 
+{\bfseries Stream\-Hold\-Enable\-\_\-\-On} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Strobe\-Duration\-Mode\-Enum} \{ {\bfseries Strobe\-Duration\-Mode\-\_\-\-Source} = 0, 
+{\bfseries Strobe\-Duration\-Mode\-\_\-\-Controlled} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Strobe\-Source\-Enum} \{ \\*
+{\bfseries Strobe\-Source\-\_\-\-Acquisition\-Trigger\-Ready} = 1, 
+{\bfseries Strobe\-Source\-\_\-\-Frame\-Trigger\-Ready} = 2, 
+{\bfseries Strobe\-Source\-\_\-\-Frame\-Trigger} = 3, 
+{\bfseries Strobe\-Source\-\_\-\-Exposing} = 4, 
+\\*
+{\bfseries Strobe\-Source\-\_\-\-Frame\-Readout} = 5, 
+{\bfseries Strobe\-Source\-\_\-\-Acquiring} = 7, 
+{\bfseries Strobe\-Source\-\_\-\-Line\-In1} = 8, 
+{\bfseries Strobe\-Source\-\_\-\-Line\-In2} = 9
+ \}
+\item 
+enum {\bfseries \-\_\-\-Sync\-In\-Selector\-Enum} \{ {\bfseries Sync\-In\-Selector\-\_\-\-Sync\-In1} = 0, 
+{\bfseries Sync\-In\-Selector\-\_\-\-Sync\-In2} = 1, 
+{\bfseries Sync\-In\-Selector\-\_\-\-Sync\-In3} = 2, 
+{\bfseries Sync\-In\-Selector\-\_\-\-Sync\-In4} = 3
+ \}
+\item 
+enum {\bfseries \-\_\-\-Sync\-Out\-Polarity\-Enum} \{ {\bfseries Sync\-Out\-Polarity\-\_\-\-Normal} = 0, 
+{\bfseries Sync\-Out\-Polarity\-\_\-\-Invert} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Sync\-Out\-Selector\-Enum} \{ {\bfseries Sync\-Out\-Selector\-\_\-\-Sync\-Out1} = 0, 
+{\bfseries Sync\-Out\-Selector\-\_\-\-Sync\-Out2} = 1, 
+{\bfseries Sync\-Out\-Selector\-\_\-\-Sync\-Out3} = 2, 
+{\bfseries Sync\-Out\-Selector\-\_\-\-Sync\-Out4} = 3
+ \}
+\item 
+enum {\bfseries \-\_\-\-Sync\-Out\-Source\-Enum} \{ \\*
+{\bfseries Sync\-Out\-Source\-\_\-\-G\-P\-O} = 0, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Acquisition\-Trigger\-Ready} = 1, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Frame\-Trigger\-Ready} = 2, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Exposing} = 4, 
+\\*
+{\bfseries Sync\-Out\-Source\-\_\-\-Frame\-Readout} = 5, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Imaging} = 6, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Acquiring} = 7, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Line\-In1} = 8, 
+\\*
+{\bfseries Sync\-Out\-Source\-\_\-\-Line\-In2} = 9, 
+{\bfseries Sync\-Out\-Source\-\_\-\-Strobe1} = 12
+ \}
+\item 
+enum {\bfseries \-\_\-\-Trigger\-Activation\-Enum} \{ \\*
+{\bfseries Trigger\-Activation\-\_\-\-Rising\-Edge} = 0, 
+{\bfseries Trigger\-Activation\-\_\-\-Falling\-Edge} = 1, 
+{\bfseries Trigger\-Activation\-\_\-\-Any\-Edge} = 2, 
+{\bfseries Trigger\-Activation\-\_\-\-Level\-High} = 3, 
+\\*
+{\bfseries Trigger\-Activation\-\_\-\-Level\-Low} = 4
+ \}
+\item 
+enum {\bfseries \-\_\-\-Trigger\-Mode\-Enum} \{ {\bfseries Trigger\-Mode\-\_\-\-Off} = 0, 
+{\bfseries Trigger\-Mode\-\_\-\-On} = 1
+ \}
+\item 
+enum {\bfseries \-\_\-\-Trigger\-Overlap\-Enum} \{ {\bfseries Trigger\-Overlap\-\_\-\-Off} = 0, 
+{\bfseries Trigger\-Overlap\-\_\-\-Read\-Out} = 1, 
+{\bfseries Trigger\-Overlap\-\_\-\-Previous\-Frame} = 2
+ \}
+\item 
+enum {\bfseries \-\_\-\-Trigger\-Selector\-Enum} \{ {\bfseries Trigger\-Selector\-\_\-\-Frame\-Start} = 0, 
+{\bfseries Trigger\-Selector\-\_\-\-Acquisition\-Start} = 3, 
+{\bfseries Trigger\-Selector\-\_\-\-Acquisition\-End} = 4, 
+{\bfseries Trigger\-Selector\-\_\-\-Acquisition\-Record} = 6
+ \}
+\item 
+enum {\bfseries \-\_\-\-Trigger\-Source\-Enum} \{ \\*
+{\bfseries Trigger\-Source\-\_\-\-Freerun} = 0, 
+{\bfseries Trigger\-Source\-\_\-\-Line1} = 1, 
+{\bfseries Trigger\-Source\-\_\-\-Line2} = 2, 
+{\bfseries Trigger\-Source\-\_\-\-Line3} = 3, 
+\\*
+{\bfseries Trigger\-Source\-\_\-\-Line4} = 4, 
+{\bfseries Trigger\-Source\-\_\-\-Fixed\-Rate} = 5, 
+{\bfseries Trigger\-Source\-\_\-\-Software} = 6
+ \}
+\item 
+enum {\bfseries \-\_\-\-User\-Set\-Default\-Selector\-Enum} \{ \\*
+{\bfseries User\-Set\-Default\-Selector\-\_\-\-Default} = 0, 
+{\bfseries User\-Set\-Default\-Selector\-\_\-\-User\-Set1} = 1, 
+{\bfseries User\-Set\-Default\-Selector\-\_\-\-User\-Set2} = 2, 
+{\bfseries User\-Set\-Default\-Selector\-\_\-\-User\-Set3} = 3, 
+\\*
+{\bfseries User\-Set\-Default\-Selector\-\_\-\-User\-Set4} = 4, 
+{\bfseries User\-Set\-Default\-Selector\-\_\-\-User\-Set5} = 5
+ \}
+\item 
+enum {\bfseries \-\_\-\-User\-Set\-Selector\-Enum} \{ \\*
+{\bfseries User\-Set\-Selector\-\_\-\-Default} = 0, 
+{\bfseries User\-Set\-Selector\-\_\-\-User\-Set1} = 1, 
+{\bfseries User\-Set\-Selector\-\_\-\-User\-Set2} = 2, 
+{\bfseries User\-Set\-Selector\-\_\-\-User\-Set3} = 3, 
+\\*
+{\bfseries User\-Set\-Selector\-\_\-\-User\-Set4} = 4, 
+{\bfseries User\-Set\-Selector\-\_\-\-User\-Set5} = 5
+ \}
+\item 
+\hypertarget{classMakoCamera_aeb79ad0812660f8f46ecac228c666c17}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Acquisition\-Mode\-Enum {\bfseries Acquisition\-Mode\-Enum}}\label{classMakoCamera_aeb79ad0812660f8f46ecac228c666c17}
+
+\item 
+\hypertarget{classMakoCamera_ae13abe492fc41509cab64b2bf721acd4}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Balance\-Ratio\-Selector\-Enum {\bfseries Balance\-Ratio\-Selector\-Enum}}\label{classMakoCamera_ae13abe492fc41509cab64b2bf721acd4}
+
+\item 
+\hypertarget{classMakoCamera_ac0246b518e9bb174731f425338bebcc7}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Balance\-White\-Auto\-Enum {\bfseries Balance\-White\-Auto\-Enum}}\label{classMakoCamera_ac0246b518e9bb174731f425338bebcc7}
+
+\item 
+\hypertarget{classMakoCamera_ad2b2f683c787d424242e13390c3841ea}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Bandwidth\-Control\-Mode\-Enum {\bfseries Bandwidth\-Control\-Mode\-Enum}}\label{classMakoCamera_ad2b2f683c787d424242e13390c3841ea}
+
+\item 
+\hypertarget{classMakoCamera_a9acd8f358d09f5d88c06fa119330338b}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Black\-Level\-Selector\-Enum {\bfseries Black\-Level\-Selector\-Enum}}\label{classMakoCamera_a9acd8f358d09f5d88c06fa119330338b}
+
+\item 
+\hypertarget{classMakoCamera_af7d46f0332c9676ce7b2267b25fe3d91}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Color\-Transformation\-Mode\-Enum {\bfseries Color\-Transformation\-Mode\-Enum}}\label{classMakoCamera_af7d46f0332c9676ce7b2267b25fe3d91}
+
+\item 
+\hypertarget{classMakoCamera_afc223967f742171fad366906f462698a}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Color\-Transformation\-Selector\-Enum {\bfseries Color\-Transformation\-Selector\-Enum}}\label{classMakoCamera_afc223967f742171fad366906f462698a}
+
+\item 
+\hypertarget{classMakoCamera_aa3b3c25a0674072934b1871f4c674e25}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Color\-Transformation\-Value\-Selector\-Enum {\bfseries Color\-Transformation\-Value\-Selector\-Enum}}\label{classMakoCamera_aa3b3c25a0674072934b1871f4c674e25}
+
+\item 
+\hypertarget{classMakoCamera_aa61277670b15c49ad278add43e3275d7}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Defect\-Mask\-Column\-Enable\-Enum {\bfseries Defect\-Mask\-Column\-Enable\-Enum}}\label{classMakoCamera_aa61277670b15c49ad278add43e3275d7}
+
+\item 
+\hypertarget{classMakoCamera_aa34b993c88168bdb2f23461889db99e0}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Device\-Scan\-Type\-Enum {\bfseries Device\-Scan\-Type\-Enum}}\label{classMakoCamera_aa34b993c88168bdb2f23461889db99e0}
+
+\item 
+\hypertarget{classMakoCamera_a7bbe59e5a6ca5ee5b64539b7fac823a6}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Device\-Temperature\-Selector\-Enum {\bfseries Device\-Temperature\-Selector\-Enum}}\label{classMakoCamera_a7bbe59e5a6ca5ee5b64539b7fac823a6}
+
+\item 
+\hypertarget{classMakoCamera_a59c6336e5f9a4152838abc45f81a6af4}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Event\-Notification\-Enum {\bfseries Event\-Notification\-Enum}}\label{classMakoCamera_a59c6336e5f9a4152838abc45f81a6af4}
+
+\item 
+\hypertarget{classMakoCamera_aba2c9724727845cea7ac8487b83870b9}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Event\-Selector\-Enum {\bfseries Event\-Selector\-Enum}}\label{classMakoCamera_aba2c9724727845cea7ac8487b83870b9}
+
+\item 
+\hypertarget{classMakoCamera_a448e8a933e8556339c19f88e60b6a257}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Exposure\-Auto\-Enum {\bfseries Exposure\-Auto\-Enum}}\label{classMakoCamera_a448e8a933e8556339c19f88e60b6a257}
+
+\item 
+\hypertarget{classMakoCamera_a356b97c447889f298f0a900013c4b21b}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Exposure\-Auto\-Alg\-Enum {\bfseries Exposure\-Auto\-Alg\-Enum}}\label{classMakoCamera_a356b97c447889f298f0a900013c4b21b}
+
+\item 
+\hypertarget{classMakoCamera_af09036dd83e86168861a46b4ba3a2ff8}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Exposure\-Mode\-Enum {\bfseries Exposure\-Mode\-Enum}}\label{classMakoCamera_af09036dd83e86168861a46b4ba3a2ff8}
+
+\item 
+\hypertarget{classMakoCamera_adf7e1d2f926a776fa42fbd2ea0929553}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-G\-V\-S\-P\-Driver\-Enum {\bfseries G\-V\-S\-P\-Driver\-Enum}}\label{classMakoCamera_adf7e1d2f926a776fa42fbd2ea0929553}
+
+\item 
+\hypertarget{classMakoCamera_aa4c73ada2069b3e6eb3eace3d254b5a6}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Gain\-Auto\-Enum {\bfseries Gain\-Auto\-Enum}}\label{classMakoCamera_aa4c73ada2069b3e6eb3eace3d254b5a6}
+
+\item 
+\hypertarget{classMakoCamera_ad5318d7dbe3e5c1a39b27f0227219bbb}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Gain\-Selector\-Enum {\bfseries Gain\-Selector\-Enum}}\label{classMakoCamera_ad5318d7dbe3e5c1a39b27f0227219bbb}
+
+\item 
+\hypertarget{classMakoCamera_ac4b1fc144d1769dbaa4f9e6da1bd613d}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Gev\-I\-P\-Configuration\-Mode\-Enum {\bfseries Gev\-I\-P\-Configuration\-Mode\-Enum}}\label{classMakoCamera_ac4b1fc144d1769dbaa4f9e6da1bd613d}
+
+\item 
+\hypertarget{classMakoCamera_adfd02d69c7a6361504d67e59642e5be3}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-L\-U\-T\-Mode\-Enum {\bfseries L\-U\-T\-Mode\-Enum}}\label{classMakoCamera_adfd02d69c7a6361504d67e59642e5be3}
+
+\item 
+\hypertarget{classMakoCamera_aafc0870e522f6456cb83b3ec50cddb4f}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-L\-U\-T\-Selector\-Enum {\bfseries L\-U\-T\-Selector\-Enum}}\label{classMakoCamera_aafc0870e522f6456cb83b3ec50cddb4f}
+
+\item 
+\hypertarget{classMakoCamera_aae0a89ae73a47771e623107d920c47b6}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Pixel\-Format\-Enum {\bfseries Pixel\-Format\-Enum}}\label{classMakoCamera_aae0a89ae73a47771e623107d920c47b6}
+
+\item 
+\hypertarget{classMakoCamera_ab4059344d03db601ed8ea4cdcb9d4750}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Sensor\-Type\-Enum {\bfseries Sensor\-Type\-Enum}}\label{classMakoCamera_ab4059344d03db601ed8ea4cdcb9d4750}
+
+\item 
+\hypertarget{classMakoCamera_aea6e59669de557f0e84e111c5367c0cd}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Stream\-Hold\-Enable\-Enum {\bfseries Stream\-Hold\-Enable\-Enum}}\label{classMakoCamera_aea6e59669de557f0e84e111c5367c0cd}
+
+\item 
+\hypertarget{classMakoCamera_a187e0a50a19146409952d83b4d930b32}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Strobe\-Duration\-Mode\-Enum {\bfseries Strobe\-Duration\-Mode\-Enum}}\label{classMakoCamera_a187e0a50a19146409952d83b4d930b32}
+
+\item 
+\hypertarget{classMakoCamera_a4241f2e20b6fadbc4ab323e4cbc7b2c0}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Strobe\-Source\-Enum {\bfseries Strobe\-Source\-Enum}}\label{classMakoCamera_a4241f2e20b6fadbc4ab323e4cbc7b2c0}
+
+\item 
+\hypertarget{classMakoCamera_af10ed649b7586e6eceaca1c7dbf17de0}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Sync\-In\-Selector\-Enum {\bfseries Sync\-In\-Selector\-Enum}}\label{classMakoCamera_af10ed649b7586e6eceaca1c7dbf17de0}
+
+\item 
+\hypertarget{classMakoCamera_abdaf28ff9fdc3f95bdadb102f0bce117}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Sync\-Out\-Polarity\-Enum {\bfseries Sync\-Out\-Polarity\-Enum}}\label{classMakoCamera_abdaf28ff9fdc3f95bdadb102f0bce117}
+
+\item 
+\hypertarget{classMakoCamera_acbb886aa4864d8fbd875bf1c948148f2}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Sync\-Out\-Selector\-Enum {\bfseries Sync\-Out\-Selector\-Enum}}\label{classMakoCamera_acbb886aa4864d8fbd875bf1c948148f2}
+
+\item 
+\hypertarget{classMakoCamera_afb546192608ede71b43899957369f0d5}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Sync\-Out\-Source\-Enum {\bfseries Sync\-Out\-Source\-Enum}}\label{classMakoCamera_afb546192608ede71b43899957369f0d5}
+
+\item 
+\hypertarget{classMakoCamera_a3af14a264fbf86ff9bb23d4cb2837405}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Trigger\-Activation\-Enum {\bfseries Trigger\-Activation\-Enum}}\label{classMakoCamera_a3af14a264fbf86ff9bb23d4cb2837405}
+
+\item 
+\hypertarget{classMakoCamera_abcf43d9bb1ed447e24bcfb5da359b783}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Trigger\-Mode\-Enum {\bfseries Trigger\-Mode\-Enum}}\label{classMakoCamera_abcf43d9bb1ed447e24bcfb5da359b783}
+
+\item 
+\hypertarget{classMakoCamera_a7511b11a711126fd4850231a820e7add}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Trigger\-Overlap\-Enum {\bfseries Trigger\-Overlap\-Enum}}\label{classMakoCamera_a7511b11a711126fd4850231a820e7add}
+
+\item 
+\hypertarget{classMakoCamera_a8ac1b9979a81db688a3991bfe55fb9d3}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Trigger\-Selector\-Enum {\bfseries Trigger\-Selector\-Enum}}\label{classMakoCamera_a8ac1b9979a81db688a3991bfe55fb9d3}
+
+\item 
+\hypertarget{classMakoCamera_a0549b40b255b8fca0ec7d6c665458c90}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-Trigger\-Source\-Enum {\bfseries Trigger\-Source\-Enum}}\label{classMakoCamera_a0549b40b255b8fca0ec7d6c665458c90}
+
+\item 
+\hypertarget{classMakoCamera_ac65d5e275306fcc8540a3d0baadbadf1}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-User\-Set\-Default\-Selector\-Enum {\bfseries User\-Set\-Default\-Selector\-Enum}}\label{classMakoCamera_ac65d5e275306fcc8540a3d0baadbadf1}
+
+\item 
+\hypertarget{classMakoCamera_ad90059ed50a1cd7c9d087fa0fd0d1480}{typedef enum \\*
+Mako\-Camera\-::\-\_\-\-User\-Set\-Selector\-Enum {\bfseries User\-Set\-Selector\-Enum}}\label{classMakoCamera_ad90059ed50a1cd7c9d087fa0fd0d1480}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classMakoCamera_a1f58551d1739f17407f33f81e9a81c9a}{typedef {\bfseries S\-P\-\_\-\-D\-E\-C\-L} (\hyperlink{classMakoCamera}{Mako\-Camera}) Ptr}\label{classMakoCamera_a1f58551d1739f17407f33f81e9a81c9a}
+
+\item 
+\hypertarget{classMakoCamera_a626420efebcb9c4148d8fa9d6ae7ddb1}{{\bfseries Mako\-Camera} (const char $\ast$p\-Camera\-I\-D, const char $\ast$p\-Camera\-Name, const char $\ast$p\-Camera\-Model, const char $\ast$p\-Camera\-Serial\-Number, const char $\ast$p\-Interface\-I\-D, Vmb\-Interface\-Type interface\-Type, const char $\ast$p\-Interface\-Name, const char $\ast$p\-Interface\-Serial\-Number, Vmb\-Access\-Mode\-Type interface\-Permitted\-Access)}\label{classMakoCamera_a626420efebcb9c4148d8fa9d6ae7ddb1}
+
+\item 
+\hypertarget{classMakoCamera_ad6a8803b977187ddad879c4c513a2689}{Vmb\-Error\-Type {\bfseries Acquisition\-Abort} ()}\label{classMakoCamera_ad6a8803b977187ddad879c4c513a2689}
+
+\item 
+\hypertarget{classMakoCamera_abd43c4ca6f93ebfe9b8c38dfbca5760c}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Abort\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abd43c4ca6f93ebfe9b8c38dfbca5760c}
+
+\item 
+\hypertarget{classMakoCamera_ad723b76155147907791ae3c3c4c43bec}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Frame\-Count} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad723b76155147907791ae3c3c4c43bec}
+
+\item 
+\hypertarget{classMakoCamera_a410d9eaac2599e4e6f69ea35df53c816}{Vmb\-Error\-Type {\bfseries Set\-Acquisition\-Frame\-Count} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a410d9eaac2599e4e6f69ea35df53c816}
+
+\item 
+\hypertarget{classMakoCamera_a2002ef7282aad5d7a843baea2492d071}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Frame\-Count\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a2002ef7282aad5d7a843baea2492d071}
+
+\item 
+\hypertarget{classMakoCamera_a09bc3bb0403ae61c9b4396db9bd5dda3}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Frame\-Rate\-Abs} (double \&value)}\label{classMakoCamera_a09bc3bb0403ae61c9b4396db9bd5dda3}
+
+\item 
+\hypertarget{classMakoCamera_a6a51a1a9781c6aba75a1324056e247ae}{Vmb\-Error\-Type {\bfseries Set\-Acquisition\-Frame\-Rate\-Abs} (double value)}\label{classMakoCamera_a6a51a1a9781c6aba75a1324056e247ae}
+
+\item 
+\hypertarget{classMakoCamera_a08001d452e6139fd478f443436e652f9}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Frame\-Rate\-Abs\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a08001d452e6139fd478f443436e652f9}
+
+\item 
+\hypertarget{classMakoCamera_ac2b3b896c304dcd3396dbad3aa06efca}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Frame\-Rate\-Limit} (double \&value)}\label{classMakoCamera_ac2b3b896c304dcd3396dbad3aa06efca}
+
+\item 
+\hypertarget{classMakoCamera_ae22ae6f5cc89772d62c653502a7294b7}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Frame\-Rate\-Limit\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae22ae6f5cc89772d62c653502a7294b7}
+
+\item 
+\hypertarget{classMakoCamera_a814938f2dfb3ae225ef8bb5f109ac743}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Mode} (Acquisition\-Mode\-Enum \&value)}\label{classMakoCamera_a814938f2dfb3ae225ef8bb5f109ac743}
+
+\item 
+\hypertarget{classMakoCamera_a5dc896cf31da219bd120e9ac8897d56d}{Vmb\-Error\-Type {\bfseries Set\-Acquisition\-Mode} (Acquisition\-Mode\-Enum value)}\label{classMakoCamera_a5dc896cf31da219bd120e9ac8897d56d}
+
+\item 
+\hypertarget{classMakoCamera_a11baccf010babeea39dbc6c1a89cdd4e}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a11baccf010babeea39dbc6c1a89cdd4e}
+
+\item 
+\hypertarget{classMakoCamera_a627755175c2611c7349307d9cb333867}{Vmb\-Error\-Type {\bfseries Acquisition\-Start} ()}\label{classMakoCamera_a627755175c2611c7349307d9cb333867}
+
+\item 
+\hypertarget{classMakoCamera_a219cdb96910c477d2552017c9c09537f}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Start\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a219cdb96910c477d2552017c9c09537f}
+
+\item 
+\hypertarget{classMakoCamera_a7cee671ef7610fdc8bdc73443e882d2e}{Vmb\-Error\-Type {\bfseries Acquisition\-Stop} ()}\label{classMakoCamera_a7cee671ef7610fdc8bdc73443e882d2e}
+
+\item 
+\hypertarget{classMakoCamera_af07b6714edd5e10ab497ea78caabb56d}{Vmb\-Error\-Type {\bfseries Get\-Acquisition\-Stop\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af07b6714edd5e10ab497ea78caabb56d}
+
+\item 
+\hypertarget{classMakoCamera_a548742bab59830c09e7ac968e42105df}{Vmb\-Error\-Type {\bfseries Get\-Recorder\-Pre\-Event\-Count} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a548742bab59830c09e7ac968e42105df}
+
+\item 
+\hypertarget{classMakoCamera_afc1cfe0621b49caf77b95fe1b2439191}{Vmb\-Error\-Type {\bfseries Set\-Recorder\-Pre\-Event\-Count} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_afc1cfe0621b49caf77b95fe1b2439191}
+
+\item 
+\hypertarget{classMakoCamera_aff2d02ae96e3560e7964464bf42745cd}{Vmb\-Error\-Type {\bfseries Get\-Recorder\-Pre\-Event\-Count\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aff2d02ae96e3560e7964464bf42745cd}
+
+\item 
+\hypertarget{classMakoCamera_a341b4741ec294514f6955fd65a1e9921}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Activation} (Trigger\-Activation\-Enum \&value)}\label{classMakoCamera_a341b4741ec294514f6955fd65a1e9921}
+
+\item 
+\hypertarget{classMakoCamera_a889212d1842d89ebbc75cb211a521ded}{Vmb\-Error\-Type {\bfseries Set\-Trigger\-Activation} (Trigger\-Activation\-Enum value)}\label{classMakoCamera_a889212d1842d89ebbc75cb211a521ded}
+
+\item 
+\hypertarget{classMakoCamera_a0c9564c209a07c0cf92ed69d56e5cc77}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Activation\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0c9564c209a07c0cf92ed69d56e5cc77}
+
+\item 
+\hypertarget{classMakoCamera_a057c7f796932a0207577042fd10a0801}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Delay\-Abs} (double \&value)}\label{classMakoCamera_a057c7f796932a0207577042fd10a0801}
+
+\item 
+\hypertarget{classMakoCamera_aaca1c096f889d47babc5c88b6d2f7f04}{Vmb\-Error\-Type {\bfseries Set\-Trigger\-Delay\-Abs} (double value)}\label{classMakoCamera_aaca1c096f889d47babc5c88b6d2f7f04}
+
+\item 
+\hypertarget{classMakoCamera_ad53ab3c57e66cbf1bbe4c9a9a3074ab1}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Delay\-Abs\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ad53ab3c57e66cbf1bbe4c9a9a3074ab1}
+
+\item 
+\hypertarget{classMakoCamera_a907fa31119988288a78275ed5fe6cc25}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Mode} (Trigger\-Mode\-Enum \&value)}\label{classMakoCamera_a907fa31119988288a78275ed5fe6cc25}
+
+\item 
+\hypertarget{classMakoCamera_a67644a21ecbb79aa412e9a169aa6e9d8}{Vmb\-Error\-Type {\bfseries Set\-Trigger\-Mode} (Trigger\-Mode\-Enum value)}\label{classMakoCamera_a67644a21ecbb79aa412e9a169aa6e9d8}
+
+\item 
+\hypertarget{classMakoCamera_aafb0967603cd24dc39f58ef0aafdfff5}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aafb0967603cd24dc39f58ef0aafdfff5}
+
+\item 
+\hypertarget{classMakoCamera_a44cb9924db72b20afabe0b5687bb1e47}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Overlap} (Trigger\-Overlap\-Enum \&value)}\label{classMakoCamera_a44cb9924db72b20afabe0b5687bb1e47}
+
+\item 
+\hypertarget{classMakoCamera_a6ff7f9fa65fa1b99c896b6f1d1893d63}{Vmb\-Error\-Type {\bfseries Set\-Trigger\-Overlap} (Trigger\-Overlap\-Enum value)}\label{classMakoCamera_a6ff7f9fa65fa1b99c896b6f1d1893d63}
+
+\item 
+\hypertarget{classMakoCamera_a1938fbf11c7db57c3a38ba1ba6026a13}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Overlap\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a1938fbf11c7db57c3a38ba1ba6026a13}
+
+\item 
+\hypertarget{classMakoCamera_a9b28f29ede8c101dcbeac47fa97e84a6}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Selector} (Trigger\-Selector\-Enum \&value)}\label{classMakoCamera_a9b28f29ede8c101dcbeac47fa97e84a6}
+
+\item 
+\hypertarget{classMakoCamera_a7ef83bba07dd7cc54ac3aefa10e6057f}{Vmb\-Error\-Type {\bfseries Set\-Trigger\-Selector} (Trigger\-Selector\-Enum value)}\label{classMakoCamera_a7ef83bba07dd7cc54ac3aefa10e6057f}
+
+\item 
+\hypertarget{classMakoCamera_a4e1054b5439ec1efc3c41efd6ba0decc}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4e1054b5439ec1efc3c41efd6ba0decc}
+
+\item 
+\hypertarget{classMakoCamera_ac06c97158c82839f37ae8deda14c87bd}{Vmb\-Error\-Type {\bfseries Trigger\-Software} ()}\label{classMakoCamera_ac06c97158c82839f37ae8deda14c87bd}
+
+\item 
+\hypertarget{classMakoCamera_a174f34f7f5e13fd362a532d13959c4f4}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Software\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a174f34f7f5e13fd362a532d13959c4f4}
+
+\item 
+\hypertarget{classMakoCamera_a53f3fedf79cca3dcd5706463c637cf86}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Source} (Trigger\-Source\-Enum \&value)}\label{classMakoCamera_a53f3fedf79cca3dcd5706463c637cf86}
+
+\item 
+\hypertarget{classMakoCamera_a6928f29143def0eea99e095d2e320b91}{Vmb\-Error\-Type {\bfseries Set\-Trigger\-Source} (Trigger\-Source\-Enum value)}\label{classMakoCamera_a6928f29143def0eea99e095d2e320b91}
+
+\item 
+\hypertarget{classMakoCamera_a38e72144e2a96aa3be0c19ad5fecaea9}{Vmb\-Error\-Type {\bfseries Get\-Trigger\-Source\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a38e72144e2a96aa3be0c19ad5fecaea9}
+
+\item 
+\hypertarget{classMakoCamera_a4ad74d73c7adfac7a40677ccc9c41a8a}{Vmb\-Error\-Type {\bfseries Get\-Gamma} (double \&value)}\label{classMakoCamera_a4ad74d73c7adfac7a40677ccc9c41a8a}
+
+\item 
+\hypertarget{classMakoCamera_a0c180ad34814b5189c86dd6057e0f96e}{Vmb\-Error\-Type {\bfseries Set\-Gamma} (double value)}\label{classMakoCamera_a0c180ad34814b5189c86dd6057e0f96e}
+
+\item 
+\hypertarget{classMakoCamera_a02168d9b2b86993e0ac6f6a1e298f084}{Vmb\-Error\-Type {\bfseries Get\-Gamma\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a02168d9b2b86993e0ac6f6a1e298f084}
+
+\item 
+\hypertarget{classMakoCamera_ae7e519798e2754a949810acda22ffcd6}{Vmb\-Error\-Type {\bfseries Get\-Hue} (double \&value)}\label{classMakoCamera_ae7e519798e2754a949810acda22ffcd6}
+
+\item 
+\hypertarget{classMakoCamera_af106faa285fb041a7c913c2d51dff3fa}{Vmb\-Error\-Type {\bfseries Set\-Hue} (double value)}\label{classMakoCamera_af106faa285fb041a7c913c2d51dff3fa}
+
+\item 
+\hypertarget{classMakoCamera_aedf847c7dc0caf6e3ef5253dd8d9bc82}{Vmb\-Error\-Type {\bfseries Get\-Hue\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aedf847c7dc0caf6e3ef5253dd8d9bc82}
+
+\item 
+\hypertarget{classMakoCamera_a56d70947470fc0dbb6f38e77a9b498af}{Vmb\-Error\-Type {\bfseries Get\-Saturation} (double \&value)}\label{classMakoCamera_a56d70947470fc0dbb6f38e77a9b498af}
+
+\item 
+\hypertarget{classMakoCamera_ade4d15c0e8afe50ca2ff03948ee85406}{Vmb\-Error\-Type {\bfseries Set\-Saturation} (double value)}\label{classMakoCamera_ade4d15c0e8afe50ca2ff03948ee85406}
+
+\item 
+\hypertarget{classMakoCamera_ab7862f08f403de9b6bcccc13bd7b18c1}{Vmb\-Error\-Type {\bfseries Get\-Saturation\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab7862f08f403de9b6bcccc13bd7b18c1}
+
+\item 
+\hypertarget{classMakoCamera_a043b7e00b8a873d29a3efac913e33669}{Vmb\-Error\-Type {\bfseries Get\-Black\-Level} (double \&value)}\label{classMakoCamera_a043b7e00b8a873d29a3efac913e33669}
+
+\item 
+\hypertarget{classMakoCamera_ab92c22343a039adc77488c2078fb168b}{Vmb\-Error\-Type {\bfseries Set\-Black\-Level} (double value)}\label{classMakoCamera_ab92c22343a039adc77488c2078fb168b}
+
+\item 
+\hypertarget{classMakoCamera_a5c15ec6a871846641db5a88e1bbff9a0}{Vmb\-Error\-Type {\bfseries Get\-Black\-Level\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5c15ec6a871846641db5a88e1bbff9a0}
+
+\item 
+\hypertarget{classMakoCamera_a38d78f5243087c44d8664b9f4e516374}{Vmb\-Error\-Type {\bfseries Get\-Black\-Level\-Selector} (Black\-Level\-Selector\-Enum \&value)}\label{classMakoCamera_a38d78f5243087c44d8664b9f4e516374}
+
+\item 
+\hypertarget{classMakoCamera_a96c91d0365ecdad2c5c110a577f8c27d}{Vmb\-Error\-Type {\bfseries Set\-Black\-Level\-Selector} (Black\-Level\-Selector\-Enum value)}\label{classMakoCamera_a96c91d0365ecdad2c5c110a577f8c27d}
+
+\item 
+\hypertarget{classMakoCamera_ab54029fcf0e4d37d2309d0abcf641200}{Vmb\-Error\-Type {\bfseries Get\-Black\-Level\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab54029fcf0e4d37d2309d0abcf641200}
+
+\item 
+\hypertarget{classMakoCamera_a0f1bddd560322a313b32f22439b481f3}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Mode} (Color\-Transformation\-Mode\-Enum \&value)}\label{classMakoCamera_a0f1bddd560322a313b32f22439b481f3}
+
+\item 
+\hypertarget{classMakoCamera_a256e96c6ae688505bac5cdef7f60fb13}{Vmb\-Error\-Type {\bfseries Set\-Color\-Transformation\-Mode} (Color\-Transformation\-Mode\-Enum value)}\label{classMakoCamera_a256e96c6ae688505bac5cdef7f60fb13}
+
+\item 
+\hypertarget{classMakoCamera_a9dca1a28fe49c28b78586e4789df41b9}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a9dca1a28fe49c28b78586e4789df41b9}
+
+\item 
+\hypertarget{classMakoCamera_aaa6b17efc5f23675cdda430786712aca}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Selector} (Color\-Transformation\-Selector\-Enum \&value)}\label{classMakoCamera_aaa6b17efc5f23675cdda430786712aca}
+
+\item 
+\hypertarget{classMakoCamera_ad9017389abab1507ced4b125ef2db50a}{Vmb\-Error\-Type {\bfseries Set\-Color\-Transformation\-Selector} (Color\-Transformation\-Selector\-Enum value)}\label{classMakoCamera_ad9017389abab1507ced4b125ef2db50a}
+
+\item 
+\hypertarget{classMakoCamera_a750cb82a40a32ef8d55d19cd3d24314a}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a750cb82a40a32ef8d55d19cd3d24314a}
+
+\item 
+\hypertarget{classMakoCamera_a6dfec064c92c19e3a3c1eb19b8a928f5}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Value} (double \&value)}\label{classMakoCamera_a6dfec064c92c19e3a3c1eb19b8a928f5}
+
+\item 
+\hypertarget{classMakoCamera_adb0b086553386b39c9a7161f11be23d2}{Vmb\-Error\-Type {\bfseries Set\-Color\-Transformation\-Value} (double value)}\label{classMakoCamera_adb0b086553386b39c9a7161f11be23d2}
+
+\item 
+\hypertarget{classMakoCamera_a5ef4959a0ad305b71956e0102b0913e7}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Value\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5ef4959a0ad305b71956e0102b0913e7}
+
+\item 
+\hypertarget{classMakoCamera_a8ff0d8c25fac8f6a2b0f8a7195fe31ce}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Value\-Selector} (Color\-Transformation\-Value\-Selector\-Enum \&value)}\label{classMakoCamera_a8ff0d8c25fac8f6a2b0f8a7195fe31ce}
+
+\item 
+\hypertarget{classMakoCamera_a057cc2e37f771203b832d33c467298f8}{Vmb\-Error\-Type {\bfseries Set\-Color\-Transformation\-Value\-Selector} (Color\-Transformation\-Value\-Selector\-Enum value)}\label{classMakoCamera_a057cc2e37f771203b832d33c467298f8}
+
+\item 
+\hypertarget{classMakoCamera_aaf68882be0a05d3c7aae96075462b754}{Vmb\-Error\-Type {\bfseries Get\-Color\-Transformation\-Value\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aaf68882be0a05d3c7aae96075462b754}
+
+\item 
+\hypertarget{classMakoCamera_a22be4ace18cd7004c801bc825ad77f8a}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Bottom} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a22be4ace18cd7004c801bc825ad77f8a}
+
+\item 
+\hypertarget{classMakoCamera_a0ffaa8ec9a8b525b220ea3dfc6131330}{Vmb\-Error\-Type {\bfseries Set\-D\-S\-P\-Subregion\-Bottom} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a0ffaa8ec9a8b525b220ea3dfc6131330}
+
+\item 
+\hypertarget{classMakoCamera_ad186316f7b2cfa8509e00584e37a430e}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Bottom\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ad186316f7b2cfa8509e00584e37a430e}
+
+\item 
+\hypertarget{classMakoCamera_a8d2015e5cb0e15e488549993e6722758}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Left} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8d2015e5cb0e15e488549993e6722758}
+
+\item 
+\hypertarget{classMakoCamera_a6733a0d7a0feaa2c6a1a0bd4ad7977eb}{Vmb\-Error\-Type {\bfseries Set\-D\-S\-P\-Subregion\-Left} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a6733a0d7a0feaa2c6a1a0bd4ad7977eb}
+
+\item 
+\hypertarget{classMakoCamera_ae365be3e77907b39788d75a36a13c83a}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Left\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae365be3e77907b39788d75a36a13c83a}
+
+\item 
+\hypertarget{classMakoCamera_a08046bf9fd2000d7466d42b9795518db}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Right} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a08046bf9fd2000d7466d42b9795518db}
+
+\item 
+\hypertarget{classMakoCamera_a157ed0e11f654a3aa5b319d905370ef4}{Vmb\-Error\-Type {\bfseries Set\-D\-S\-P\-Subregion\-Right} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a157ed0e11f654a3aa5b319d905370ef4}
+
+\item 
+\hypertarget{classMakoCamera_abb44a12d4259de806e41d55ae44f3718}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Right\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abb44a12d4259de806e41d55ae44f3718}
+
+\item 
+\hypertarget{classMakoCamera_ad9eb5f084ee71d6345db15488a280552}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Top} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad9eb5f084ee71d6345db15488a280552}
+
+\item 
+\hypertarget{classMakoCamera_ae4d42a938c096376fb042cbc83a4fcda}{Vmb\-Error\-Type {\bfseries Set\-D\-S\-P\-Subregion\-Top} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ae4d42a938c096376fb042cbc83a4fcda}
+
+\item 
+\hypertarget{classMakoCamera_a738bc2f83785ab912b947464c9d006da}{Vmb\-Error\-Type {\bfseries Get\-D\-S\-P\-Subregion\-Top\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a738bc2f83785ab912b947464c9d006da}
+
+\item 
+\hypertarget{classMakoCamera_a7de69325c9a7045dc3667e02a5eb49ab}{Vmb\-Error\-Type {\bfseries Get\-Defect\-Mask\-Column\-Enable} (Defect\-Mask\-Column\-Enable\-Enum \&value)}\label{classMakoCamera_a7de69325c9a7045dc3667e02a5eb49ab}
+
+\item 
+\hypertarget{classMakoCamera_ad4762a4dd50db285b2b20b965e6399d7}{Vmb\-Error\-Type {\bfseries Set\-Defect\-Mask\-Column\-Enable} (Defect\-Mask\-Column\-Enable\-Enum value)}\label{classMakoCamera_ad4762a4dd50db285b2b20b965e6399d7}
+
+\item 
+\hypertarget{classMakoCamera_a2b2947f77de4806f4a6c6b45ea7340a2}{Vmb\-Error\-Type {\bfseries Get\-Defect\-Mask\-Column\-Enable\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a2b2947f77de4806f4a6c6b45ea7340a2}
+
+\item 
+\hypertarget{classMakoCamera_ab6f4baf030e4c2e3dd6f69293064d663}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto} (Exposure\-Auto\-Enum \&value)}\label{classMakoCamera_ab6f4baf030e4c2e3dd6f69293064d663}
+
+\item 
+\hypertarget{classMakoCamera_aff9d9569e27a02fd01384e765011e96e}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto} (Exposure\-Auto\-Enum value)}\label{classMakoCamera_aff9d9569e27a02fd01384e765011e96e}
+
+\item 
+\hypertarget{classMakoCamera_a20b1adb79283f26eb124ed1fe41fb420}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a20b1adb79283f26eb124ed1fe41fb420}
+
+\item 
+\hypertarget{classMakoCamera_a32212c10c38add68a253deac2e052ed5}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Mode} (Exposure\-Mode\-Enum \&value)}\label{classMakoCamera_a32212c10c38add68a253deac2e052ed5}
+
+\item 
+\hypertarget{classMakoCamera_a77eebc121e7be716ac24492d0eb0e1d4}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Mode} (Exposure\-Mode\-Enum value)}\label{classMakoCamera_a77eebc121e7be716ac24492d0eb0e1d4}
+
+\item 
+\hypertarget{classMakoCamera_a6ae3900b37a91a911a4494e9ea37045f}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a6ae3900b37a91a911a4494e9ea37045f}
+
+\item 
+\hypertarget{classMakoCamera_a6fbe9e8c6b884f2dfaefe4118d15ac8b}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Time\-Abs} (double \&value)}\label{classMakoCamera_a6fbe9e8c6b884f2dfaefe4118d15ac8b}
+
+\item 
+\hypertarget{classMakoCamera_ae63245643584cb86ea51ecfe1da68779}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Time\-Abs} (double value)}\label{classMakoCamera_ae63245643584cb86ea51ecfe1da68779}
+
+\item 
+\hypertarget{classMakoCamera_ab815546c3e113456a88c8daffbc4d69f}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Time\-Abs\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab815546c3e113456a88c8daffbc4d69f}
+
+\item 
+\hypertarget{classMakoCamera_af0f253cba2a87c81563dd54ba7b91c1b}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Adjust\-Tol} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_af0f253cba2a87c81563dd54ba7b91c1b}
+
+\item 
+\hypertarget{classMakoCamera_a662a32c8804160451e12d18a6f62c020}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Adjust\-Tol} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a662a32c8804160451e12d18a6f62c020}
+
+\item 
+\hypertarget{classMakoCamera_a7adef4006a3852a96fc65b8e37a8e255}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Adjust\-Tol\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a7adef4006a3852a96fc65b8e37a8e255}
+
+\item 
+\hypertarget{classMakoCamera_aaf4f82829831e96a3b07707c3c55daae}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Alg} (Exposure\-Auto\-Alg\-Enum \&value)}\label{classMakoCamera_aaf4f82829831e96a3b07707c3c55daae}
+
+\item 
+\hypertarget{classMakoCamera_a0ef27580a897c7a5f070e98f83ccc5fd}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Alg} (Exposure\-Auto\-Alg\-Enum value)}\label{classMakoCamera_a0ef27580a897c7a5f070e98f83ccc5fd}
+
+\item 
+\hypertarget{classMakoCamera_a9eec1c8e5f93dcbeb1e8ad3736d54aae}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Alg\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a9eec1c8e5f93dcbeb1e8ad3736d54aae}
+
+\item 
+\hypertarget{classMakoCamera_a53e9ba5ba0b9e8169ac125edb903e077}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Max} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a53e9ba5ba0b9e8169ac125edb903e077}
+
+\item 
+\hypertarget{classMakoCamera_a92ecf238e705a0d7aef798febcfba0f9}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Max} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a92ecf238e705a0d7aef798febcfba0f9}
+
+\item 
+\hypertarget{classMakoCamera_a1d56cde61a5b3674e7f4c324a33b33d6}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Max\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a1d56cde61a5b3674e7f4c324a33b33d6}
+
+\item 
+\hypertarget{classMakoCamera_a357d35f74535e4d19f44e129eade193a}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Min} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a357d35f74535e4d19f44e129eade193a}
+
+\item 
+\hypertarget{classMakoCamera_a93fc309ed92139371e8fb0fa829debcf}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Min} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a93fc309ed92139371e8fb0fa829debcf}
+
+\item 
+\hypertarget{classMakoCamera_ad2560b8358b6f34d0a38335c747f35ab}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Min\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ad2560b8358b6f34d0a38335c747f35ab}
+
+\item 
+\hypertarget{classMakoCamera_af9770a46c40f9f13d9a8e406b6dc11b8}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Outliers} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_af9770a46c40f9f13d9a8e406b6dc11b8}
+
+\item 
+\hypertarget{classMakoCamera_a9a2a079179b0a0ad1c1a295e65d3c46a}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Outliers} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a9a2a079179b0a0ad1c1a295e65d3c46a}
+
+\item 
+\hypertarget{classMakoCamera_a44081c12088a441a2ea2d9f1e13b9db5}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Outliers\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a44081c12088a441a2ea2d9f1e13b9db5}
+
+\item 
+\hypertarget{classMakoCamera_a552caa145e27932f98347c874f2b0527}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Rate} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a552caa145e27932f98347c874f2b0527}
+
+\item 
+\hypertarget{classMakoCamera_ae789c94da4567ed53ae2af52fa38b6b3}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Rate} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ae789c94da4567ed53ae2af52fa38b6b3}
+
+\item 
+\hypertarget{classMakoCamera_a0b91e3078164c723c6f0fced97daac1c}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Rate\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0b91e3078164c723c6f0fced97daac1c}
+
+\item 
+\hypertarget{classMakoCamera_a5cf461bcfd3dd2aacf6469f3df3c9c26}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Target} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a5cf461bcfd3dd2aacf6469f3df3c9c26}
+
+\item 
+\hypertarget{classMakoCamera_ae18419f022c8d86e2845e576abce27f5}{Vmb\-Error\-Type {\bfseries Set\-Exposure\-Auto\-Target} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ae18419f022c8d86e2845e576abce27f5}
+
+\item 
+\hypertarget{classMakoCamera_a09326ed9f55a40121b36a21ce82bc5eb}{Vmb\-Error\-Type {\bfseries Get\-Exposure\-Auto\-Target\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a09326ed9f55a40121b36a21ce82bc5eb}
+
+\item 
+\hypertarget{classMakoCamera_adb509477f8c9e6cca9aa98a636886b04}{Vmb\-Error\-Type {\bfseries Get\-Gain} (double \&value)}\label{classMakoCamera_adb509477f8c9e6cca9aa98a636886b04}
+
+\item 
+\hypertarget{classMakoCamera_a6431932153d74bd966eae0af2c30e244}{Vmb\-Error\-Type {\bfseries Set\-Gain} (double value)}\label{classMakoCamera_a6431932153d74bd966eae0af2c30e244}
+
+\item 
+\hypertarget{classMakoCamera_a38887bc546e460f2b459171fe3609dd2}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a38887bc546e460f2b459171fe3609dd2}
+
+\item 
+\hypertarget{classMakoCamera_aee1d2b064dc8b841e61f2cf0f250aa1b}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto} (Gain\-Auto\-Enum \&value)}\label{classMakoCamera_aee1d2b064dc8b841e61f2cf0f250aa1b}
+
+\item 
+\hypertarget{classMakoCamera_a0b2246120ec7715c41e887bcee1c69e4}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto} (Gain\-Auto\-Enum value)}\label{classMakoCamera_a0b2246120ec7715c41e887bcee1c69e4}
+
+\item 
+\hypertarget{classMakoCamera_a313e3e3c500fcef17c7041b1923eb98d}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a313e3e3c500fcef17c7041b1923eb98d}
+
+\item 
+\hypertarget{classMakoCamera_a854679fd1393371872095d649f308dec}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Selector} (Gain\-Selector\-Enum \&value)}\label{classMakoCamera_a854679fd1393371872095d649f308dec}
+
+\item 
+\hypertarget{classMakoCamera_ac5caaa8c8730bed58e269bb94728fd36}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Selector} (Gain\-Selector\-Enum value)}\label{classMakoCamera_ac5caaa8c8730bed58e269bb94728fd36}
+
+\item 
+\hypertarget{classMakoCamera_abddbcee0ea435e390134b8bf60d52931}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abddbcee0ea435e390134b8bf60d52931}
+
+\item 
+\hypertarget{classMakoCamera_a96b1882f2993ec5a1a130336ce376d9d}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Adjust\-Tol} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a96b1882f2993ec5a1a130336ce376d9d}
+
+\item 
+\hypertarget{classMakoCamera_a3300008b8d363ce3660bf54dee4b9377}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto\-Adjust\-Tol} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a3300008b8d363ce3660bf54dee4b9377}
+
+\item 
+\hypertarget{classMakoCamera_a0202ae5ffaed6b9635cf894d19688a17}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Adjust\-Tol\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0202ae5ffaed6b9635cf894d19688a17}
+
+\item 
+\hypertarget{classMakoCamera_a7076deeeb52cd7806e101e295fc38a97}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Max} (double \&value)}\label{classMakoCamera_a7076deeeb52cd7806e101e295fc38a97}
+
+\item 
+\hypertarget{classMakoCamera_aa01232d49f56a19f4314a1325021ce88}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto\-Max} (double value)}\label{classMakoCamera_aa01232d49f56a19f4314a1325021ce88}
+
+\item 
+\hypertarget{classMakoCamera_ae2a96dfceb966682c8f725baefd0d22d}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Max\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae2a96dfceb966682c8f725baefd0d22d}
+
+\item 
+\hypertarget{classMakoCamera_a8f8ca7a55492ddfa597541d375f91615}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Min} (double \&value)}\label{classMakoCamera_a8f8ca7a55492ddfa597541d375f91615}
+
+\item 
+\hypertarget{classMakoCamera_a3866f6288f86fa62d6f35fec26ad35cb}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto\-Min} (double value)}\label{classMakoCamera_a3866f6288f86fa62d6f35fec26ad35cb}
+
+\item 
+\hypertarget{classMakoCamera_af159f8f9a63a4b750c900126bf43a350}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Min\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af159f8f9a63a4b750c900126bf43a350}
+
+\item 
+\hypertarget{classMakoCamera_ab28104564d69ac6891e5a960082f69ad}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Outliers} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ab28104564d69ac6891e5a960082f69ad}
+
+\item 
+\hypertarget{classMakoCamera_a7467b5cb2a3dd884f1ac171b52b9e752}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto\-Outliers} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a7467b5cb2a3dd884f1ac171b52b9e752}
+
+\item 
+\hypertarget{classMakoCamera_a9cd1bd9aa0896ee340d17f20c0f3e545}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Outliers\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a9cd1bd9aa0896ee340d17f20c0f3e545}
+
+\item 
+\hypertarget{classMakoCamera_ac8a0b6afed75deb41a9d9fb0eaeac415}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Rate} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ac8a0b6afed75deb41a9d9fb0eaeac415}
+
+\item 
+\hypertarget{classMakoCamera_a06564c8a747b4d59cac3192f4ec16bec}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto\-Rate} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a06564c8a747b4d59cac3192f4ec16bec}
+
+\item 
+\hypertarget{classMakoCamera_aac5b0e7bed6098320a380428b35a9c41}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Rate\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aac5b0e7bed6098320a380428b35a9c41}
+
+\item 
+\hypertarget{classMakoCamera_adf1ebe7270533798052bf1f35817ef8d}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Target} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_adf1ebe7270533798052bf1f35817ef8d}
+
+\item 
+\hypertarget{classMakoCamera_a48ff7e8dc36e71a21d3ee6db3cc3e601}{Vmb\-Error\-Type {\bfseries Set\-Gain\-Auto\-Target} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a48ff7e8dc36e71a21d3ee6db3cc3e601}
+
+\item 
+\hypertarget{classMakoCamera_a760fc9a1df53c5048c807a566a5809ef}{Vmb\-Error\-Type {\bfseries Get\-Gain\-Auto\-Target\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a760fc9a1df53c5048c807a566a5809ef}
+
+\item 
+\hypertarget{classMakoCamera_addb6d75a9cce5d1fe06b0aafa1caad57}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Enable} (bool \&value)}\label{classMakoCamera_addb6d75a9cce5d1fe06b0aafa1caad57}
+
+\item 
+\hypertarget{classMakoCamera_a49232a5592c201bd88c3bdce538ef21f}{Vmb\-Error\-Type {\bfseries Set\-L\-U\-T\-Enable} (bool value)}\label{classMakoCamera_a49232a5592c201bd88c3bdce538ef21f}
+
+\item 
+\hypertarget{classMakoCamera_af007d5e0a8f3b669d45a2b708891dae7}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Enable\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af007d5e0a8f3b669d45a2b708891dae7}
+
+\item 
+\hypertarget{classMakoCamera_a47cf280ff46f894cfce4d829ea79c20c}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Index} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a47cf280ff46f894cfce4d829ea79c20c}
+
+\item 
+\hypertarget{classMakoCamera_a8ac911eae028476e4a793d7c7dde8149}{Vmb\-Error\-Type {\bfseries Set\-L\-U\-T\-Index} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a8ac911eae028476e4a793d7c7dde8149}
+
+\item 
+\hypertarget{classMakoCamera_ab1c6dad0c5b3b1069da59b0be3c2c1e9}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Index\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab1c6dad0c5b3b1069da59b0be3c2c1e9}
+
+\item 
+\hypertarget{classMakoCamera_a322346407bfd69c21fce31d6f8db9c8e}{Vmb\-Error\-Type {\bfseries L\-U\-T\-Load\-All} ()}\label{classMakoCamera_a322346407bfd69c21fce31d6f8db9c8e}
+
+\item 
+\hypertarget{classMakoCamera_a4d4ceebe410ba05a04f1a81e89b4c65d}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Load\-All\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4d4ceebe410ba05a04f1a81e89b4c65d}
+
+\item 
+\hypertarget{classMakoCamera_a556d75ed82c3ac68b14796028b0b26c7}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Mode} (L\-U\-T\-Mode\-Enum \&value)}\label{classMakoCamera_a556d75ed82c3ac68b14796028b0b26c7}
+
+\item 
+\hypertarget{classMakoCamera_af56e341caea80c9983380e43c055f37a}{Vmb\-Error\-Type {\bfseries Set\-L\-U\-T\-Mode} (L\-U\-T\-Mode\-Enum value)}\label{classMakoCamera_af56e341caea80c9983380e43c055f37a}
+
+\item 
+\hypertarget{classMakoCamera_af43d936f5f072963d0ce3363f25c93b5}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af43d936f5f072963d0ce3363f25c93b5}
+
+\item 
+\hypertarget{classMakoCamera_a3394c9ae95f1d001a24458bcc0a11003}{Vmb\-Error\-Type {\bfseries L\-U\-T\-Save\-All} ()}\label{classMakoCamera_a3394c9ae95f1d001a24458bcc0a11003}
+
+\item 
+\hypertarget{classMakoCamera_a76eefafae33d3c9aadfbc63be307cab3}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Save\-All\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a76eefafae33d3c9aadfbc63be307cab3}
+
+\item 
+\hypertarget{classMakoCamera_a3ad68096e1894a97a96154014a1a6d35}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Selector} (L\-U\-T\-Selector\-Enum \&value)}\label{classMakoCamera_a3ad68096e1894a97a96154014a1a6d35}
+
+\item 
+\hypertarget{classMakoCamera_ad36b9ba352ea566eb780786e31355ccb}{Vmb\-Error\-Type {\bfseries Set\-L\-U\-T\-Selector} (L\-U\-T\-Selector\-Enum value)}\label{classMakoCamera_ad36b9ba352ea566eb780786e31355ccb}
+
+\item 
+\hypertarget{classMakoCamera_a579e427cf68e08357f39e33386c68e53}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a579e427cf68e08357f39e33386c68e53}
+
+\item 
+\hypertarget{classMakoCamera_ad28aa79e866a18bd4f4b22421ddca155}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Value} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad28aa79e866a18bd4f4b22421ddca155}
+
+\item 
+\hypertarget{classMakoCamera_a03a6a8aa08e19914ecd427fa399c0a7e}{Vmb\-Error\-Type {\bfseries Set\-L\-U\-T\-Value} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a03a6a8aa08e19914ecd427fa399c0a7e}
+
+\item 
+\hypertarget{classMakoCamera_a90d21403e8db2ab5c76c6a797f9d71ad}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Value\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a90d21403e8db2ab5c76c6a797f9d71ad}
+
+\item 
+\hypertarget{classMakoCamera_ac2c355ab0014f20ed83e0fae52cd6871}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Address} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ac2c355ab0014f20ed83e0fae52cd6871}
+
+\item 
+\hypertarget{classMakoCamera_aab95751c80098e235a6a1955c78116b2}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Address\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aab95751c80098e235a6a1955c78116b2}
+
+\item 
+\hypertarget{classMakoCamera_ae9b8a1cd7582db0ffc5c3bfedcd8fd9c}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Bit\-Depth\-In} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ae9b8a1cd7582db0ffc5c3bfedcd8fd9c}
+
+\item 
+\hypertarget{classMakoCamera_a5633f64561f35c2192bd6b0064b20499}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Bit\-Depth\-In\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5633f64561f35c2192bd6b0064b20499}
+
+\item 
+\hypertarget{classMakoCamera_abf0f072dd95848fa590f8add4b552251}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Bit\-Depth\-Out} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_abf0f072dd95848fa590f8add4b552251}
+
+\item 
+\hypertarget{classMakoCamera_a1fbcd446d3ce9a67a4eb3c19431ef132}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Bit\-Depth\-Out\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a1fbcd446d3ce9a67a4eb3c19431ef132}
+
+\item 
+\hypertarget{classMakoCamera_a8eaf455b414718d68ead9f666cf6ef40}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Size\-Bytes} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8eaf455b414718d68ead9f666cf6ef40}
+
+\item 
+\hypertarget{classMakoCamera_af386f677389120e7be5c98100ff98e96}{Vmb\-Error\-Type {\bfseries Get\-L\-U\-T\-Size\-Bytes\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af386f677389120e7be5c98100ff98e96}
+
+\item 
+\hypertarget{classMakoCamera_ae70eed18ae8e9082f74ff52b7ff20424}{Vmb\-Error\-Type {\bfseries Get\-Balance\-Ratio\-Abs} (double \&value)}\label{classMakoCamera_ae70eed18ae8e9082f74ff52b7ff20424}
+
+\item 
+\hypertarget{classMakoCamera_acace669406bccb4dae1d3347445b13af}{Vmb\-Error\-Type {\bfseries Set\-Balance\-Ratio\-Abs} (double value)}\label{classMakoCamera_acace669406bccb4dae1d3347445b13af}
+
+\item 
+\hypertarget{classMakoCamera_af10d6f19b276bd766a6609e59579706f}{Vmb\-Error\-Type {\bfseries Get\-Balance\-Ratio\-Abs\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af10d6f19b276bd766a6609e59579706f}
+
+\item 
+\hypertarget{classMakoCamera_ab3f53c5cb9d54558f6ace088ad185716}{Vmb\-Error\-Type {\bfseries Get\-Balance\-Ratio\-Selector} (Balance\-Ratio\-Selector\-Enum \&value)}\label{classMakoCamera_ab3f53c5cb9d54558f6ace088ad185716}
+
+\item 
+\hypertarget{classMakoCamera_adb5bde628b4e570e74d79d7cfd161291}{Vmb\-Error\-Type {\bfseries Set\-Balance\-Ratio\-Selector} (Balance\-Ratio\-Selector\-Enum value)}\label{classMakoCamera_adb5bde628b4e570e74d79d7cfd161291}
+
+\item 
+\hypertarget{classMakoCamera_aa54bcf730a9db6d7697137a8d5b49caa}{Vmb\-Error\-Type {\bfseries Get\-Balance\-Ratio\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aa54bcf730a9db6d7697137a8d5b49caa}
+
+\item 
+\hypertarget{classMakoCamera_a6aa0f436633043266be2eb9a8802410e}{Vmb\-Error\-Type {\bfseries Get\-Balance\-White\-Auto} (Balance\-White\-Auto\-Enum \&value)}\label{classMakoCamera_a6aa0f436633043266be2eb9a8802410e}
+
+\item 
+\hypertarget{classMakoCamera_a41532cf7547e02f184577531bd0ef70f}{Vmb\-Error\-Type {\bfseries Set\-Balance\-White\-Auto} (Balance\-White\-Auto\-Enum value)}\label{classMakoCamera_a41532cf7547e02f184577531bd0ef70f}
+
+\item 
+\hypertarget{classMakoCamera_adcf6fd8783f51a4dbb7749616e90a9ce}{Vmb\-Error\-Type {\bfseries Get\-Balance\-White\-Auto\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_adcf6fd8783f51a4dbb7749616e90a9ce}
+
+\item 
+\hypertarget{classMakoCamera_a732754acc7e17f9ba8fae3c3f4d264ef}{Vmb\-Error\-Type {\bfseries Get\-Balance\-White\-Auto\-Adjust\-Tol} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a732754acc7e17f9ba8fae3c3f4d264ef}
+
+\item 
+\hypertarget{classMakoCamera_a4f80fd3210a4659902d3d159fc174563}{Vmb\-Error\-Type {\bfseries Set\-Balance\-White\-Auto\-Adjust\-Tol} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a4f80fd3210a4659902d3d159fc174563}
+
+\item 
+\hypertarget{classMakoCamera_aa852a35ea844d38b77ce4e8f1fbe74de}{Vmb\-Error\-Type {\bfseries Get\-Balance\-White\-Auto\-Adjust\-Tol\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aa852a35ea844d38b77ce4e8f1fbe74de}
+
+\item 
+\hypertarget{classMakoCamera_ac4d858e1fc6bd4a1a4f96f51fa004ee5}{Vmb\-Error\-Type {\bfseries Get\-Balance\-White\-Auto\-Rate} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ac4d858e1fc6bd4a1a4f96f51fa004ee5}
+
+\item 
+\hypertarget{classMakoCamera_a0d52593c4b146e73b437f3cb22535bf0}{Vmb\-Error\-Type {\bfseries Set\-Balance\-White\-Auto\-Rate} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a0d52593c4b146e73b437f3cb22535bf0}
+
+\item 
+\hypertarget{classMakoCamera_a6f1bcee22a716067338e6f4e19fa2c5c}{Vmb\-Error\-Type {\bfseries Get\-Balance\-White\-Auto\-Rate\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a6f1bcee22a716067338e6f4e19fa2c5c}
+
+\item 
+\hypertarget{classMakoCamera_a24e5dca7c7a8cf1701ace0496a3614f8}{Vmb\-Error\-Type {\bfseries Get\-Device\-Temperature} (double \&value)}\label{classMakoCamera_a24e5dca7c7a8cf1701ace0496a3614f8}
+
+\item 
+\hypertarget{classMakoCamera_ac8bc4ec4ea9c7b43d22100d87e4169e4}{Vmb\-Error\-Type {\bfseries Get\-Device\-Temperature\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ac8bc4ec4ea9c7b43d22100d87e4169e4}
+
+\item 
+\hypertarget{classMakoCamera_a2dc29bc332961276aacd84f6ab989156}{Vmb\-Error\-Type {\bfseries Get\-Device\-Temperature\-Selector} (Device\-Temperature\-Selector\-Enum \&value)}\label{classMakoCamera_a2dc29bc332961276aacd84f6ab989156}
+
+\item 
+\hypertarget{classMakoCamera_a378595147ce175bd362dfa5963eef831}{Vmb\-Error\-Type {\bfseries Set\-Device\-Temperature\-Selector} (Device\-Temperature\-Selector\-Enum value)}\label{classMakoCamera_a378595147ce175bd362dfa5963eef831}
+
+\item 
+\hypertarget{classMakoCamera_a8f7bf02b0fa90a4b218de36b963dd674}{Vmb\-Error\-Type {\bfseries Get\-Device\-Temperature\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8f7bf02b0fa90a4b218de36b963dd674}
+
+\item 
+\hypertarget{classMakoCamera_acbf18f78af9853d10ae0848dbff2c531}{Vmb\-Error\-Type {\bfseries Get\-Event\-Notification} (Event\-Notification\-Enum \&value)}\label{classMakoCamera_acbf18f78af9853d10ae0848dbff2c531}
+
+\item 
+\hypertarget{classMakoCamera_a010f064fc2f3a55ec458aca11ddfabd6}{Vmb\-Error\-Type {\bfseries Set\-Event\-Notification} (Event\-Notification\-Enum value)}\label{classMakoCamera_a010f064fc2f3a55ec458aca11ddfabd6}
+
+\item 
+\hypertarget{classMakoCamera_a3eec93d6de61dc0eab4b88c3a90c075b}{Vmb\-Error\-Type {\bfseries Get\-Event\-Notification\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a3eec93d6de61dc0eab4b88c3a90c075b}
+
+\item 
+\hypertarget{classMakoCamera_a7ea095778e1f4a1771ebd17de176f725}{Vmb\-Error\-Type {\bfseries Get\-Event\-Selector} (Event\-Selector\-Enum \&value)}\label{classMakoCamera_a7ea095778e1f4a1771ebd17de176f725}
+
+\item 
+\hypertarget{classMakoCamera_adf9fd9ac06de25867dbcbd944ae26146}{Vmb\-Error\-Type {\bfseries Set\-Event\-Selector} (Event\-Selector\-Enum value)}\label{classMakoCamera_adf9fd9ac06de25867dbcbd944ae26146}
+
+\item 
+\hypertarget{classMakoCamera_ac3cc6ed307fdf0d282285fb0bed893fe}{Vmb\-Error\-Type {\bfseries Get\-Event\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ac3cc6ed307fdf0d282285fb0bed893fe}
+
+\item 
+\hypertarget{classMakoCamera_a136defe3e7e2dac2832977774260c018}{Vmb\-Error\-Type {\bfseries Get\-Events\-Enable1} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a136defe3e7e2dac2832977774260c018}
+
+\item 
+\hypertarget{classMakoCamera_a01e953982770b3355fe3dd3bf9fe0fed}{Vmb\-Error\-Type {\bfseries Set\-Events\-Enable1} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a01e953982770b3355fe3dd3bf9fe0fed}
+
+\item 
+\hypertarget{classMakoCamera_abe3c6d7347102275f15f1c814e83de7f}{Vmb\-Error\-Type {\bfseries Get\-Events\-Enable1\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abe3c6d7347102275f15f1c814e83de7f}
+
+\item 
+\hypertarget{classMakoCamera_a12b328eff2776000b92568e551b26e7a}{Vmb\-Error\-Type {\bfseries Get\-Event\-Overflow\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a12b328eff2776000b92568e551b26e7a}
+
+\item 
+\hypertarget{classMakoCamera_a0f91805708fd03ca040038681aa269c3}{Vmb\-Error\-Type {\bfseries Get\-Event\-Overflow\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0f91805708fd03ca040038681aa269c3}
+
+\item 
+\hypertarget{classMakoCamera_a484ed8583ebf14aded2c5d9aa73c947d}{Vmb\-Error\-Type {\bfseries Get\-Event\-Overflow\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a484ed8583ebf14aded2c5d9aa73c947d}
+
+\item 
+\hypertarget{classMakoCamera_a4417142b6b223dd4f0d3b3655879a9fe}{Vmb\-Error\-Type {\bfseries Get\-Event\-Overflow\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4417142b6b223dd4f0d3b3655879a9fe}
+
+\item 
+\hypertarget{classMakoCamera_a822598f12f57532b1ec045666ba01c56}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Rising\-Edge\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a822598f12f57532b1ec045666ba01c56}
+
+\item 
+\hypertarget{classMakoCamera_a8ae9e3d36a8841827eb4ac683c576b56}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Rising\-Edge\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8ae9e3d36a8841827eb4ac683c576b56}
+
+\item 
+\hypertarget{classMakoCamera_a4177ba4396c63fbfb640c633f02307c0}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Rising\-Edge\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a4177ba4396c63fbfb640c633f02307c0}
+
+\item 
+\hypertarget{classMakoCamera_adeefda54b994309457605459e9395f25}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Rising\-Edge\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_adeefda54b994309457605459e9395f25}
+
+\item 
+\hypertarget{classMakoCamera_a89c83ec77ae89c60107d8e40520d527d}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Falling\-Edge\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a89c83ec77ae89c60107d8e40520d527d}
+
+\item 
+\hypertarget{classMakoCamera_acdca52d29ebdd2f82ad7059f21c5bbd7}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Falling\-Edge\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_acdca52d29ebdd2f82ad7059f21c5bbd7}
+
+\item 
+\hypertarget{classMakoCamera_af3417c16d35b257c32839f21d256b8fd}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Falling\-Edge\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_af3417c16d35b257c32839f21d256b8fd}
+
+\item 
+\hypertarget{classMakoCamera_a8734c08d4ce5c80af0213e22f438c49c}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Falling\-Edge\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8734c08d4ce5c80af0213e22f438c49c}
+
+\item 
+\hypertarget{classMakoCamera_a363a3311d772a261fe0cd6989d91a785}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a363a3311d772a261fe0cd6989d91a785}
+
+\item 
+\hypertarget{classMakoCamera_a6d7039619c00145672d48ca7ca08a643}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a6d7039619c00145672d48ca7ca08a643}
+
+\item 
+\hypertarget{classMakoCamera_a2cdc7c61737275ba22f4074486c87dbc}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Ready\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a2cdc7c61737275ba22f4074486c87dbc}
+
+\item 
+\hypertarget{classMakoCamera_a5b6c56f385ebe5f47f1c96a5f2df877a}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Ready\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5b6c56f385ebe5f47f1c96a5f2df877a}
+
+\item 
+\hypertarget{classMakoCamera_a53eecb6ee82962a06aff80cdceb7324e}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Ready\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a53eecb6ee82962a06aff80cdceb7324e}
+
+\item 
+\hypertarget{classMakoCamera_a2e1a2769fe17af6f7c446dc3d6e0aab3}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Ready\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a2e1a2769fe17af6f7c446dc3d6e0aab3}
+
+\item 
+\hypertarget{classMakoCamera_a67150c4a7c5f7e96324e6bfd6dd9ad15}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a67150c4a7c5f7e96324e6bfd6dd9ad15}
+
+\item 
+\hypertarget{classMakoCamera_a16865d793b7a3e3107358a386c8d3fd3}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a16865d793b7a3e3107358a386c8d3fd3}
+
+\item 
+\hypertarget{classMakoCamera_aa8d51e797339acc005042e593354fe90}{Vmb\-Error\-Type {\bfseries Get\-Event\-Exposure\-End\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aa8d51e797339acc005042e593354fe90}
+
+\item 
+\hypertarget{classMakoCamera_ad2eadcd14b9ca61fc092ec81191e1c31}{Vmb\-Error\-Type {\bfseries Get\-Event\-Exposure\-End\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ad2eadcd14b9ca61fc092ec81191e1c31}
+
+\item 
+\hypertarget{classMakoCamera_aa7f5072546c2db88847bf31e455c1312}{Vmb\-Error\-Type {\bfseries Get\-Event\-Exposure\-End\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aa7f5072546c2db88847bf31e455c1312}
+
+\item 
+\hypertarget{classMakoCamera_a0e106dd12046e69cdad94fa8c624ac28}{Vmb\-Error\-Type {\bfseries Get\-Event\-Exposure\-End\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0e106dd12046e69cdad94fa8c624ac28}
+
+\item 
+\hypertarget{classMakoCamera_adacda98eb6f2e1882f663a86a80d0f94}{Vmb\-Error\-Type {\bfseries Get\-Event\-Error\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_adacda98eb6f2e1882f663a86a80d0f94}
+
+\item 
+\hypertarget{classMakoCamera_a7d820831e6da071b5e5528e48ff4cde5}{Vmb\-Error\-Type {\bfseries Get\-Event\-Error\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a7d820831e6da071b5e5528e48ff4cde5}
+
+\item 
+\hypertarget{classMakoCamera_a074a839c07fbc1aad772cbbab864c50e}{Vmb\-Error\-Type {\bfseries Get\-Event\-Error\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a074a839c07fbc1aad772cbbab864c50e}
+
+\item 
+\hypertarget{classMakoCamera_afbb3b3c9a35b67f61a2f43f823d88052}{Vmb\-Error\-Type {\bfseries Get\-Event\-Error\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_afbb3b3c9a35b67f61a2f43f823d88052}
+
+\item 
+\hypertarget{classMakoCamera_a3c22eac9f05c06fed5021950ac7df14a}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Start\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a3c22eac9f05c06fed5021950ac7df14a}
+
+\item 
+\hypertarget{classMakoCamera_a8960f96ad4f12223a01976221fbd4d9f}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Start\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8960f96ad4f12223a01976221fbd4d9f}
+
+\item 
+\hypertarget{classMakoCamera_a49f0921d05f53a37743293d5fea76071}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Start\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a49f0921d05f53a37743293d5fea76071}
+
+\item 
+\hypertarget{classMakoCamera_aeb8025ec7bfd744f133daa91cc52a761}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Start\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aeb8025ec7bfd744f133daa91cc52a761}
+
+\item 
+\hypertarget{classMakoCamera_ad1eb743c424009f951daa867fe78c112}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Record\-Trigger\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad1eb743c424009f951daa867fe78c112}
+
+\item 
+\hypertarget{classMakoCamera_a5dc8cb83826310bbc01b27b4672d42ea}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Record\-Trigger\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5dc8cb83826310bbc01b27b4672d42ea}
+
+\item 
+\hypertarget{classMakoCamera_a270da21603edfab2cc749a7191464f37}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Record\-Trigger\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a270da21603edfab2cc749a7191464f37}
+
+\item 
+\hypertarget{classMakoCamera_a51739fe91ac6a48ebcb11f73391958be}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Record\-Trigger\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a51739fe91ac6a48ebcb11f73391958be}
+
+\item 
+\hypertarget{classMakoCamera_a4972604573faac7ffea5d91d0a249459}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-End\-Timestamp} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a4972604573faac7ffea5d91d0a249459}
+
+\item 
+\hypertarget{classMakoCamera_a902dd7de33b8883896febf613088528b}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-End\-Timestamp\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a902dd7de33b8883896febf613088528b}
+
+\item 
+\hypertarget{classMakoCamera_a432ec16ae135440a2b8e6bfa8503f61a}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-End\-Frame\-I\-D} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a432ec16ae135440a2b8e6bfa8503f61a}
+
+\item 
+\hypertarget{classMakoCamera_a03126c571e7b2a4f9f284efa36ff99e7}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-End\-Frame\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a03126c571e7b2a4f9f284efa36ff99e7}
+
+\item 
+\hypertarget{classMakoCamera_a2c9f1d26e3f9a125fd91de8347671f21}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-End} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a2c9f1d26e3f9a125fd91de8347671f21}
+
+\item 
+\hypertarget{classMakoCamera_a4db7648d84870993287cec09c2b9515b}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-End\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4db7648d84870993287cec09c2b9515b}
+
+\item 
+\hypertarget{classMakoCamera_a5e005e9b7efd298aab3a61b2f86d52f3}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Record\-Trigger} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a5e005e9b7efd298aab3a61b2f86d52f3}
+
+\item 
+\hypertarget{classMakoCamera_a84257ce541d40e3f17103f38a13dbd31}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Record\-Trigger\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a84257ce541d40e3f17103f38a13dbd31}
+
+\item 
+\hypertarget{classMakoCamera_a60fcd0d4942e67c91b2e11f1c16f6d3a}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Start} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a60fcd0d4942e67c91b2e11f1c16f6d3a}
+
+\item 
+\hypertarget{classMakoCamera_ac1fc9e18c768b4626424d48f04ad92c7}{Vmb\-Error\-Type {\bfseries Get\-Event\-Acquisition\-Start\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ac1fc9e18c768b4626424d48f04ad92c7}
+
+\item 
+\hypertarget{classMakoCamera_a1169f87cbb7c2e0df7f77acf304b6887}{Vmb\-Error\-Type {\bfseries Get\-Event\-Error} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a1169f87cbb7c2e0df7f77acf304b6887}
+
+\item 
+\hypertarget{classMakoCamera_a066c6295ca4fbbfb7ace4896ba3c8a82}{Vmb\-Error\-Type {\bfseries Get\-Event\-Error\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a066c6295ca4fbbfb7ace4896ba3c8a82}
+
+\item 
+\hypertarget{classMakoCamera_a52b00ca70394a5f77e9427a3ee1ceb8b}{Vmb\-Error\-Type {\bfseries Get\-Event\-Exposure\-End} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a52b00ca70394a5f77e9427a3ee1ceb8b}
+
+\item 
+\hypertarget{classMakoCamera_a8e5f5406204eeb36b1992904a4f36ff3}{Vmb\-Error\-Type {\bfseries Get\-Event\-Exposure\-End\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8e5f5406204eeb36b1992904a4f36ff3}
+
+\item 
+\hypertarget{classMakoCamera_a315de5784495345d4f5b35cc57a508fc}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a315de5784495345d4f5b35cc57a508fc}
+
+\item 
+\hypertarget{classMakoCamera_a41c408689c870ed6682704744b4eae81}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a41c408689c870ed6682704744b4eae81}
+
+\item 
+\hypertarget{classMakoCamera_a7f699ae8fbe15a55e02af319b1f40848}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Ready} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a7f699ae8fbe15a55e02af319b1f40848}
+
+\item 
+\hypertarget{classMakoCamera_a4775cab2e33950449cbc1c27a578402a}{Vmb\-Error\-Type {\bfseries Get\-Event\-Frame\-Trigger\-Ready\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4775cab2e33950449cbc1c27a578402a}
+
+\item 
+\hypertarget{classMakoCamera_a47816bef6ae252ead1fcb318dd8fe9f4}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Falling\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a47816bef6ae252ead1fcb318dd8fe9f4}
+
+\item 
+\hypertarget{classMakoCamera_a34a8c5e723d36f6b2cc06c14b70eb7bb}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Falling\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a34a8c5e723d36f6b2cc06c14b70eb7bb}
+
+\item 
+\hypertarget{classMakoCamera_abe9be9732bf11cf88cbd6604ecbd7aed}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Rising\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_abe9be9732bf11cf88cbd6604ecbd7aed}
+
+\item 
+\hypertarget{classMakoCamera_a49ede935814d0bec31e4b4c973bf5248}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line1\-Rising\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a49ede935814d0bec31e4b4c973bf5248}
+
+\item 
+\hypertarget{classMakoCamera_a090d831c4635e962335b309f24735940}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line2\-Falling\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a090d831c4635e962335b309f24735940}
+
+\item 
+\hypertarget{classMakoCamera_a7db65f53ac12c209664a6ddfc641befd}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line2\-Falling\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a7db65f53ac12c209664a6ddfc641befd}
+
+\item 
+\hypertarget{classMakoCamera_a81838424c2bb8d68c0744f13f46e668f}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line2\-Rising\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a81838424c2bb8d68c0744f13f46e668f}
+
+\item 
+\hypertarget{classMakoCamera_aee7b41a854c0668f536699d07a3f87af}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line2\-Rising\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aee7b41a854c0668f536699d07a3f87af}
+
+\item 
+\hypertarget{classMakoCamera_a8d727977404d7775258554dcf91b89ab}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line3\-Falling\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8d727977404d7775258554dcf91b89ab}
+
+\item 
+\hypertarget{classMakoCamera_a3147fd53954e049624b2a75229fe1cd4}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line3\-Falling\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a3147fd53954e049624b2a75229fe1cd4}
+
+\item 
+\hypertarget{classMakoCamera_ac01e6488b56dded663c84589c037101c}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line3\-Rising\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ac01e6488b56dded663c84589c037101c}
+
+\item 
+\hypertarget{classMakoCamera_adc0a2619c70abd90717cc04c7b4b915e}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line3\-Rising\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_adc0a2619c70abd90717cc04c7b4b915e}
+
+\item 
+\hypertarget{classMakoCamera_a2a0663a8175023dd948c8c3bfe2fb691}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line4\-Falling\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a2a0663a8175023dd948c8c3bfe2fb691}
+
+\item 
+\hypertarget{classMakoCamera_a89ea53b578538bfc710bf88d798246c7}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line4\-Falling\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a89ea53b578538bfc710bf88d798246c7}
+
+\item 
+\hypertarget{classMakoCamera_a935c1d0d9ff498a61a895f5343c80dcc}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line4\-Rising\-Edge} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a935c1d0d9ff498a61a895f5343c80dcc}
+
+\item 
+\hypertarget{classMakoCamera_ae3d7d4ceac0ef4a69cde3bce9cfd9ffe}{Vmb\-Error\-Type {\bfseries Get\-Event\-Line4\-Rising\-Edge\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae3d7d4ceac0ef4a69cde3bce9cfd9ffe}
+
+\item 
+\hypertarget{classMakoCamera_a9252d9a75c71a0b49307c53e6958d6c6}{Vmb\-Error\-Type {\bfseries Get\-Event\-Overflow} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a9252d9a75c71a0b49307c53e6958d6c6}
+
+\item 
+\hypertarget{classMakoCamera_a1d3c7f87a249dfe91bc1969c9b3c3476}{Vmb\-Error\-Type {\bfseries Get\-Event\-Overflow\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a1d3c7f87a249dfe91bc1969c9b3c3476}
+
+\item 
+\hypertarget{classMakoCamera_a0bc42e634f94f37bb2d28846e61656b9}{Vmb\-Error\-Type {\bfseries Get\-Bandwidth\-Control\-Mode} (Bandwidth\-Control\-Mode\-Enum \&value)}\label{classMakoCamera_a0bc42e634f94f37bb2d28846e61656b9}
+
+\item 
+\hypertarget{classMakoCamera_aca8b7e5f74319a61341e6d5817d4f1ec}{Vmb\-Error\-Type {\bfseries Set\-Bandwidth\-Control\-Mode} (Bandwidth\-Control\-Mode\-Enum value)}\label{classMakoCamera_aca8b7e5f74319a61341e6d5817d4f1ec}
+
+\item 
+\hypertarget{classMakoCamera_a5d148eb105b7e78248d1ec85426ca17b}{Vmb\-Error\-Type {\bfseries Get\-Bandwidth\-Control\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5d148eb105b7e78248d1ec85426ca17b}
+
+\item 
+\hypertarget{classMakoCamera_a87c0591ac9cc2e06a647743134c0cf07}{Vmb\-Error\-Type {\bfseries Get\-Chunk\-Mode\-Active} (bool \&value)}\label{classMakoCamera_a87c0591ac9cc2e06a647743134c0cf07}
+
+\item 
+\hypertarget{classMakoCamera_a2bf6b605020c474ba6376fcf47be27a9}{Vmb\-Error\-Type {\bfseries Set\-Chunk\-Mode\-Active} (bool value)}\label{classMakoCamera_a2bf6b605020c474ba6376fcf47be27a9}
+
+\item 
+\hypertarget{classMakoCamera_a934987ae587c1b49ca3656e9781cc72f}{Vmb\-Error\-Type {\bfseries Get\-Chunk\-Mode\-Active\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a934987ae587c1b49ca3656e9781cc72f}
+
+\item 
+\hypertarget{classMakoCamera_a34e9bc9f5b2c9c218f73f3452f5e5894}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Device\-M\-A\-C\-Address} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a34e9bc9f5b2c9c218f73f3452f5e5894}
+
+\item 
+\hypertarget{classMakoCamera_abe623f54144fc10ab2dabb682af8cb3a}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Device\-M\-A\-C\-Address\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abe623f54144fc10ab2dabb682af8cb3a}
+
+\item 
+\hypertarget{classMakoCamera_a5780f8389349cbf7fa0438088d2939cb}{Vmb\-Error\-Type {\bfseries Get\-Gev\-S\-C\-P\-S\-Packet\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a5780f8389349cbf7fa0438088d2939cb}
+
+\item 
+\hypertarget{classMakoCamera_ab170ff6f7112065435fb91c6c904ce1e}{Vmb\-Error\-Type {\bfseries Set\-Gev\-S\-C\-P\-S\-Packet\-Size} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ab170ff6f7112065435fb91c6c904ce1e}
+
+\item 
+\hypertarget{classMakoCamera_af7f766d94d6d60e53f97dc289b6a7bd7}{Vmb\-Error\-Type {\bfseries Get\-Gev\-S\-C\-P\-S\-Packet\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af7f766d94d6d60e53f97dc289b6a7bd7}
+
+\item 
+\hypertarget{classMakoCamera_a82d2852411e40449c1515c624e6cbe4b}{Vmb\-Error\-Type {\bfseries Get\-Non\-Image\-Payload\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a82d2852411e40449c1515c624e6cbe4b}
+
+\item 
+\hypertarget{classMakoCamera_a06fb696cbd6726adb81104f74d5ba842}{Vmb\-Error\-Type {\bfseries Get\-Non\-Image\-Payload\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a06fb696cbd6726adb81104f74d5ba842}
+
+\item 
+\hypertarget{classMakoCamera_ae3d725b4adb70b06c3b5fecf374420b4}{Vmb\-Error\-Type {\bfseries Get\-Payload\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ae3d725b4adb70b06c3b5fecf374420b4}
+
+\item 
+\hypertarget{classMakoCamera_a992cbdb88ce4a96e47e6bb2f4b33bd4d}{Vmb\-Error\-Type {\bfseries Get\-Payload\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a992cbdb88ce4a96e47e6bb2f4b33bd4d}
+
+\item 
+\hypertarget{classMakoCamera_ad83cd41e213f1b4f59154e1f1869c102}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Bytes\-Per\-Second} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad83cd41e213f1b4f59154e1f1869c102}
+
+\item 
+\hypertarget{classMakoCamera_a8c50b7e494032d6c68a90150f67ddc12}{Vmb\-Error\-Type {\bfseries Set\-Stream\-Bytes\-Per\-Second} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a8c50b7e494032d6c68a90150f67ddc12}
+
+\item 
+\hypertarget{classMakoCamera_a4f643321bcda60272e12669831a2c3f7}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Bytes\-Per\-Second\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4f643321bcda60272e12669831a2c3f7}
+
+\item 
+\hypertarget{classMakoCamera_a682a0594f15588087e6d68eafe35b67b}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Frame\-Rate\-Constrain} (bool \&value)}\label{classMakoCamera_a682a0594f15588087e6d68eafe35b67b}
+
+\item 
+\hypertarget{classMakoCamera_aa641a057896aa2371e0e15f969b50abf}{Vmb\-Error\-Type {\bfseries Set\-Stream\-Frame\-Rate\-Constrain} (bool value)}\label{classMakoCamera_aa641a057896aa2371e0e15f969b50abf}
+
+\item 
+\hypertarget{classMakoCamera_a1d90f969c7e423fd8f08a0a94dabc03a}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Frame\-Rate\-Constrain\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a1d90f969c7e423fd8f08a0a94dabc03a}
+
+\item 
+\hypertarget{classMakoCamera_ab0a2d2d3d1f571c62125730d177e8248}{Vmb\-Error\-Type {\bfseries Get\-Gev\-I\-P\-Configuration\-Mode} (Gev\-I\-P\-Configuration\-Mode\-Enum \&value)}\label{classMakoCamera_ab0a2d2d3d1f571c62125730d177e8248}
+
+\item 
+\hypertarget{classMakoCamera_aba1b7bef72530e1aa3b7c9f426a08ca2}{Vmb\-Error\-Type {\bfseries Get\-Gev\-I\-P\-Configuration\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aba1b7bef72530e1aa3b7c9f426a08ca2}
+
+\item 
+\hypertarget{classMakoCamera_a3eadaeb6d17becb2d1f9826033bc9eda}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Current\-Default\-Gateway} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a3eadaeb6d17becb2d1f9826033bc9eda}
+
+\item 
+\hypertarget{classMakoCamera_acf8b28c9a1754f36127fca84eb96b4a8}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Current\-Default\-Gateway\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_acf8b28c9a1754f36127fca84eb96b4a8}
+
+\item 
+\hypertarget{classMakoCamera_ad927f7653b731d446031cb0232d8858f}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Current\-I\-P\-Address} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad927f7653b731d446031cb0232d8858f}
+
+\item 
+\hypertarget{classMakoCamera_a81e4f4ba026aa15c96e68119086eeaaa}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Current\-I\-P\-Address\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a81e4f4ba026aa15c96e68119086eeaaa}
+
+\item 
+\hypertarget{classMakoCamera_a651c1326b0c84c5da60f69b8215ffa29}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Current\-Subnet\-Mask} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a651c1326b0c84c5da60f69b8215ffa29}
+
+\item 
+\hypertarget{classMakoCamera_a68bc16ad976ce2bebba7d5422d82daf5}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Current\-Subnet\-Mask\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a68bc16ad976ce2bebba7d5422d82daf5}
+
+\item 
+\hypertarget{classMakoCamera_a13e45757f2b07de1c7c1fe55af96aed8}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-C\-P\-Cmd\-Retries} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a13e45757f2b07de1c7c1fe55af96aed8}
+
+\item 
+\hypertarget{classMakoCamera_a0d10b8661c148a81fb6b6815967afb5c}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-C\-P\-Cmd\-Retries} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a0d10b8661c148a81fb6b6815967afb5c}
+
+\item 
+\hypertarget{classMakoCamera_a8ada5164008fce96cabc73692baffccd}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-C\-P\-Cmd\-Retries\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8ada5164008fce96cabc73692baffccd}
+
+\item 
+\hypertarget{classMakoCamera_a255fd615ca2eef876189722065e6d9d9}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-C\-P\-Cmd\-Timeout} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a255fd615ca2eef876189722065e6d9d9}
+
+\item 
+\hypertarget{classMakoCamera_ac3a935476acbd74cb6dbe865e0929fa5}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-C\-P\-Cmd\-Timeout} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ac3a935476acbd74cb6dbe865e0929fa5}
+
+\item 
+\hypertarget{classMakoCamera_ab1e85b4a16de14a8635f2bb88373788e}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-C\-P\-Cmd\-Timeout\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab1e85b4a16de14a8635f2bb88373788e}
+
+\item 
+\hypertarget{classMakoCamera_a10b28b4a71bc08014ad824384273cc40}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-C\-P\-H\-B\-Interval} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a10b28b4a71bc08014ad824384273cc40}
+
+\item 
+\hypertarget{classMakoCamera_aa7010531060d2e0b4535cd4b7472c448}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-C\-P\-H\-B\-Interval} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_aa7010531060d2e0b4535cd4b7472c448}
+
+\item 
+\hypertarget{classMakoCamera_a90f4e276e6ca0b204e71b9879864018b}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-C\-P\-H\-B\-Interval\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a90f4e276e6ca0b204e71b9879864018b}
+
+\item 
+\hypertarget{classMakoCamera_a6a6fd32aad4f2401c3aa228417c2b696}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Persistent\-Default\-Gateway} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a6a6fd32aad4f2401c3aa228417c2b696}
+
+\item 
+\hypertarget{classMakoCamera_ab821ec0abad698cce555ae38445bd49a}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Persistent\-Default\-Gateway\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab821ec0abad698cce555ae38445bd49a}
+
+\item 
+\hypertarget{classMakoCamera_ae4da71d1a0c73c3fd8dd8619c51de1ed}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Persistent\-I\-P\-Address} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ae4da71d1a0c73c3fd8dd8619c51de1ed}
+
+\item 
+\hypertarget{classMakoCamera_af07ddc326dd11eb2da22ca3eb2a1bd32}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Persistent\-I\-P\-Address\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af07ddc326dd11eb2da22ca3eb2a1bd32}
+
+\item 
+\hypertarget{classMakoCamera_af689fc267db91f99e894c5fabdef5b72}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Persistent\-Subnet\-Mask} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_af689fc267db91f99e894c5fabdef5b72}
+
+\item 
+\hypertarget{classMakoCamera_aa6f31d3fefbac621f8be570be99c830d}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Persistent\-Subnet\-Mask\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aa6f31d3fefbac621f8be570be99c830d}
+
+\item 
+\hypertarget{classMakoCamera_a08802d811bfc061c0316c280350d431f}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Hold\-Capacity} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a08802d811bfc061c0316c280350d431f}
+
+\item 
+\hypertarget{classMakoCamera_abacc43fccb9b65b306310ff0c897a7c9}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Hold\-Capacity\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abacc43fccb9b65b306310ff0c897a7c9}
+
+\item 
+\hypertarget{classMakoCamera_aed4c3888a687cbd7c36b86085b7b26f8}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Hold\-Enable} (Stream\-Hold\-Enable\-Enum \&value)}\label{classMakoCamera_aed4c3888a687cbd7c36b86085b7b26f8}
+
+\item 
+\hypertarget{classMakoCamera_a0dfcf069cda67cadc49c0e2868c61b4c}{Vmb\-Error\-Type {\bfseries Set\-Stream\-Hold\-Enable} (Stream\-Hold\-Enable\-Enum value)}\label{classMakoCamera_a0dfcf069cda67cadc49c0e2868c61b4c}
+
+\item 
+\hypertarget{classMakoCamera_a2dd64a2510eff5fdbab98b4875b115f5}{Vmb\-Error\-Type {\bfseries Get\-Stream\-Hold\-Enable\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a2dd64a2510eff5fdbab98b4875b115f5}
+
+\item 
+\hypertarget{classMakoCamera_a17c942aaed4fbba10bed2307da50711b}{Vmb\-Error\-Type {\bfseries Gev\-Timestamp\-Control\-Latch} ()}\label{classMakoCamera_a17c942aaed4fbba10bed2307da50711b}
+
+\item 
+\hypertarget{classMakoCamera_a32540c946c21437e4561a53505d80105}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Timestamp\-Control\-Latch\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a32540c946c21437e4561a53505d80105}
+
+\item 
+\hypertarget{classMakoCamera_a9d5733515070ee91198c81d9a188af73}{Vmb\-Error\-Type {\bfseries Gev\-Timestamp\-Control\-Reset} ()}\label{classMakoCamera_a9d5733515070ee91198c81d9a188af73}
+
+\item 
+\hypertarget{classMakoCamera_a0e10bc22eddc8dbea67b4a1c867201e9}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Timestamp\-Control\-Reset\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0e10bc22eddc8dbea67b4a1c867201e9}
+
+\item 
+\hypertarget{classMakoCamera_a8c5d5dbc896823f51825a07b0af2d84b}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Timestamp\-Tick\-Frequency} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8c5d5dbc896823f51825a07b0af2d84b}
+
+\item 
+\hypertarget{classMakoCamera_a06b3428054d7f253e8ae83d8b6fda2e6}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Timestamp\-Tick\-Frequency\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a06b3428054d7f253e8ae83d8b6fda2e6}
+
+\item 
+\hypertarget{classMakoCamera_aefb37abd217458f66e0138506206bb85}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Timestamp\-Value} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aefb37abd217458f66e0138506206bb85}
+
+\item 
+\hypertarget{classMakoCamera_a0c38a5887175600d29a5bc9693d3bef5}{Vmb\-Error\-Type {\bfseries Get\-Gev\-Timestamp\-Value\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a0c38a5887175600d29a5bc9693d3bef5}
+
+\item 
+\hypertarget{classMakoCamera_a4d54821ec511851f843150624e3569e7}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Delay} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a4d54821ec511851f843150624e3569e7}
+
+\item 
+\hypertarget{classMakoCamera_a74399fca4109ef379983de342937e793}{Vmb\-Error\-Type {\bfseries Set\-Strobe\-Delay} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a74399fca4109ef379983de342937e793}
+
+\item 
+\hypertarget{classMakoCamera_a77b5be1dc46c5a5ea2ec301bc65896de}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Delay\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a77b5be1dc46c5a5ea2ec301bc65896de}
+
+\item 
+\hypertarget{classMakoCamera_ac45f39a989d25c7a48422f8ac1a79e35}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Duration} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ac45f39a989d25c7a48422f8ac1a79e35}
+
+\item 
+\hypertarget{classMakoCamera_a0b426addfd5e43e40d6ed236252ae82e}{Vmb\-Error\-Type {\bfseries Set\-Strobe\-Duration} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a0b426addfd5e43e40d6ed236252ae82e}
+
+\item 
+\hypertarget{classMakoCamera_a16035badc74a0f8b7ca852419306a60a}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Duration\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a16035badc74a0f8b7ca852419306a60a}
+
+\item 
+\hypertarget{classMakoCamera_a57f0528ea8bfbe0dad7526c4cc30d280}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Duration\-Mode} (Strobe\-Duration\-Mode\-Enum \&value)}\label{classMakoCamera_a57f0528ea8bfbe0dad7526c4cc30d280}
+
+\item 
+\hypertarget{classMakoCamera_ad3c1c9ad9fc44895f646341d9b35d722}{Vmb\-Error\-Type {\bfseries Set\-Strobe\-Duration\-Mode} (Strobe\-Duration\-Mode\-Enum value)}\label{classMakoCamera_ad3c1c9ad9fc44895f646341d9b35d722}
+
+\item 
+\hypertarget{classMakoCamera_ae8c2c3f22183f96c16820b7595681e12}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Duration\-Mode\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae8c2c3f22183f96c16820b7595681e12}
+
+\item 
+\hypertarget{classMakoCamera_a19c361580590703bda347d0d5883aee7}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Source} (Strobe\-Source\-Enum \&value)}\label{classMakoCamera_a19c361580590703bda347d0d5883aee7}
+
+\item 
+\hypertarget{classMakoCamera_a57547b0c9c721c111ba6877845ce7d62}{Vmb\-Error\-Type {\bfseries Set\-Strobe\-Source} (Strobe\-Source\-Enum value)}\label{classMakoCamera_a57547b0c9c721c111ba6877845ce7d62}
+
+\item 
+\hypertarget{classMakoCamera_a72d5ebc1952ed733caff80295a9af2b4}{Vmb\-Error\-Type {\bfseries Get\-Strobe\-Source\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a72d5ebc1952ed733caff80295a9af2b4}
+
+\item 
+\hypertarget{classMakoCamera_a8befd767c5a20dd3efe7e1f5852a3745}{Vmb\-Error\-Type {\bfseries Get\-Sync\-In\-Glitch\-Filter} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8befd767c5a20dd3efe7e1f5852a3745}
+
+\item 
+\hypertarget{classMakoCamera_aae451219aa704ab0443fb075fe166c79}{Vmb\-Error\-Type {\bfseries Set\-Sync\-In\-Glitch\-Filter} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_aae451219aa704ab0443fb075fe166c79}
+
+\item 
+\hypertarget{classMakoCamera_aef6dc1592b540542fce44947d1b494f0}{Vmb\-Error\-Type {\bfseries Get\-Sync\-In\-Glitch\-Filter\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aef6dc1592b540542fce44947d1b494f0}
+
+\item 
+\hypertarget{classMakoCamera_ab2509f617f402e3a856bf2e6beb9c653}{Vmb\-Error\-Type {\bfseries Get\-Sync\-In\-Levels} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ab2509f617f402e3a856bf2e6beb9c653}
+
+\item 
+\hypertarget{classMakoCamera_ae8d2d7474478b7cd30eb9c0d59f4e720}{Vmb\-Error\-Type {\bfseries Get\-Sync\-In\-Levels\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae8d2d7474478b7cd30eb9c0d59f4e720}
+
+\item 
+\hypertarget{classMakoCamera_a73a00154c11f21f0f93e602daf214c8d}{Vmb\-Error\-Type {\bfseries Get\-Sync\-In\-Selector} (Sync\-In\-Selector\-Enum \&value)}\label{classMakoCamera_a73a00154c11f21f0f93e602daf214c8d}
+
+\item 
+\hypertarget{classMakoCamera_ae3e162bec10377ca79c6940b9e540893}{Vmb\-Error\-Type {\bfseries Set\-Sync\-In\-Selector} (Sync\-In\-Selector\-Enum value)}\label{classMakoCamera_ae3e162bec10377ca79c6940b9e540893}
+
+\item 
+\hypertarget{classMakoCamera_a5ae81f24b271389559d84c39613f082a}{Vmb\-Error\-Type {\bfseries Get\-Sync\-In\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5ae81f24b271389559d84c39613f082a}
+
+\item 
+\hypertarget{classMakoCamera_aeb308e8b5ddbb278f044f1857af7897d}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Levels} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aeb308e8b5ddbb278f044f1857af7897d}
+
+\item 
+\hypertarget{classMakoCamera_a22bd73c5ac05ae13197b28e134e7e2b7}{Vmb\-Error\-Type {\bfseries Set\-Sync\-Out\-Levels} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a22bd73c5ac05ae13197b28e134e7e2b7}
+
+\item 
+\hypertarget{classMakoCamera_ab42d6905f31755581297d240ffc01dae}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Levels\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab42d6905f31755581297d240ffc01dae}
+
+\item 
+\hypertarget{classMakoCamera_a671fc62afa7b76a26c0e273057db9214}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Polarity} (Sync\-Out\-Polarity\-Enum \&value)}\label{classMakoCamera_a671fc62afa7b76a26c0e273057db9214}
+
+\item 
+\hypertarget{classMakoCamera_a186f09eaa991ad702b96987f4703370e}{Vmb\-Error\-Type {\bfseries Set\-Sync\-Out\-Polarity} (Sync\-Out\-Polarity\-Enum value)}\label{classMakoCamera_a186f09eaa991ad702b96987f4703370e}
+
+\item 
+\hypertarget{classMakoCamera_add3cda0ac91d3af774708df5aad9d20d}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Polarity\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_add3cda0ac91d3af774708df5aad9d20d}
+
+\item 
+\hypertarget{classMakoCamera_a993405de383b2c0b63f945f2b986eaef}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Selector} (Sync\-Out\-Selector\-Enum \&value)}\label{classMakoCamera_a993405de383b2c0b63f945f2b986eaef}
+
+\item 
+\hypertarget{classMakoCamera_ad6363f340bdfd01527e08b52e6eafe15}{Vmb\-Error\-Type {\bfseries Set\-Sync\-Out\-Selector} (Sync\-Out\-Selector\-Enum value)}\label{classMakoCamera_ad6363f340bdfd01527e08b52e6eafe15}
+
+\item 
+\hypertarget{classMakoCamera_a93554cfab7b0c6c1839f4d47819527ce}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a93554cfab7b0c6c1839f4d47819527ce}
+
+\item 
+\hypertarget{classMakoCamera_a417a4ae7397212015a5700174b6b8e6d}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Source} (Sync\-Out\-Source\-Enum \&value)}\label{classMakoCamera_a417a4ae7397212015a5700174b6b8e6d}
+
+\item 
+\hypertarget{classMakoCamera_a1c2409a5b30e1cffcc0b829de0e7b1f5}{Vmb\-Error\-Type {\bfseries Set\-Sync\-Out\-Source} (Sync\-Out\-Source\-Enum value)}\label{classMakoCamera_a1c2409a5b30e1cffcc0b829de0e7b1f5}
+
+\item 
+\hypertarget{classMakoCamera_a08ea24e5e3bea0adca66154215d647b2}{Vmb\-Error\-Type {\bfseries Get\-Sync\-Out\-Source\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a08ea24e5e3bea0adca66154215d647b2}
+
+\item 
+\hypertarget{classMakoCamera_a503fabe0138feb8a8c55be3edd7a539e}{Vmb\-Error\-Type {\bfseries Get\-Height} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a503fabe0138feb8a8c55be3edd7a539e}
+
+\item 
+\hypertarget{classMakoCamera_a886651c782e062e007c0530c7905f2e1}{Vmb\-Error\-Type {\bfseries Set\-Height} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a886651c782e062e007c0530c7905f2e1}
+
+\item 
+\hypertarget{classMakoCamera_adf69b04f34c53c2810f7ca8fa15d53b5}{Vmb\-Error\-Type {\bfseries Get\-Height\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_adf69b04f34c53c2810f7ca8fa15d53b5}
+
+\item 
+\hypertarget{classMakoCamera_a6ba5f92c8f6cec5ac3ddf3fea28fbf90}{Vmb\-Error\-Type {\bfseries Get\-Height\-Max} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a6ba5f92c8f6cec5ac3ddf3fea28fbf90}
+
+\item 
+\hypertarget{classMakoCamera_a1a097c5663bcea310108ab6e48e96413}{Vmb\-Error\-Type {\bfseries Get\-Height\-Max\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a1a097c5663bcea310108ab6e48e96413}
+
+\item 
+\hypertarget{classMakoCamera_aedbf19b94d6b6bc2535a1967f29355d6}{Vmb\-Error\-Type {\bfseries Get\-Image\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aedbf19b94d6b6bc2535a1967f29355d6}
+
+\item 
+\hypertarget{classMakoCamera_a677f31b91a72fd49e3760e74492dd16d}{Vmb\-Error\-Type {\bfseries Get\-Image\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a677f31b91a72fd49e3760e74492dd16d}
+
+\item 
+\hypertarget{classMakoCamera_a76b13f9d016ff54f0280801edd307cc5}{Vmb\-Error\-Type {\bfseries Get\-Offset\-X} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a76b13f9d016ff54f0280801edd307cc5}
+
+\item 
+\hypertarget{classMakoCamera_ae622c0b507b79f37c531b7468c877be9}{Vmb\-Error\-Type {\bfseries Set\-Offset\-X} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ae622c0b507b79f37c531b7468c877be9}
+
+\item 
+\hypertarget{classMakoCamera_a89ecbe76ba442ef6b7a00701c9a76c0e}{Vmb\-Error\-Type {\bfseries Get\-Offset\-X\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a89ecbe76ba442ef6b7a00701c9a76c0e}
+
+\item 
+\hypertarget{classMakoCamera_ae31b0f2cc79a408181a33261d3ef4d55}{Vmb\-Error\-Type {\bfseries Get\-Offset\-Y} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ae31b0f2cc79a408181a33261d3ef4d55}
+
+\item 
+\hypertarget{classMakoCamera_a33e688dd61aeca2136fafc74899effad}{Vmb\-Error\-Type {\bfseries Set\-Offset\-Y} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a33e688dd61aeca2136fafc74899effad}
+
+\item 
+\hypertarget{classMakoCamera_a4c01f6af82025406baf51bfaf1bf09c5}{Vmb\-Error\-Type {\bfseries Get\-Offset\-Y\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4c01f6af82025406baf51bfaf1bf09c5}
+
+\item 
+\hypertarget{classMakoCamera_a3be43b071485db14a0a0841778baf5bd}{Vmb\-Error\-Type {\bfseries Get\-Pixel\-Format} (Pixel\-Format\-Enum \&value)}\label{classMakoCamera_a3be43b071485db14a0a0841778baf5bd}
+
+\item 
+\hypertarget{classMakoCamera_add802ac6786b707e11936b54ad4dcdfa}{Vmb\-Error\-Type {\bfseries Set\-Pixel\-Format} (Pixel\-Format\-Enum value)}\label{classMakoCamera_add802ac6786b707e11936b54ad4dcdfa}
+
+\item 
+\hypertarget{classMakoCamera_a60797e9f649348283aa3010621b547f1}{Vmb\-Error\-Type {\bfseries Get\-Pixel\-Format\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a60797e9f649348283aa3010621b547f1}
+
+\item 
+\hypertarget{classMakoCamera_aba26e2b798b592ca0458754613e8868e}{Vmb\-Error\-Type {\bfseries Get\-Width} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aba26e2b798b592ca0458754613e8868e}
+
+\item 
+\hypertarget{classMakoCamera_a527b9a766e870bfd2926c31e9b4d6236}{Vmb\-Error\-Type {\bfseries Set\-Width} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a527b9a766e870bfd2926c31e9b4d6236}
+
+\item 
+\hypertarget{classMakoCamera_ad0a59a834514918909f2c3a159e9dca5}{Vmb\-Error\-Type {\bfseries Get\-Width\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ad0a59a834514918909f2c3a159e9dca5}
+
+\item 
+\hypertarget{classMakoCamera_a8400a8b7d6b7778eaa3d1d26835fe046}{Vmb\-Error\-Type {\bfseries Get\-Width\-Max} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8400a8b7d6b7778eaa3d1d26835fe046}
+
+\item 
+\hypertarget{classMakoCamera_a5b3ed88e61641d5854d33843aa5829ea}{Vmb\-Error\-Type {\bfseries Get\-Width\-Max\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5b3ed88e61641d5854d33843aa5829ea}
+
+\item 
+\hypertarget{classMakoCamera_a1885e67612c500c4a717908c61c5c84a}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Height} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a1885e67612c500c4a717908c61c5c84a}
+
+\item 
+\hypertarget{classMakoCamera_a564a27cf4b596cd0d70dc03cc704693a}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Height\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a564a27cf4b596cd0d70dc03cc704693a}
+
+\item 
+\hypertarget{classMakoCamera_a70f21f78c5c8af4b14e126a513f102c8}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Width} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a70f21f78c5c8af4b14e126a513f102c8}
+
+\item 
+\hypertarget{classMakoCamera_a64cb38c04d65985144596b8d34efcbcf}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Width\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a64cb38c04d65985144596b8d34efcbcf}
+
+\item 
+\hypertarget{classMakoCamera_a9690ab26b1a9201670331cd231a94837}{Vmb\-Error\-Type {\bfseries Get\-Device\-Firmware\-Version} (std\-::string \&value)}\label{classMakoCamera_a9690ab26b1a9201670331cd231a94837}
+
+\item 
+\hypertarget{classMakoCamera_a9d5145e1e3ea9b757a427a4e31fcc83a}{Vmb\-Error\-Type {\bfseries Get\-Device\-Firmware\-Version\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a9d5145e1e3ea9b757a427a4e31fcc83a}
+
+\item 
+\hypertarget{classMakoCamera_aa68a090c75be1f2c0ac1030be9b808a1}{Vmb\-Error\-Type {\bfseries Get\-Device\-I\-D} (std\-::string \&value)}\label{classMakoCamera_aa68a090c75be1f2c0ac1030be9b808a1}
+
+\item 
+\hypertarget{classMakoCamera_a48efc3f1c02766e5b4e7e20b2bcc5960}{Vmb\-Error\-Type {\bfseries Get\-Device\-I\-D\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a48efc3f1c02766e5b4e7e20b2bcc5960}
+
+\item 
+\hypertarget{classMakoCamera_a01c84775556779047fbe3a4b9d2173be}{Vmb\-Error\-Type {\bfseries Get\-Device\-Model\-Name} (std\-::string \&value)}\label{classMakoCamera_a01c84775556779047fbe3a4b9d2173be}
+
+\item 
+\hypertarget{classMakoCamera_ac94f8aa8c987502417103c15a69e1326}{Vmb\-Error\-Type {\bfseries Get\-Device\-Model\-Name\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ac94f8aa8c987502417103c15a69e1326}
+
+\item 
+\hypertarget{classMakoCamera_a44e2ace63c18e80f89e6da40c6ffecee}{Vmb\-Error\-Type {\bfseries Get\-Device\-Part\-Number} (std\-::string \&value)}\label{classMakoCamera_a44e2ace63c18e80f89e6da40c6ffecee}
+
+\item 
+\hypertarget{classMakoCamera_aeebb4a275b98496c204215849c5810f3}{Vmb\-Error\-Type {\bfseries Get\-Device\-Part\-Number\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aeebb4a275b98496c204215849c5810f3}
+
+\item 
+\hypertarget{classMakoCamera_abc58f61895e3f03d3f7c1699cdb4ed6b}{Vmb\-Error\-Type {\bfseries Get\-Device\-Scan\-Type} (Device\-Scan\-Type\-Enum \&value)}\label{classMakoCamera_abc58f61895e3f03d3f7c1699cdb4ed6b}
+
+\item 
+\hypertarget{classMakoCamera_a4358061d742142e2ffc44c9ae1940551}{Vmb\-Error\-Type {\bfseries Get\-Device\-Scan\-Type\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a4358061d742142e2ffc44c9ae1940551}
+
+\item 
+\hypertarget{classMakoCamera_acf4c23ff185398a312d7a6410d7c2a33}{Vmb\-Error\-Type {\bfseries Get\-Device\-Vendor\-Name} (std\-::string \&value)}\label{classMakoCamera_acf4c23ff185398a312d7a6410d7c2a33}
+
+\item 
+\hypertarget{classMakoCamera_a5e7fe32fa83ec3818ff2c03ba72cefb1}{Vmb\-Error\-Type {\bfseries Get\-Device\-Vendor\-Name\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a5e7fe32fa83ec3818ff2c03ba72cefb1}
+
+\item 
+\hypertarget{classMakoCamera_a6564611584484f651b2c6c13161cabaa}{Vmb\-Error\-Type {\bfseries Get\-Firmware\-Ver\-Build} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a6564611584484f651b2c6c13161cabaa}
+
+\item 
+\hypertarget{classMakoCamera_a37e7e8fa73ba5ba5458b1b8261312076}{Vmb\-Error\-Type {\bfseries Get\-Firmware\-Ver\-Build\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a37e7e8fa73ba5ba5458b1b8261312076}
+
+\item 
+\hypertarget{classMakoCamera_ab3a50a5bae21780f426b50245bf107b0}{Vmb\-Error\-Type {\bfseries Get\-Firmware\-Ver\-Major} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ab3a50a5bae21780f426b50245bf107b0}
+
+\item 
+\hypertarget{classMakoCamera_a13d17030d5f29e2c81079e6135c2e4f1}{Vmb\-Error\-Type {\bfseries Get\-Firmware\-Ver\-Major\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a13d17030d5f29e2c81079e6135c2e4f1}
+
+\item 
+\hypertarget{classMakoCamera_a048778ac5a2aa55bcf924c252649d4ae}{Vmb\-Error\-Type {\bfseries Get\-Firmware\-Ver\-Minor} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a048778ac5a2aa55bcf924c252649d4ae}
+
+\item 
+\hypertarget{classMakoCamera_a92371a903e7ba144dbd65adaf6cc703b}{Vmb\-Error\-Type {\bfseries Get\-Firmware\-Ver\-Minor\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a92371a903e7ba144dbd65adaf6cc703b}
+
+\item 
+\hypertarget{classMakoCamera_a9d7fac71b0e346c0e893be763a462497}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Bits} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a9d7fac71b0e346c0e893be763a462497}
+
+\item 
+\hypertarget{classMakoCamera_a51e52c5066a0e74e4c62da90fad0de24}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Bits\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a51e52c5066a0e74e4c62da90fad0de24}
+
+\item 
+\hypertarget{classMakoCamera_a428f288f265d56ff1562f650b248997b}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Type} (Sensor\-Type\-Enum \&value)}\label{classMakoCamera_a428f288f265d56ff1562f650b248997b}
+
+\item 
+\hypertarget{classMakoCamera_aa10ba88092a674a7c445610275efd10b}{Vmb\-Error\-Type {\bfseries Get\-Sensor\-Type\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aa10ba88092a674a7c445610275efd10b}
+
+\item 
+\hypertarget{classMakoCamera_af19a469107dbaf9d2391578435efc4b0}{Vmb\-Error\-Type {\bfseries Get\-User\-Set\-Default\-Selector} (User\-Set\-Default\-Selector\-Enum \&value)}\label{classMakoCamera_af19a469107dbaf9d2391578435efc4b0}
+
+\item 
+\hypertarget{classMakoCamera_af6e3d1f606d8c39620490b2a39d81b1b}{Vmb\-Error\-Type {\bfseries Set\-User\-Set\-Default\-Selector} (User\-Set\-Default\-Selector\-Enum value)}\label{classMakoCamera_af6e3d1f606d8c39620490b2a39d81b1b}
+
+\item 
+\hypertarget{classMakoCamera_a592a7f5e43fd6e0dc5da8c8ce778ba8d}{Vmb\-Error\-Type {\bfseries Get\-User\-Set\-Default\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a592a7f5e43fd6e0dc5da8c8ce778ba8d}
+
+\item 
+\hypertarget{classMakoCamera_a2ee58452c412f8c39ee0c42c8ab86bd9}{Vmb\-Error\-Type {\bfseries User\-Set\-Load} ()}\label{classMakoCamera_a2ee58452c412f8c39ee0c42c8ab86bd9}
+
+\item 
+\hypertarget{classMakoCamera_a65faf272cf08d055500c01873ca8e6d7}{Vmb\-Error\-Type {\bfseries Get\-User\-Set\-Load\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a65faf272cf08d055500c01873ca8e6d7}
+
+\item 
+\hypertarget{classMakoCamera_a37a54a0e5f15588880878ca5dd42d621}{Vmb\-Error\-Type {\bfseries User\-Set\-Save} ()}\label{classMakoCamera_a37a54a0e5f15588880878ca5dd42d621}
+
+\item 
+\hypertarget{classMakoCamera_ae9e5b8ff0fa2f854e3ba1b873eeb7b7c}{Vmb\-Error\-Type {\bfseries Get\-User\-Set\-Save\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae9e5b8ff0fa2f854e3ba1b873eeb7b7c}
+
+\item 
+\hypertarget{classMakoCamera_ab77159be73b68098b485991239cc1751}{Vmb\-Error\-Type {\bfseries Get\-User\-Set\-Selector} (User\-Set\-Selector\-Enum \&value)}\label{classMakoCamera_ab77159be73b68098b485991239cc1751}
+
+\item 
+\hypertarget{classMakoCamera_a1b6031373d413e4516e36650ecaa6c5f}{Vmb\-Error\-Type {\bfseries Set\-User\-Set\-Selector} (User\-Set\-Selector\-Enum value)}\label{classMakoCamera_a1b6031373d413e4516e36650ecaa6c5f}
+
+\item 
+\hypertarget{classMakoCamera_a6a380f844b121cfc0152708cb227139c}{Vmb\-Error\-Type {\bfseries Get\-User\-Set\-Selector\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a6a380f844b121cfc0152708cb227139c}
+
+\item 
+\hypertarget{classMakoCamera_a3ef094fb0089a3e3b4a06a58a47f63e1}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Filter\-Version} (std\-::string \&value)}\label{classMakoCamera_a3ef094fb0089a3e3b4a06a58a47f63e1}
+
+\item 
+\hypertarget{classMakoCamera_ac87293ab6c750f387e006fd40da838fa}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Filter\-Version\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ac87293ab6c750f387e006fd40da838fa}
+
+\item 
+\hypertarget{classMakoCamera_a5edf2d80c865874ed65c270c790177a0}{Vmb\-Error\-Type {\bfseries Get\-Multicast\-Enable} (bool \&value)}\label{classMakoCamera_a5edf2d80c865874ed65c270c790177a0}
+
+\item 
+\hypertarget{classMakoCamera_ac34ac1317ca8e19d63a0b99551981cf0}{Vmb\-Error\-Type {\bfseries Set\-Multicast\-Enable} (bool value)}\label{classMakoCamera_ac34ac1317ca8e19d63a0b99551981cf0}
+
+\item 
+\hypertarget{classMakoCamera_a54467b3aecbb15fb976260d7937292ff}{Vmb\-Error\-Type {\bfseries Get\-Multicast\-Enable\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a54467b3aecbb15fb976260d7937292ff}
+
+\item 
+\hypertarget{classMakoCamera_ab77bf7c7f3a47b74dae08dc363fc3a9a}{Vmb\-Error\-Type {\bfseries Get\-Multicast\-I\-P\-Address} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ab77bf7c7f3a47b74dae08dc363fc3a9a}
+
+\item 
+\hypertarget{classMakoCamera_abc5ab18c8c21c0e63d899bc2d9e057d3}{Vmb\-Error\-Type {\bfseries Set\-Multicast\-I\-P\-Address} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_abc5ab18c8c21c0e63d899bc2d9e057d3}
+
+\item 
+\hypertarget{classMakoCamera_a253de45097af01d7001749c8d13fc65c}{Vmb\-Error\-Type {\bfseries Get\-Multicast\-I\-P\-Address\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a253de45097af01d7001749c8d13fc65c}
+
+\item 
+\hypertarget{classMakoCamera_a5563d7babc16c35237c16794de5acbfd}{Vmb\-Error\-Type {\bfseries G\-V\-S\-P\-Adjust\-Packet\-Size} ()}\label{classMakoCamera_a5563d7babc16c35237c16794de5acbfd}
+
+\item 
+\hypertarget{classMakoCamera_abe9909763667cff463254da941a68012}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Adjust\-Packet\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_abe9909763667cff463254da941a68012}
+
+\item 
+\hypertarget{classMakoCamera_a4ffaf9747cf8fafc130d6ff6626a214e}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Burst\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a4ffaf9747cf8fafc130d6ff6626a214e}
+
+\item 
+\hypertarget{classMakoCamera_a85a9de65db13c3b914c64d960c8168f7}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Burst\-Size} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a85a9de65db13c3b914c64d960c8168f7}
+
+\item 
+\hypertarget{classMakoCamera_ad7be97084fb6e8171effd97a0454f9ce}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Burst\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ad7be97084fb6e8171effd97a0454f9ce}
+
+\item 
+\hypertarget{classMakoCamera_aaa66250ddad6537c19a2033326b7f431}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Driver} (G\-V\-S\-P\-Driver\-Enum \&value)}\label{classMakoCamera_aaa66250ddad6537c19a2033326b7f431}
+
+\item 
+\hypertarget{classMakoCamera_a4b5f7b3bf68193c9f57f2c97fa4ffa1e}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Driver} (G\-V\-S\-P\-Driver\-Enum value)}\label{classMakoCamera_a4b5f7b3bf68193c9f57f2c97fa4ffa1e}
+
+\item 
+\hypertarget{classMakoCamera_a23cc278e3a123d32392d668fa24a4b7e}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Driver\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a23cc278e3a123d32392d668fa24a4b7e}
+
+\item 
+\hypertarget{classMakoCamera_ae7556cd3a0ca20d6dc407087588eece8}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Host\-Receive\-Buffers} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ae7556cd3a0ca20d6dc407087588eece8}
+
+\item 
+\hypertarget{classMakoCamera_a9f2d181a157aa2f76b597180e411b092}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Host\-Receive\-Buffers} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a9f2d181a157aa2f76b597180e411b092}
+
+\item 
+\hypertarget{classMakoCamera_af1df84ce7539b6a0a2211d7674703dc4}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Host\-Receive\-Buffers\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af1df84ce7539b6a0a2211d7674703dc4}
+
+\item 
+\hypertarget{classMakoCamera_ad11eee83fc8ae9acf50c428f803a8f93}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Max\-Look\-Back} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ad11eee83fc8ae9acf50c428f803a8f93}
+
+\item 
+\hypertarget{classMakoCamera_afde515c087b96e893b48ea4455431e3c}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Max\-Look\-Back} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_afde515c087b96e893b48ea4455431e3c}
+
+\item 
+\hypertarget{classMakoCamera_a03b1ea9f6107c7adc5c9bb57c324b8bc}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Max\-Look\-Back\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a03b1ea9f6107c7adc5c9bb57c324b8bc}
+
+\item 
+\hypertarget{classMakoCamera_aa3917ad5ae475519a6b605daec16961c}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Max\-Requests} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aa3917ad5ae475519a6b605daec16961c}
+
+\item 
+\hypertarget{classMakoCamera_aecef8ee1e4f3271e674083f5f2491c61}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Max\-Requests} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_aecef8ee1e4f3271e674083f5f2491c61}
+
+\item 
+\hypertarget{classMakoCamera_afff9ac2f135aa863465846fe674b8ed5}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Max\-Requests\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_afff9ac2f135aa863465846fe674b8ed5}
+
+\item 
+\hypertarget{classMakoCamera_a94aae0f8aa43f319c93eb9d46d6e8fa5}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Max\-Wait\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a94aae0f8aa43f319c93eb9d46d6e8fa5}
+
+\item 
+\hypertarget{classMakoCamera_a82772e8438d2410f239281c0679b7517}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Max\-Wait\-Size} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a82772e8438d2410f239281c0679b7517}
+
+\item 
+\hypertarget{classMakoCamera_ab344ec2b890e217e8bdfad5194077514}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Max\-Wait\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab344ec2b890e217e8bdfad5194077514}
+
+\item 
+\hypertarget{classMakoCamera_a0064bf9f30aa6da65622657fd5d6903d}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Missing\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a0064bf9f30aa6da65622657fd5d6903d}
+
+\item 
+\hypertarget{classMakoCamera_a447352fe8f57f6c3b5c503b45450ae68}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Missing\-Size} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a447352fe8f57f6c3b5c503b45450ae68}
+
+\item 
+\hypertarget{classMakoCamera_ae9ef22d7546e4734c134619ae8bd7faa}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Missing\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae9ef22d7546e4734c134619ae8bd7faa}
+
+\item 
+\hypertarget{classMakoCamera_a45d878903b9a37b9722b2f6f4cb11f7d}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Packet\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a45d878903b9a37b9722b2f6f4cb11f7d}
+
+\item 
+\hypertarget{classMakoCamera_a700f4b5886608367cc4ad9970837efbc}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Packet\-Size} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a700f4b5886608367cc4ad9970837efbc}
+
+\item 
+\hypertarget{classMakoCamera_ae5d970ccbb5d494d4227e5ec17487818}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Packet\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ae5d970ccbb5d494d4227e5ec17487818}
+
+\item 
+\hypertarget{classMakoCamera_a8d8a9914dcf19b7a43fe62a072229e58}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Tilting\-Size} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a8d8a9914dcf19b7a43fe62a072229e58}
+
+\item 
+\hypertarget{classMakoCamera_a54b044999530ac6592283c6217fb3dee}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Tilting\-Size} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_a54b044999530ac6592283c6217fb3dee}
+
+\item 
+\hypertarget{classMakoCamera_adaf0578e9f2328ea2cc0215589ff20a0}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Tilting\-Size\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_adaf0578e9f2328ea2cc0215589ff20a0}
+
+\item 
+\hypertarget{classMakoCamera_ae09f2c03e80840c63974ac5e30da3a4c}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Timeout} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ae09f2c03e80840c63974ac5e30da3a4c}
+
+\item 
+\hypertarget{classMakoCamera_ac6b575d20a67964f124f0224147d9c7d}{Vmb\-Error\-Type {\bfseries Set\-G\-V\-S\-P\-Timeout} (Vmb\-Int64\-\_\-t value)}\label{classMakoCamera_ac6b575d20a67964f124f0224147d9c7d}
+
+\item 
+\hypertarget{classMakoCamera_a25a2362443ca57c3d5a39f1e7eeb328a}{Vmb\-Error\-Type {\bfseries Get\-G\-V\-S\-P\-Timeout\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a25a2362443ca57c3d5a39f1e7eeb328a}
+
+\item 
+\hypertarget{classMakoCamera_aa9f481496e9a4a2a838e98fd28b77fa0}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Delivered} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_aa9f481496e9a4a2a838e98fd28b77fa0}
+
+\item 
+\hypertarget{classMakoCamera_a9fcef15b63d9641cb8ea6055bf6b2818}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Delivered\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a9fcef15b63d9641cb8ea6055bf6b2818}
+
+\item 
+\hypertarget{classMakoCamera_a26bc0f2ddad9a98660acd3b77706aef6}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Dropped} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a26bc0f2ddad9a98660acd3b77706aef6}
+
+\item 
+\hypertarget{classMakoCamera_a001ebf9bd708bc9f51d2d8726067866e}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Dropped\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a001ebf9bd708bc9f51d2d8726067866e}
+
+\item 
+\hypertarget{classMakoCamera_a29e0bd565916c0f127ccddd3bfb07b54}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Rate} (double \&value)}\label{classMakoCamera_a29e0bd565916c0f127ccddd3bfb07b54}
+
+\item 
+\hypertarget{classMakoCamera_a8829f1fbe934727cdd337684f2175b33}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Rate\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a8829f1fbe934727cdd337684f2175b33}
+
+\item 
+\hypertarget{classMakoCamera_abd8c9a376a8002c81bc206cdd5f17733}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Rescued} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_abd8c9a376a8002c81bc206cdd5f17733}
+
+\item 
+\hypertarget{classMakoCamera_ab1409dbefbb28f30d431f97e196bad4a}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Rescued\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_ab1409dbefbb28f30d431f97e196bad4a}
+
+\item 
+\hypertarget{classMakoCamera_a3da78ac5e6af13bbcc15070fb48bc7d8}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Shoved} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a3da78ac5e6af13bbcc15070fb48bc7d8}
+
+\item 
+\hypertarget{classMakoCamera_af563498362dfb8b0bbe4ab1546c0e2b5}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Shoved\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af563498362dfb8b0bbe4ab1546c0e2b5}
+
+\item 
+\hypertarget{classMakoCamera_a6567d58730a9e2b1db3984f635ec8541}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Underrun} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a6567d58730a9e2b1db3984f635ec8541}
+
+\item 
+\hypertarget{classMakoCamera_a32bcb3ac7d14d3d50339006f7f5ddede}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Frame\-Underrun\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a32bcb3ac7d14d3d50339006f7f5ddede}
+
+\item 
+\hypertarget{classMakoCamera_a452c92bfd12e745cc04e24b7bb32aa11}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Local\-Rate} (double \&value)}\label{classMakoCamera_a452c92bfd12e745cc04e24b7bb32aa11}
+
+\item 
+\hypertarget{classMakoCamera_a7ef66a97f6e8323312acf5e3feaab8fe}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Local\-Rate\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a7ef66a97f6e8323312acf5e3feaab8fe}
+
+\item 
+\hypertarget{classMakoCamera_a66ba4f8f149a1aa5d56db30156a08358}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Errors} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a66ba4f8f149a1aa5d56db30156a08358}
+
+\item 
+\hypertarget{classMakoCamera_a22092c94d28d5d2c47a032c19c7571e1}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Errors\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a22092c94d28d5d2c47a032c19c7571e1}
+
+\item 
+\hypertarget{classMakoCamera_ab5c9ecf1b0e84d33d0614f7a399e30e5}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Missed} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_ab5c9ecf1b0e84d33d0614f7a399e30e5}
+
+\item 
+\hypertarget{classMakoCamera_a70055d33a88c72d2038c957f87330345}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Missed\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a70055d33a88c72d2038c957f87330345}
+
+\item 
+\hypertarget{classMakoCamera_a4e76ff01f5085258836b5e76981f629b}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Received} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a4e76ff01f5085258836b5e76981f629b}
+
+\item 
+\hypertarget{classMakoCamera_aa5ad4fec205206541cfc31cc3e0ca09b}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Received\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_aa5ad4fec205206541cfc31cc3e0ca09b}
+
+\item 
+\hypertarget{classMakoCamera_a717ac060fe1d4bb8b24fbe070fe14f4d}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Requested} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a717ac060fe1d4bb8b24fbe070fe14f4d}
+
+\item 
+\hypertarget{classMakoCamera_a719e765cd7f52822b4f6c81c5618cce8}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Requested\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_a719e765cd7f52822b4f6c81c5618cce8}
+
+\item 
+\hypertarget{classMakoCamera_a234da4bb0e5b161efb0bb00cb8ca988c}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Resent} (Vmb\-Int64\-\_\-t \&value)}\label{classMakoCamera_a234da4bb0e5b161efb0bb00cb8ca988c}
+
+\item 
+\hypertarget{classMakoCamera_afc179e45c86808293c9a8992add8f3cd}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Packet\-Resent\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_afc179e45c86808293c9a8992add8f3cd}
+
+\item 
+\hypertarget{classMakoCamera_a3f4690c075593ca8e7f46c0b4e0db48e}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Time\-Elapsed} (double \&value)}\label{classMakoCamera_a3f4690c075593ca8e7f46c0b4e0db48e}
+
+\item 
+\hypertarget{classMakoCamera_af8e293aa3dfe5c379709ef76376c6b14}{Vmb\-Error\-Type {\bfseries Get\-Stat\-Time\-Elapsed\-Feature} (A\-V\-T\-::\-Vmb\-A\-P\-I\-::\-Feature\-Ptr \&feature)}\label{classMakoCamera_af8e293aa3dfe5c379709ef76376c6b14}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Mako\-Camera.\-h\item 
+Mako\-Camera.\-cpp\end{DoxyCompactItemize}
