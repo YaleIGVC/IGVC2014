@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import sys
 import roslib
 import rospy
 import sys
@@ -11,6 +12,13 @@ import numpy as np
 
 class flagmaster():
     def __init__(self):
+
+        #Set stream to subscribe to
+        if(len(sys.argv) > 1):
+            camstring = sys.argv[1]
+        else:
+            camstring = "/usb_cam/image_raw"
+
         self.node_name = "flagmaster_flash"
         self.redpub = rospy.Publisher("/redflag", Image)
         self.bluepub = rospy.Publisher("/blueflag", Image)
@@ -32,7 +40,7 @@ class flagmaster():
         self.bridge = CvBridge()
 
         # Subscribe to the camera image
-        self.image_sub = rospy.Subscriber("/usb_cam/image_raw", Image, self.image_callback)
+        self.image_sub = rospy.Subscriber(camstring, Image, self.image_callback)
 
         rospy.loginfo("Waiting for image topic...")
 
