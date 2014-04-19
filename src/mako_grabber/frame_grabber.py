@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 from pymba import *
-import numpy as np
-from cv_bridge import CvBridge, CvBridgeError
-from sensor_msgs.msg import Image, CameraInfo
-import cv2 
+import numpy as np 
+from cv_bridge import CvBridge, CvBridgeError 
+from sensor_msgs.msg import Image, CameraInfo 
+import cv2
+from cv2 import cv
 import rospy
 import time
 
@@ -59,10 +60,11 @@ imgdata = np.ndarray(buffer = frame0.getBufferByteData(),
                                         frame0.width,
                                         1))
 
-cv2.imshow('result', imgdata), cv2.waitKey(0)
+debayer = cv2.cvtColor(imgdata, cv.CV_BayerBG2BGR)
+cv2.imshow('result', debayer), cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-rosimgpub = bridge.cv2_to_imgmsg(imgdata, "mono8")
+rosimgpub = bridge.cv2_to_imgmsg(debayer, "rgb8")
 
 pubtopic.publish(rosimgpub)
 
@@ -73,5 +75,7 @@ camera0.revokeAllFrames()
 
 # close camera
 camera0.closeCamera()
+print "did I make it?"
 
-# shutdown Vimba vimba.shutdown()
+# shutdown Vimba 
+vimba.shutdown()
