@@ -12,7 +12,8 @@ import numpy as np
 class flagmaster():
     def __init__(self):
         self.node_name = "flagmaster_flash"
-        self.pub = rospy.Publisher("/flagtopic", Image)
+        self.redpub = rospy.Publisher("/blueflag", Image)
+        self.bluepub = rospy.Publisher("/redflag", Image)
 
         rospy.init_node(self.node_name)
 
@@ -47,19 +48,30 @@ class flagmaster():
         frame = np.array(frame, dtype=np.uint8)
         
         # Process the frame using the process_image() function
-        display_image = self.process_image(frame)
+        processedimgs = self.process_image(frame)
 
-        nvimg = cv2.cvtColor(display_image, cv2.cv.CV_GRAY2BGR)
+
+        nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
 
         try:
             rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
 
-        self.pub.publish(rosimgpub)
+        self.bluepub.publish(rosimgpub)
+
+        nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
+
+        try:
+            rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
+        except CvBridgeError, e:
+            print e
+
+        self.redpub.publish(rosimgpub)
                        
-        # Display the image.
-        cv2.imshow(self.node_name, display_image)
+        # Display the images.
+        cv2.imshow(self.node_name + ' blue mask', processedimgs['blue'])
+        cv2.imshow(self.node_name + ' red mask', processedimgs['red'])
         
         # Process any keyboard commands
         self.keystroke = cv.WaitKey(5)
@@ -76,17 +88,22 @@ class flagmaster():
         lower_blue = np.array([80,50,50])
         upper_blue = np.array([130,255,255])
 
-        # Threshold the HSV image to get only blue colors
-        mask = cv2.inRange(hsv, lower_blue, upper_blue)
+        # define range of red color in HSV
+        lower_red = np.array([0,160,120])
+        upper_red = np.array([10,255,255])
+
+        # Thresholding
+        bluemask = cv2.inRange(hsv, lower_blue, upper_blue)
+        redmask = cv2.inRange(hsv, lower_red, upper_red)
 
         # Bitwise-AND mask and original image
-        res = cv2.bitwise_and(frame,frame, mask= mask)
+        #res = cv2.bitwise_and(frame,frame, mask= mask)
 
         #cv2.imshow('frame',frame)
         #cv2.imshow('mask',mask)
         #cv2.imshow('res',res)
         
-        return mask
+        return {'blue':bluemask, 'red':redmask}
     
     def cleanup(self):
         print "Shutting down vision node."
