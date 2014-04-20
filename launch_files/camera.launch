@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="usb_cam" type="usb_cam_node" name="usb_cam_node"/>
+    <node pkg="flagmaster" type="flagmaster.py" name="flagmaster"/>
+</launch>

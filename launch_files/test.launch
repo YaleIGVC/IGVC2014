@@ -12,6 +12,7 @@
     <!--<node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />-->
     <node pkg="tf" type="static_transform_publisher" name="baselink_laserbase_tf" args=".47 .095 .342 0 0 0 base_link laser_base 1000" />
     <node pkg="tf" type="static_transform_publisher" name="laserbase_laser_tf" args="0 0 0 0 0 0 laser_base laser 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
     <!--laser_base reperesents center of pitch rotation of lrf, and laser represents center of lrf-->
 
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
@@ -27,18 +28,18 @@
         <param name="output_frame" value="odom_combined" />
     </node>
 
-    <node pkg="gmapping" type="slam_gmapping" name="mapping">
+    <!--<node pkg="gmapping" type="slam_gmapping" name="mapping">-->
         <!--<param name="srr" value="0"/>-->
         <!--<param name="srt" value="0"/>-->
         <!--<param name="str" value="0"/>-->
         <!--<param name="stt" value="0"/>-->
-        <param name="odom_frame" value="odom_combined" />
+        <!--<param name="odom_frame" value="odom_combined" />-->
         <!--<param name="map_update_interval" value="0.5"/>-->
         <!--<param name="linearUpdate" value="0.05"/>-->
         <!--<param name="angularUpdate" value="0.02"/>-->
         <!--<param name="transform_publish_period" value="0.05"/>-->
         <!--<param name="delta" value="0.02" />-->
-    </node>
+    <!--</node>-->
 
     <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
     <node pkg="rviz" type="rviz" name="rviz"/>
