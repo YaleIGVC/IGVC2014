@@ -10,6 +10,8 @@
 #include <ctime>
 #include <sys/time.h>
 
+#include <ros/console.h>
+
 using namespace std;
 
 class ImageUnwarper {
@@ -93,13 +95,13 @@ class ImageUnwarper {
 
     bool setup() {
         // Get private configuration parameters
-        nh_.param<string>("input_topic", input_topic_, "/camera/image_raw");
+        nh_.param<string>("input_topic", input_topic_, "/raw_image");
         nh_.param<string>("output_topic", output_topic_,
                 "/image_unwarp/output_video");
 
         // Get calibration parameters
-        if (!(nh_.hasParam("/center_x") && nh_.hasParam("/center_y")
-                && nh_.hasParam("/polynomial"))) {
+        if (!(nh_.hasParam("/image_unwarp/center_x") && nh_.hasParam("/image_unwarp/center_y")
+                && nh_.hasParam("/image_unwarp/polynomial"))) {
             ROS_ERROR("Could not find calibration parameters. Did you run "
                     "image_unwarp calibrate?");
             return false;
@@ -107,6 +109,7 @@ class ImageUnwarper {
         nh_.getParam("/image_unwarp/center_x", center_x_);
         nh_.getParam("/image_unwarp/center_y", center_y_);
         nh_.getParam("/image_unwarp/polynomial", polynomial_);
+
 
         // Subscribe to incoming images and publish unwarped images
         image_sub_ = it_.subscribe(input_topic_, 1,
@@ -147,6 +150,7 @@ class ImageUnwarper {
         int width = input_image->image.cols;
         int height = input_image->image.rows;
         int channels = input_image->image.channels();
+        ROS_DEBUG("Width %d, height %d\n",width, height);
         uint8_t *input_data = (uint8_t *)input_image->image.data;
         uint8_t *output_data = (uint8_t *)output_image->image.data;
         uint64 t2 = get_time();
