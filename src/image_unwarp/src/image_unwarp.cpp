@@ -27,8 +27,11 @@ class ImageUnwarper {
     string input_topic_, output_topic_;
 
     // Calibration parameters
-    int center_x_, center_y_;
+    int center_x_, center_y_, width_, height_;
     vector<double> polynomial_;
+
+    // Transform matrix
+    vector< vector<cv::Point2i> > transform_;
 
     /**
      * Find the cartesian distance between two points.
@@ -81,6 +84,16 @@ class ImageUnwarper {
         return sum;
     }
 
+    /**
+     * Helper function for benchmarking code segments.
+     *
+     * Running this function twice gives two times, of which the latter can be
+     * subtracted from the former to find the time elapsed in milliseconds for
+     * the code inbetween.
+     *
+     * Returns:
+     *  The time of day in milliseconds.
+     */
     uint64 get_time() {
         struct timeval tv;
         gettimeofday(&tv, NULL);
@@ -93,6 +106,12 @@ class ImageUnwarper {
     public:
     ImageUnwarper() : nh_("~"), it_(nh_) {}
 
+    /**
+     * Setup the topics and parameters for the node.
+     *
+     * Returns:
+     *  Whether or not setup was successful
+     */
     bool setup() {
         // Get private configuration parameters
         nh_.param<string>("input_topic", input_topic_, "/raw_image");
@@ -106,6 +125,8 @@ class ImageUnwarper {
                     "image_unwarp calibrate?");
             return false;
         }
+        nh_.getParam("/image_unwarp/width", width_);
+        nh_.getParam("/image_unwarp/height", height_);
         nh_.getParam("/image_unwarp/center_x", center_x_);
         nh_.getParam("/image_unwarp/center_y", center_y_);
         nh_.getParam("/image_unwarp/polynomial", polynomial_);
@@ -115,7 +136,37 @@ class ImageUnwarper {
         image_sub_ = it_.subscribe(input_topic_, 1,
                 &ImageUnwarper::process_image, this);
         image_pub_ = it_.advertise(output_topic_, 1);
+
+        // Create the transform matrix
+        create_transform();
         return true;
+    }
+
+    /**
+     * Create the transform matrix that is used to unwarp images.
+     */
+    void create_transform() {
+        transform_.resize(width_);
+        for (int i = 0; i < width_; i++) {
+            transform_[i].resize(height_);
+            for (int j = 0; j < height_; j++) {
+                // Calculate the distance and angle from (i, j) to the center
+                double dist = cart_dist(i, j, center_x_, center_y_);
+                double theta = cart_angle(i, -1 * j, center_x_, -1 * center_y_);
+
+                // Calculate the (x, y) of the point that should be at (i, j)
+                double new_dist = polynomial_function(polynomial_, dist);
+                int x = round(center_x_ + new_dist * cos(theta));
+                int y = -1 * round(center_y_ + new_dist * sin(theta));
+
+                // If that point is defined in the input, propogate it to the transform
+                if (x >= 0 && x < width_ && y >= 0 && y < height_) {
+                    transform_[i][j].x = x;
+                    transform_[i][j].y = y;
+                } else
+                    transform_[i][j].x = transform_[i][j].y = -1;
+            }
+        }
     }
 
     /**
@@ -145,31 +196,17 @@ class ImageUnwarper {
             return;
         }
 
-        // Fill the output image based on input_image and the calibration parameters (680ms)
-        uint64 t1 = get_time();
-        int width = input_image->image.cols;
-        int height = input_image->image.rows;
+        // Fill the output image based on input_image and the calibration parameters
         int channels = input_image->image.channels();
-        ROS_DEBUG("Width %d, height %d\n",width, height);
         uint8_t *input_data = (uint8_t *)input_image->image.data;
         uint8_t *output_data = (uint8_t *)output_image->image.data;
-        uint64 t2 = get_time();
-        cout << t1 << " " << t2 << " " << t2 - t1 << endl;
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                // Calculate the distance and angle from (i, j) to the center
-                double dist = cart_dist(i, j, center_x_, center_y_); // (44ms)
-                double theta = cart_angle(i, j, center_x_, center_y_); // (98ms)
-
-                // Calculate the (x, y) of the point that should be at (i, j)
-                double new_dist = polynomial_function(polynomial_, dist); // (341ms)
-                int x = round(center_x_ + new_dist * cos(theta)); // (75ms)
-                int y = round(center_y_ + new_dist * sin(theta)); // (75ms)
-
-                // If that point is defined in the input, propogate it to the output (<7ms)
-                if (x >= 0 && x < width && y >= 0 && y < height) {
-                    uchar *pixel = input_data + (x + y * width) * channels;
-                    uchar *new_pixel = output_data + (i + j * width) * channels;
+        for (int i = 0; i < width_; i++) {
+            for (int j = 0; j < height_; j++) {
+                // If that point is defined in the input, propogate it to the output
+                if (transform_[i][j].x >= 0 && transform_[i][j].y >= 0) {
+                    uchar *pixel = input_data + (transform_[i][j].x
+                            + transform_[i][j].y * width_) * channels;
+                    uchar *new_pixel = output_data + (i + j * width_) * channels;
                     memcpy(new_pixel, pixel, channels * sizeof(uchar));
                 }
             }
