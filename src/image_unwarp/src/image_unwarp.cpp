@@ -152,12 +152,12 @@ class ImageUnwarper {
             for (int j = 0; j < height_; j++) {
                 // Calculate the distance and angle from (i, j) to the center
                 double dist = cart_dist(i, j, center_x_, center_y_);
-                double theta = cart_angle(i, -1 * j, center_x_, -1 * center_y_);
+                double theta = cart_angle(center_x_, -1 * center_y_, i, -1 * j);
 
                 // Calculate the (x, y) of the point that should be at (i, j)
                 double new_dist = polynomial_function(polynomial_, dist);
                 int x = round(center_x_ + new_dist * cos(theta));
-                int y = -1 * round(center_y_ + new_dist * sin(theta));
+                int y = -1 * round(-1 * center_y_ + new_dist * sin(theta));
 
                 // If that point is defined in the input, propogate it to the transform
                 if (x >= 0 && x < width_ && y >= 0 && y < height_) {
@@ -204,6 +204,7 @@ class ImageUnwarper {
             for (int j = 0; j < height_; j++) {
                 // If that point is defined in the input, propogate it to the output
                 if (transform_[i][j].x >= 0 && transform_[i][j].y >= 0) {
+                    cout << i << " " << j << " " << transform_[i][j].x << " " << transform_[i][j].y << endl;
                     uchar *pixel = input_data + (transform_[i][j].x
                             + transform_[i][j].y * width_) * channels;
                     uchar *new_pixel = output_data + (i + j * width_) * channels;
