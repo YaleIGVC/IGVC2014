@@ -37,15 +37,19 @@ def callback_laser(msg_in):
         print e
     angles = euler_from_quaternion(rot)
 
-    originAngles = euler_from_quaternion(Origin.orientation)
+    quat = [Origin.orientation.x,
+            Origin.orientation.y,
+            Origin.orientation.z,
+            Origin.orientation.w]
+    originAngles = euler_from_quaternion(quat)
 
     for r in ranges:
-        if not math.isnan(r):
+        if not math.isnan(r) or r>msg_in.range_max:
             x = trans[0] - Origin.position.x
             y = trans[1] - Origin.position.y
 
-            x = y + (r/math.cos(angles[2]+angle_min-originAngles[2]))
-            y = y + (r/math.sin(angles[2]+angle_min-originAngles[2]
+            x = x + (r*math.cos(angles[2]+angle_min-originAngles[2]))
+            y = y + (r*math.sin(angles[2]+angle_min-originAngles[2]))
 
             x = int(round(x*(1/Resolution)))
             y = int(round(y*(1/Resolution))) 
@@ -88,8 +92,8 @@ if __name__=='__main__':
         print "Fail!"
         print e
     point = Point()
-    point.x = trans[0]-((Width/2)*.05)
-    point.y = trans[1]-((Height/2)*.05)
+    point.x = trans[0] - ((Width/2)*.05)
+    point.y = trans[1]- ((Height/2)*.05)
     point.z = 0
 
     rotation = Quaternion()

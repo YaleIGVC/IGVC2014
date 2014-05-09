@@ -39,7 +39,7 @@ class FrameGrabber():
         self.camera.openCamera()
         rospy.loginfo("Opened camera!")
 
-        # set the value of a feature
+        # set the feature values
         self.camera.AcquisitionMode = 'SingleFrame'
 
         # Start capture!!!
@@ -80,11 +80,11 @@ class FrameGrabber():
     def cleanup(self):
         # clean up after capture self.camera.endCapture()
         self.camera.revokeAllFrames()
-        
+
         # close camera
         self.camera.closeCamera()
-        
-        # shutdown Vimba 
+
+        # shutdown Vimba
         self.vimba.shutdown()
 
 if __name__ == '__main__':
