@@ -2,12 +2,11 @@
 <package>
   <name>frame_grabber</name>
   <version>0.0.0</version>
-  <description>The frame_grabber node</description>
+  <description>The Yale IGVC frame_grabber node</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
-  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="info@yaleigvc.com">inve</maintainer>
+  <maintainer email="alex@alejandrocarrillo.net">Alejandro Carrillo</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -19,7 +18,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/oem628</url> -->
+  <url type="website">http://twitter.com/yaleinve</url>
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -42,8 +41,14 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>tf2_msgs</build_depend>
+  <build_depend>tf</build_depend>
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>tf2_msgs</run_depend>
+  <run_depend>tf</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
