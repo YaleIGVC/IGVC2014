@@ -4,6 +4,7 @@ from pymba import *
 import numpy as np 
 from cv_bridge import CvBridge, CvBridgeError 
 from sensor_msgs.msg import Image, CameraInfo 
+from frame_grabber.msg import ImageWithTF
 import cv2
 from cv2 import cv
 import rospy
@@ -20,6 +21,9 @@ class FrameGrabber():
 
         # CvBridge
         self.bridge = CvBridge()
+
+        # ROS Transforms
+        self.listener = tf.TransformListener()
 
         #ROS
         self.pubtopic = rospy.Publisher("/raw_image", Image)
