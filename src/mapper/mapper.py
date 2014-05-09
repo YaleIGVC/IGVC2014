@@ -3,6 +3,7 @@ import math
 import rospy
 import tf
 from tf.transformations import euler_from_quaternion
+from tf.transformations import quaternion_from_euler
 import tf.msg
 import geometry_msgs.msg
 from sensor_msgs.msg import LaserScan
@@ -22,6 +23,7 @@ def callback_laser(msg_in):
     global Origin
     global Map
     global mapData
+    global seq
 
 
     angle_min = msg_in.angle_min
@@ -42,6 +44,8 @@ def callback_laser(msg_in):
             Origin.orientation.z,
             Origin.orientation.w]
     originAngles = euler_from_quaternion(quat)
+
+    print ranges
 
     for r in ranges:
         if not math.isnan(r) or r>msg_in.range_max:
@@ -65,8 +69,11 @@ def callback_laser(msg_in):
 
         angle_min = angle_min + angle_increment 
 
-    Map.header.stamp = msg_in.header.stamp
+    seq = seq + 1
+    Map.header.seq = seq 
+    Map.header.stamp = rospy.get_rostime()
     Map.header.frame_id = 'map'
+    Map.info.map_load_time = rospy.get_rostime()
     Map.data = mapData
 
     rospy.loginfo("publishing a map")
@@ -78,23 +85,30 @@ if __name__=='__main__':
     global Origin
     global Map
     global mapData
+    global seq
 
     rospy.init_node('mapper')
     time = rospy.get_rostime()
 
     tf_listener = tf.TransformListener()
-
+    
+    seq = 0;
+    
     Origin = Pose()
     try:
-         tf_listener.waitForTransform("odom_combined", "laser", rospy.Time(0), rospy.Duration(3.0))
+         tf_listener.waitForTransform("odom_combined", "base_link", rospy.Time(0), rospy.Duration(3.0))
          (trans,rot) = tf_listener.lookupTransform("odom_combined", "laser", rospy.Time(0))
     except (tf.LookupException, tf.ConnectivityException) as e:
         print "Fail!"
         print e
+
+    angles = euler_from_quaternion(rot)
+    rot = quaternion_from_euler(0.0, 0.0, angles[2])
+
     point = Point()
     point.x = trans[0] - ((Width/2)*.05)
     point.y = trans[1]- ((Height/2)*.05)
-    point.z = 0
+    point.z = trans[2]
 
     rotation = Quaternion()
     rotation.x=rot[0]
@@ -106,7 +120,7 @@ if __name__=='__main__':
     Origin.orientation = rotation
 
     metaData = MapMetaData()
-    metaData.map_load_time = time
+    metaData.map_load_time = rospy.get_rostime()
     metaData.width = Width 
     metaData.height = Height
     metaData.resolution = Resolution
