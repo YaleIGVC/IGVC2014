@@ -12,7 +12,7 @@ find_package(catkin REQUIRED tf
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   ImageWithTF.msg
+   ImageWithTransform.msg
  )
 
 ## System dependencies are found with CMake's conventions
@@ -69,7 +69,6 @@ find_package(catkin REQUIRED tf
    std_msgs
    geometry_msgs
    sensor_msgs
-   tf2_msgs
    tf
  )
 
@@ -85,7 +84,7 @@ find_package(catkin REQUIRED tf
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES frame_grabber
-  CATKIN_DEPENDS rospy std_msgs tf2_msgs tf sensor_msgs
+  CATKIN_DEPENDS rospy std_msgs tf sensor_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 
