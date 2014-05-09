@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(frame_grabber)
+project(frame_grabber_node)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -12,11 +12,7 @@ find_package(catkin REQUIRED tf
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-<<<<<<< HEAD
-   ImageWithTF.msg
-=======
    ImageWithTransform.msg
->>>>>>> 3ab7f554eeda6fb14e95ead0f1afe79ce7f15129
  )
 
 ## System dependencies are found with CMake's conventions
@@ -73,10 +69,7 @@ find_package(catkin REQUIRED tf
    std_msgs
    geometry_msgs
    sensor_msgs
-<<<<<<< HEAD
    tf2_msgs
-=======
->>>>>>> 3ab7f554eeda6fb14e95ead0f1afe79ce7f15129
    tf
  )
 
@@ -92,11 +85,7 @@ find_package(catkin REQUIRED tf
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES frame_grabber
-<<<<<<< HEAD
-  CATKIN_DEPENDS rospy std_msgs tf2_msgs tf sensor_msgs
-=======
   CATKIN_DEPENDS rospy std_msgs tf sensor_msgs geometry_msgs
->>>>>>> 3ab7f554eeda6fb14e95ead0f1afe79ce7f15129
 #  DEPENDS system_lib
 )
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>frame_grabber</name>
+  <name>frame_grabber_node</name>
   <version>0.0.0</version>
   <description>The Yale IGVC frame_grabber node</description>
 
