@@ -64,9 +64,9 @@ def callback_laser(msg_in):
 
             else:
                 index = ((y*Width)+x)
-                if mapData[index] < 100:
+                #if mapData[index] < 100:
                     #mapData[index] = mapData[index] + 5
-                    mapData[index] = 100
+                mapData[index] = 100
             
         angle_min = angle_min + angle_increment 
 
