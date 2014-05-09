@@ -28,13 +28,14 @@ def callback_laser(msg_in):
     angle_max = msg_in.angle_max
     angle_increment = msg_in.angle_increment
     max_range = msg_in.range_max
+    laser_ranges = [0]
     laser_ranges = msg_in.ranges
 
     try:
         tf_listener.waitForTransform("odom_combined", "laser", rospy.Time(0), rospy.Duration(3.0))
         (trans,rot) = tf_listener.lookupTransform("odom_combined", "laser", rospy.Time(0))
     except (tf.LookupException, tf.ConnectivityException) as e:
-        print print "odom_combined to laser tf lookup failure"
+        print "odom_combined to laser tf lookup failure"
         print e
     angles = euler_from_quaternion(rot)
 
@@ -44,9 +45,9 @@ def callback_laser(msg_in):
             Origin.orientation.w]
     originAngles = euler_from_quaternion(quat)
 
-    print laser_ranges
-
     for r in laser_ranges:
+        x = 0
+        y = 0
         if not math.isnan(r) or r>max_range:
             x = trans[0] - Origin.position.x
             y = trans[1] - Origin.position.y
@@ -65,8 +66,6 @@ def callback_laser(msg_in):
                 if mapData[index] < 100:
                     #mapData[index] = mapData[index] + 5
                     mapData[index] = 100
-        else:
-            print "outside range"
             
         angle_min = angle_min + angle_increment 
 
@@ -124,7 +123,7 @@ if __name__=='__main__':
 
     Map = OccupancyGrid()
     Map.info = metaData
-    mapData = [0.0]*(Width*Height)
+    mapData = [0]*(Width*Height)
 
     
     pub_map = rospy.Publisher("/map", OccupancyGrid)
