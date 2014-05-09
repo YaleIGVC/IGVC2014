@@ -4,7 +4,8 @@ from pymba import *
 import numpy as np 
 from cv_bridge import CvBridge, CvBridgeError 
 from sensor_msgs.msg import Image, CameraInfo 
-from frame_grabber.msg import ImageWithTF
+from frame_grabber.msg import ImageWithTransform
+from geometry_msgs.msg import Transform
 import cv2
 from cv2 import cv
 import rospy
@@ -26,7 +27,8 @@ class FrameGrabber():
         self.listener = tf.TransformListener()
 
         #ROS
-        self.pubtopic = rospy.Publisher("/raw_image", Image)
+        self.rawimgtopic = rospy.Publisher("/raw_image", Image)
+        self.tfimgtopic = rospy.Publisher("/raw_image_with_tf", Image)
         rospy.init_node("frame_grabber")
         rospy.on_shutdown(self.cleanup)
 
@@ -63,6 +65,12 @@ class FrameGrabber():
         self.camera.runFeatureCommand('AcquisitionStop')
         self.frame0.waitFrameCapture()
 
+        # Grab TF!!
+        xform = Transform()
+
+        self.listener.waitForTransform("odom_combined", "base_footprint", rospy.Time(0), rospy.Duration(3.0))
+        (xform.translation,xform.rotation) = self.listener.lookupTransform('/odom_combined', '/base_footprint', rospy.Time(0))
+
         # Use NumPy for fast image display
         imgdata = np.ndarray(buffer = self.frame0.getBufferByteData(),
                                        dtype = np.uint8,
@@ -79,7 +87,14 @@ class FrameGrabber():
         except CvBridgeError, e:
             print e
 
-        self.pubtopic.publish(rosimgpub)
+        # Assemble ImageWithTransform package
+        tfImg = ImageWithTransform()
+        tfImg.tf = xform
+        tfImg.image = rosimgpub
+
+        # Publish!!
+        self.rawimgtopic.publish(rosimgpub)
+        self.tfimgtopic.publish(rosimgpub)
 
     def cleanup(self):
         # clean up after capture self.camera.endCapture()
