@@ -45,7 +45,7 @@ class FrameGrabber():
         self.camera.openCamera()
         rospy.loginfo("Opened camera!")
 
-        # set the value of a feature
+        # set the feature values
         self.camera.AcquisitionMode = 'SingleFrame'
 
         # Start capture!!!

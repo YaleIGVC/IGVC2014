@@ -28,7 +28,7 @@
         <param name="output_frame" value="odom_combined" />
     </node>
 
-    <node pkg="mapper" type="mapper.py" name="mapper"/>
+   <!--<node pkg="mapper" type="mapper.py" name="mapper"/>-->
 
 <!--<node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>-->
     <node pkg="rviz" type="rviz" name="rviz"/>

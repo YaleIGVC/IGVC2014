@@ -7,12 +7,12 @@ int main(int argc, char **argv) {
 
     // Set calibration parameters
     std::vector<double> polynomial = std::vector<double>();
-    polynomial.push_back(1);
-    polynomial.push_back(5);
-    polynomial.push_back(.001);
-    nh.setParam("/image_unwarp/center_x", 256);
-    nh.setParam("/image_unwarp/center_y", 256);
-    nh.setParam("/image_unwarp/width", 512);
-    nh.setParam("/image_unwarp/height", 512);
+    polynomial.push_back(0.009);
+    polynomial.push_back(0); // Linear term
+    polynomial.push_back(0);
+    nh.setParam("/image_unwarp/center_x", 1024);
+    nh.setParam("/image_unwarp/center_y", 544);
+    nh.setParam("/image_unwarp/width", 2048);
+    nh.setParam("/image_unwarp/height", 1088);
     nh.setParam("/image_unwarp/polynomial", polynomial);
 }
