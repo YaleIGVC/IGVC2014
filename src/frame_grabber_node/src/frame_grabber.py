@@ -9,7 +9,7 @@ import cv2
 from cv2 import cv
 import rospy
 import time
-from frame_grabber.msg import ImageWithTransform
+from frame_grabber_node.msg import ImageWithTransform
 
 #class FrameGrabber():
     #def __init__(self):
