@@ -36,13 +36,14 @@ def callback_laser(msg_in):
         (trans,rot) = tf_listener.lookupTransform("odom_combined", "laser", rospy.Time(0))
     except (tf.LookupException, tf.ConnectivityException) as e:
         print "odom_combined to laser tf lookup failure"
-        print e
+
     angles = euler_from_quaternion(rot)
 
     quat = [Origin.orientation.x,
             Origin.orientation.y,
             Origin.orientation.z,
             Origin.orientation.w]
+
     originAngles = euler_from_quaternion(quat)
 
     for r in laser_ranges:
@@ -95,7 +96,6 @@ if __name__=='__main__':
          (trans,rot) = tf_listener.lookupTransform("odom_combined", "laser", rospy.Time(0))
     except (tf.LookupException, tf.ConnectivityException) as e:
         print "odom_combined to base_link tf lookup failure"
-        print e
 
     angles = euler_from_quaternion(rot)
     rot = quaternion_from_euler(0.0, 0.0, angles[2])
