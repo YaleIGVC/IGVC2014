@@ -42,20 +42,12 @@
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>sensor_msgs</build_depend>
-<<<<<<< HEAD
-  <build_depend>tf2_msgs</build_depend>
-=======
   <build_depend>geometry_msgs</build_depend>
->>>>>>> 3ab7f554eeda6fb14e95ead0f1afe79ce7f15129
   <build_depend>tf</build_depend>
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>sensor_msgs</run_depend>
-<<<<<<< HEAD
-  <run_depend>tf2_msgs</run_depend>
-=======
   <run_depend>geometry_msgs</run_depend>
->>>>>>> 3ab7f554eeda6fb14e95ead0f1afe79ce7f15129
   <run_depend>tf</run_depend>
 
 
