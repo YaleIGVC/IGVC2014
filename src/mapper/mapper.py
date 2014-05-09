@@ -37,19 +37,20 @@ def callback_laser(msg_in):
         print e
     angles = euler_from_quaternion(rot)
 
+    originAngles = euler_from_quaternion(Origin.orientation)
 
     for r in ranges:
         if not math.isnan(r):
             x = trans[0] - Origin.position.x
             y = trans[1] - Origin.position.y
 
-            x = y + (r/math.cos(angles[2]+angle_min))
-            y = y + (r/math.sin(angles[2]+angle_min))
+            x = y + (r/math.cos(angles[2]+angle_min-originAngles[2]))
+            y = y + (r/math.sin(angles[2]+angle_min-originAngles[2]
 
             x = int(round(x*(1/Resolution)))
             y = int(round(y*(1/Resolution))) 
 
-            if x<0 or x>Width or y<0 or y>Height:
+            if x<0 or x>(Width-1) or y<0 or y>(Height-1):
                 print "Outside map bounds!!!!"
 
             else:
