@@ -29,7 +29,6 @@ def callback_laser(msg_in):
     angle_max = msg_in.angle_max
     angle_increment = msg_in.angle_increment
     max_range = msg_in.range_max
-    laser_ranges = [0]
     laser_ranges = msg_in.ranges
 
     try:
