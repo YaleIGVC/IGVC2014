@@ -7,7 +7,7 @@ import time
 
 start_time = time.time()
 
-image = cv2.imread('t5.bmp')
+image = cv2.imread('t2.bmp')
 # image = cv2.resize(image, (0,0), fx=0.5, fy=0.5) 
 image = image[79:870, 545:1556]
 # cv2.imshow('original_image', image)
@@ -41,9 +41,9 @@ kernel = np.ones((5,5),np.uint8)
 # erosion = cv2.erode(thresh, kernel, iterations = 1)
 morph = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
-minLineLength = 100
-maxLineGap = 10
-lines = cv2.HoughLinesP(morph,1,np.pi/180,100,minLineLength,maxLineGap)
+# minLineLength = 100
+# maxLineGap = 10
+# lines = cv2.HoughLinesP(morph,1,np.pi/180,100,minLineLength,maxLineGap)
 # for x1,y1,x2,y2 in lines[0]:
 #     cv2.line(image,(x1,y1),(x2,y2),(0,255,0),2)
 
@@ -60,7 +60,10 @@ lines = cv2.HoughLinesP(morph,1,np.pi/180,100,minLineLength,maxLineGap)
 thresh = 50
 im_bw = cv2.threshold(morph, thresh, 255, cv2.THRESH_BINARY)[1]
 dist_transform = cv2.distanceTransform(im_bw,cv2.cv.CV_DIST_L2,5)
-
+cv2.imwrite('output2.jpg', im_bw)
+contours,hierarchy = cv2.findContours(im_bw, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+# pdb.set_trace()
+# cv2.imshow('contours', hierarchy)
 # j = 0
 # for (x,y), value in np.ndenumerate(dist_transform):
 #     if dist_transform[x][y] < 5:
