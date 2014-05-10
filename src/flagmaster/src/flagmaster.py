@@ -17,7 +17,7 @@ class flagmaster():
         if(len(sys.argv) > 1):
             camstring = sys.argv[1]
         else:
-            camstring = "/usb_cam/image_raw"
+            camstring = "/raw_image"
 
         self.node_name = "flagmaster_flash"
         self.redpub = rospy.Publisher("/redflag", Image)
