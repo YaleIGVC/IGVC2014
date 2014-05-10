@@ -6,5 +6,6 @@ frames.pdf
 \#*
 build/
 devel/
-
-
+*.jpg
+*.bmp
+*.jpeg
