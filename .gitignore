@@ -9,3 +9,4 @@ devel/
 *.jpg
 *.bmp
 *.jpeg
+.DS_Store
