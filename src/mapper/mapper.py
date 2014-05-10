@@ -16,7 +16,7 @@ from geometry_msgs.msg import Quaternion
 Resolution = .05 #meters per cell
 Width = 2000 #100 meters * 20 cells per meter
 Height = 2000 #100 meters * 20 cells per meter
-MinLaserRange = .5 #minimum distance for obstacles to be considered
+MinLaserRange = .2 #minimum distance for obstacles to be considered
 
 def callback_laser(msg_in):
     global pub_map
@@ -50,7 +50,7 @@ def callback_laser(msg_in):
     for r in laser_ranges:
         x = 0
         y = 0
-        if not math.isnan(r) or r>max_range or r<MinLaserRange:
+        if (not math.isnan(r)) and (r < max_range) and (r > MinLaserRange):
             x = trans[0] - Origin.position.x
             y = trans[1] - Origin.position.y
 
