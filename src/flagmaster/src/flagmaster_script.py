@@ -74,7 +74,11 @@ class flagmaster():
         except CvBridgeError, e:
             print e
 
-        self.pub.publish(redimgpub, blueimgpub)
+        pubfin = detectedflags()
+        pubfin.redflags = redimgpub
+        pubfin.blueflags = blueimgpub
+
+        self.pub.publish(pubfin)
                        
         # Display the images.
         cv2.imshow(self.node_name + ' blue mask', processedimgs['blue'])
