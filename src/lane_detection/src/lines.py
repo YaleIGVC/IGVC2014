@@ -22,9 +22,9 @@ class LaneDetector():
             frame = self.bridge.imgmsg_to_cv2(ros_image.image, "bgr8")
         except CvBridgeError, e:
             print e
+        start_time = time.time()
 
-
-        image = image[79:870, 545:1556]
+        image = frame[79:870, 545:1556]
         # cv2.imshow('original_image', image)
 
         # minColor = np.array([0, 0, 200],np.uint8)
@@ -77,21 +77,21 @@ class LaneDetector():
         dist_transform = cv2.distanceTransform(im_bw,cv2.cv.CV_DIST_L2,5)
         # cv2.imwrite('output2.jpg', im_bw)
         # contours,hierarchy = cv2.findContours(im_bw, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        
+
+        new_bgr= cv2.cvtColor(im_bw,cv2.COLOR_GRAY2RGB)
+
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(im_bw, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(new_bgr, "bgr8")
         except CvBridgeError, e:
             print e
 
         finaloutput = ImageWithTransform()
         finaloutput.tf = ros_image.tf
-        finaloutput.image = rosimgpub   
-
+        finaloutput.image = rosimgpub
+        # print new_bgr
         self.output.publish(finaloutput.image)
-        rospy.loginfo("Published lanes")=
-
+        rospy.loginfo("Published lanes")
+        print time.time() - start_time, "seconds"
 if __name__=='__main__':
     LaneDetector()
     rospy.spin()
-
- 

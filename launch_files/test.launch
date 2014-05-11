@@ -1,7 +1,9 @@
  <launch>
     <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
-    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" />
+    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" >
+        <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
+    </node>
 
     <node pkg="urg_node" type="urg_node" name="short_range_laser">
         <param name="angle_min" value="-1.4" />
@@ -30,7 +32,7 @@
 
    <node pkg="mapper" type="mapper.py" name="mapper"/>
 
-   <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
+  <!-- <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>-->
    <node pkg="rviz" type="rviz" name="rviz"/>
 
 
