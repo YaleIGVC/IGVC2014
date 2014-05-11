@@ -21,12 +21,17 @@ MinLaserRange = .2 #minimum distance for obstacles to be considered
 
 def callback_laser(msg_in):
     global pub_map
+    global pub_map_metadata
+    global metaData
     global tf_listener
     global Origin
     global Map
     global mapData
 
+<<<<<<< HEAD
     mapData = [0]*(Width*Height)
+=======
+>>>>>>> aae41d9b53a6478ece926eae7cc5273b3185d551
 
     angle_min = msg_in.angle_min
     angle_max = msg_in.angle_max
@@ -76,13 +81,21 @@ def callback_laser(msg_in):
     Map.header.stamp = rospy.get_rostime()
     Map.header.frame_id = 'map'
     Map.info.map_load_time = rospy.get_rostime()
+    metaData.map_load_time = rospy.get_rostime()
     Map.data = mapData
 
     rospy.loginfo("Publishing a map")
+<<<<<<< HEAD
     pub_map.publish(deepcopy(Map))
+=======
+    pub_map.publish(Map)
+    pub_map_metadata.publish(metaData)
+>>>>>>> aae41d9b53a6478ece926eae7cc5273b3185d551
 
 if __name__=='__main__':
     global pub_map
+    global pub_map_metadata
+    global metaData
     global tf_listener
     global Origin
     global Map
@@ -130,6 +143,7 @@ if __name__=='__main__':
 
     
     pub_map = rospy.Publisher("/map", OccupancyGrid)
+    pub_map_metadata = rospy.Publisher("/map_metadata", MapMetaData)
     
     rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size = None)
     rospy.loginfo("init")
