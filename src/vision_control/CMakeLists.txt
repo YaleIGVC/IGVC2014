@@ -9,6 +9,12 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+## Generate messages in the 'msg' folder
+ add_message_files(
+   FILES
+   detectedvision.msg
+ )
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -42,12 +48,6 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
-## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  detectedvision.msg
-)
-
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
@@ -62,11 +62,15 @@ add_message_files(
 #   Action2.action
 # )
 
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+# Generate added messages and services with any dependencies listed here
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+   geometry_msgs
+   sensor_msgs
+   tf2_msgs
+   tf
+ )
 
 ###################################
 ## catkin specific configuration ##

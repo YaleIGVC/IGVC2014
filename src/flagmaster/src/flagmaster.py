@@ -2,6 +2,7 @@
 import sys
 import roslib
 import rospy
+import tf
 import sys
 import cv2
 import cv2.cv as cv
