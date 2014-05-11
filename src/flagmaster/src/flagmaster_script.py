@@ -19,7 +19,7 @@ class flagmaster():
         if(len(sys.argv) > 1):
             camstring = sys.argv[1]
         else:
-            camstring = "/raw_image"
+            camstring = "/image_for_cv"
 
         self.node_name = "flagmaster_flash"
         self.pub = rospy.Publisher("/detected_flags", detectedflags)

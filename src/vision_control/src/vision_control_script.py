@@ -22,7 +22,7 @@ class flagmaster():
         if(len(sys.argv) > 1):
             camstring = sys.argv[1]
         else:
-            camstring = "/raw_image"
+            camstring = "/raw_image_with_tf"
 
         if(len(sys.argv) > 2):
             linestring = sys.argv[2]
