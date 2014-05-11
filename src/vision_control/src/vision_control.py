@@ -69,7 +69,7 @@ class flagmaster():
         self.lane_sub = rospy.Subscriber(linestring, Image, self.lane_callback)
 
 
-        rospy.loginfo("Waiting for image topic...")
+        rospy.loginfo("Waiting for camera, flag and lane topics...")
 
     def flag_callback(self, flag_images):
 
