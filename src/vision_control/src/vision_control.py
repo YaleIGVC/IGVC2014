@@ -128,9 +128,16 @@ class flagmaster():
         except CvBridgeError, e:
             print e
 
-        res1 = cv2.bitwise_and(imgcv1,imgcv2, mask= mask1)
+        ibtw = cv2.bitwise_and(imgcv1,imgcv2, mask= mask1)
+
+        res = cv2.bitwise_and(ibtw,imgcv3, mask= mask2)
+
+        try:
+            resrosimg = self.bridge.cv2_to_imgmsg(res, "bgr8")
+        except CvBridgeError, e:
+            print e
         
-        return cv2.bitwise_and(res,imgcv3, mask= mask2)
+        return resrosimg
     
     def cleanup(self):
         print "Shutting down vision node."
