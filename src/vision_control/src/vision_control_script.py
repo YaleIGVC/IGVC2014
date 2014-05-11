@@ -141,7 +141,7 @@ class flagmaster():
         return resrosimg
     
     def cleanup(self):
-        print "Shutting down vision node."
+        print "Shutting down vision controller node."
         cv2.destroyAllWindows()   
     
 def main(args):       

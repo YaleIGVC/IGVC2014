@@ -113,7 +113,7 @@ class flagmaster():
         return {'blue':bluemask, 'red':redmask}
     
     def cleanup(self):
-        print "Shutting down vision node."
+        print "Shutting down flag detection node."
         cv2.destroyAllWindows()   
     
 def main(args):       
@@ -121,7 +121,7 @@ def main(args):
         flagmaster()
         rospy.spin()
     except KeyboardInterrupt:
-        print "Shutting down vision node."
+        print "Shutting down flag detection node."
         cv.DestroyAllWindows()
 
 if __name__ == '__main__':
