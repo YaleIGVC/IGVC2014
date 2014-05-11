@@ -6,7 +6,6 @@ import sys
 import cv2
 import cv2.cv as cv
 from sensor_msgs.msg import Image, CameraInfo
-from flagmaster.msg import detectedflags
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
@@ -21,7 +20,8 @@ class flagmaster():
             camstring = "/raw_image"
 
         self.node_name = "flagmaster_flash"
-        self.pub = rospy.Publisher("/detected_flags", detectedflags)
+        self.redpub = rospy.Publisher("/redflag", Image)
+        self.bluepub = rospy.Publisher("/blueflag", Image)
 
         rospy.init_node(self.node_name)
 
@@ -62,18 +62,20 @@ class flagmaster():
         nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
 
         try:
-            blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
+
+        self.bluepub.publish(rosimgpub)
 
         nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
 
         try:
-            redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
 
-        self.pub.publish(redimgpub, blueimgpub)
+        self.redpub.publish(rosimgpub)
                        
         # Display the images.
         cv2.imshow(self.node_name + ' blue mask', processedimgs['blue'])
