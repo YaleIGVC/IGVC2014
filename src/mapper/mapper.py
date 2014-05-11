@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import math
+from copy import deepcopy
 import rospy
 import tf
 from tf.transformations import euler_from_quaternion
@@ -24,6 +25,8 @@ def callback_laser(msg_in):
     global Origin
     global Map
     global mapData
+
+    mapData = [0]*(Width*Height)
 
     angle_min = msg_in.angle_min
     angle_max = msg_in.angle_max
@@ -76,7 +79,7 @@ def callback_laser(msg_in):
     Map.data = mapData
 
     rospy.loginfo("Publishing a map")
-    pub_map.publish(Map)
+    pub_map.publish(deepcopy(Map))
 
 if __name__=='__main__':
     global pub_map
@@ -93,7 +96,7 @@ if __name__=='__main__':
     Origin = Pose()
     try:
          tf_listener.waitForTransform("odom_combined", "base_link", rospy.Time(0), rospy.Duration(3.0))
-         (trans,rot) = tf_listener.lookupTransform("odom_combined", "laser", rospy.Time(0))
+         (trans,rot) = tf_listener.lookupTransform("odom_combined", "base_link", rospy.Time(0))
     except (tf.LookupException, tf.ConnectivityException) as e:
         print "odom_combined to base_link tf lookup failure"
 
@@ -128,7 +131,7 @@ if __name__=='__main__':
     
     pub_map = rospy.Publisher("/map", OccupancyGrid)
     
-    rospy.Subscriber("/scan", LaserScan, callback_laser)
+    rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size = None)
     rospy.loginfo("init")
     rospy.spin()
 
