@@ -27,7 +27,7 @@ class flagmaster():
         if(len(sys.argv) > 2):
             linestring = sys.argv[2]
         else:
-            linetring = "/detected_lanes"
+            linestring = "/detected_lanes"
 
         if(len(sys.argv) > 3):
             flagstring = sys.argv[3]
