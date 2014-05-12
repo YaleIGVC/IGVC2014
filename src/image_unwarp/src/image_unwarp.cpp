@@ -204,7 +204,7 @@ class ImageUnwarper {
             for (int j = 0; j < height_; j++) {
                 // If that point is defined in the input, propogate it to the output
                 if (transform_[i][j].x >= 0 && transform_[i][j].y >= 0) {
-                    cout << i << " " << j << " " << transform_[i][j].x << " " << transform_[i][j].y << endl;
+                    // cout << i << " " << j << " " << transform_[i][j].x << " " << transform_[i][j].y << endl;
                     uchar *pixel = input_data + (transform_[i][j].x
                             + transform_[i][j].y * width_) * channels;
                     uchar *new_pixel = output_data + (i + j * width_) * channels;
