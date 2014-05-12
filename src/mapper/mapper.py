@@ -28,10 +28,7 @@ def callback_laser(msg_in):
     global Map
     global mapData
 
-<<<<<<< HEAD
     mapData = [0]*(Width*Height)
-=======
->>>>>>> aae41d9b53a6478ece926eae7cc5273b3185d551
 
     angle_min = msg_in.angle_min
     angle_max = msg_in.angle_max
@@ -85,12 +82,10 @@ def callback_laser(msg_in):
     Map.data = mapData
 
     rospy.loginfo("Publishing a map")
-<<<<<<< HEAD
+
     pub_map.publish(deepcopy(Map))
-=======
-    pub_map.publish(Map)
     pub_map_metadata.publish(metaData)
->>>>>>> aae41d9b53a6478ece926eae7cc5273b3185d551
+
 
 if __name__=='__main__':
     global pub_map
