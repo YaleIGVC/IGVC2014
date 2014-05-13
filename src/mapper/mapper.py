@@ -2,6 +2,7 @@
 import math
 from copy import deepcopy
 import rospy
+from rospy.exceptions import ROSException, ROSInterruptException
 import tf
 from tf.transformations import euler_from_quaternion
 from tf.transformations import quaternion_from_euler
@@ -27,8 +28,6 @@ def callback_laser(msg_in):
     global Origin
     global Map
     global mapData
-
-    mapData = [0]*(Width*Height)
 
     angle_min = msg_in.angle_min
     angle_max = msg_in.angle_max
@@ -83,7 +82,7 @@ def callback_laser(msg_in):
 
     rospy.loginfo("Publishing a map")
 
-    pub_map.publish(deepcopy(Map))
+    pub_map.publish(Map)
     pub_map_metadata.publish(metaData)
 
 
@@ -140,7 +139,11 @@ if __name__=='__main__':
     pub_map = rospy.Publisher("/map", OccupancyGrid)
     pub_map_metadata = rospy.Publisher("/map_metadata", MapMetaData)
     
-    rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size = None)
+    rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size=1, buff_size = 2**24)
     rospy.loginfo("init")
+    #while(True):
+    #    try:
+    #        callback_laser(rospy.wait_for_message("/scan", LaserScan, 1)) 
+    #    except (ROSException, ROSInterruptException) as e:
+    #        print "Mapper not recieving laser scans"
     rospy.spin()
-
