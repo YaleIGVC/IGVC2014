@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>Single Image Grabber from RQT</name>
+  <name>RQTGrab</name>
   <version>0.0.1</version>
   <description>Node to capture single images from RQT viewer.</description>
 
