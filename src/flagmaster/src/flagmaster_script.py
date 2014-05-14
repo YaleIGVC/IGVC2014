@@ -2,10 +2,12 @@
 import sys
 import roslib
 import rospy
+import tf
 import sys
 import cv2
 import cv2.cv as cv
 from sensor_msgs.msg import Image, CameraInfo
+from flagmaster.msg import detectedflags
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
@@ -17,11 +19,10 @@ class flagmaster():
         if(len(sys.argv) > 1):
             camstring = sys.argv[1]
         else:
-            camstring = "/raw_image"
+            camstring = "/image_for_cv"
 
         self.node_name = "flagmaster_flash"
-        self.redpub = rospy.Publisher("/redflag", Image)
-        self.bluepub = rospy.Publisher("/blueflag", Image)
+        self.pub = rospy.Publisher("/detected_flags", detectedflags)
 
         rospy.init_node(self.node_name)
 
@@ -62,20 +63,22 @@ class flagmaster():
         nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
+            blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
-
-        self.bluepub.publish(rosimgpub)
 
         nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
+            redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
 
-        self.redpub.publish(rosimgpub)
+        pubfin = detectedflags()
+        pubfin.redflags = redimgpub
+        pubfin.blueflags = blueimgpub
+
+        self.pub.publish(pubfin)
                        
         # Display the images.
         cv2.imshow(self.node_name + ' blue mask', processedimgs['blue'])
@@ -114,7 +117,7 @@ class flagmaster():
         return {'blue':bluemask, 'red':redmask}
     
     def cleanup(self):
-        print "Shutting down vision node."
+        print "Shutting down flag detection node."
         cv2.destroyAllWindows()   
     
 def main(args):       
@@ -122,7 +125,7 @@ def main(args):
         flagmaster()
         rospy.spin()
     except KeyboardInterrupt:
-        print "Shutting down vision node."
+        print "Shutting down flag detection node."
         cv.DestroyAllWindows()
 
 if __name__ == '__main__':

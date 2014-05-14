@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>flagmaster</name>
-  <version>0.0.0</version>
-  <description>The flagmaster node</description>
+  <name>rqt_single_image_grabber</name>
+  <version>0.0.1</version>
+  <description>Node to capture single images from RQT viewer.</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
@@ -42,14 +42,8 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
-  <build_depend>sensor_msgs</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>tf</build_depend>
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
-  <run_depend>sensor_msgs</run_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>tf</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
