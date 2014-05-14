@@ -1,4 +1,3 @@
-
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -14,7 +13,7 @@
 using namespace std;
 using namespace cv;
 
-static void on_mouse_zoom(int event, int x, int y, int, void *);
+static void on_mouse_action(int event, int x, int y, int, void *);
 
 class ImageUnwarpCalibrator {
     string WINDOW_NAME_ = "Calibration Image";
@@ -28,7 +27,8 @@ class ImageUnwarpCalibrator {
     vector<double> polynomial_;
 
     // Calibration variables used for user input
-    stack<Mat> zoom_stack;
+    stack<Mat> zoom_stack_;
+    stack<Rect> crop_stack_;
     vector<Point2f> points_;
     bool setup_complete_, help_showing_;
 
@@ -77,8 +77,8 @@ class ImageUnwarpCalibrator {
                 calibration_image_name_);
 
         // Open the calibration image
-        zoom_stack.push(imread(calibration_image_name_, CV_LOAD_IMAGE_COLOR));
-        if (zoom_stack.top().empty()) {
+        zoom_stack_.push(imread(calibration_image_name_, CV_LOAD_IMAGE_COLOR));
+        if (zoom_stack_.top().empty()) {
             ROS_ERROR("Could not find image '%s'",
                     calibration_image_name_.c_str());
             return false;
@@ -86,7 +86,7 @@ class ImageUnwarpCalibrator {
 
         // Open a window and set its mouse callback
         namedWindow(WINDOW_NAME_, CV_WINDOW_NORMAL);
-        setMouseCallback(WINDOW_NAME_, on_mouse_zoom, NULL);
+        setMouseCallback(WINDOW_NAME_, on_mouse_action, NULL);
 
         setup_complete_ = true;
         return true;
@@ -116,26 +116,53 @@ class ImageUnwarpCalibrator {
 
     /**
      */
-    Mat get_help_image(Mat input_image) {
+    Mat get_image(Mat input_image, bool show_toggle, bool show_help) {
         Mat help_image = input_image.clone();
-        putText(help_image, "HELP", Point(10, 10), FONT_HERSHEY_SIMPLEX, 2, Scalar::all(255), 3, 8);
+        int font = FONT_HERSHEY_SIMPLEX;
+        int size = 1;
+        Scalar color(0, 255, 0);
+        int thickness = 3;
+        int line = 8;
+        if (show_toggle) {
+            putText(help_image, "Toggle help: 'h'", Point(10, 40), font, size,
+                    color, thickness, line);
+            putText(help_image, "Points added: " + points_.size(), Point(1000, 40), font, size,
+                    color, thickness, line);
+        }
+        if (show_help) {
+            putText(help_image, "Add point: left click", Point(10, 80), font,
+                    size, color, thickness, line);
+            putText(help_image, "Remove point: right click", Point(10, 120),
+                    font, size, color, thickness, line);
+            putText(help_image, "Zoom in: CTRL + left click", Point(10, 160),
+                    font, size, color, thickness, line);
+            putText(help_image, "Zoom out: CTRL + right click", Point(10, 200),
+                    font, size, color, thickness, line);
+            putText(help_image, "Finalize selection: ESC", Point(10, 240), font,
+                    size, color, thickness, line);
+            putText(help_image, "*Help text disappears while zoomed in",
+                    Point(10, 280), font, size, color, thickness, line);
+        }
         return help_image;
     }
 
     /**
      */
     void redraw() {
-        if (help_showing_)
-            imshow(WINDOW_NAME_, get_help_image(zoom_stack.top()));
-        else
-            imshow(WINDOW_NAME_, zoom_stack.top());
+        if (zoom_stack_.size() <= 1) {
+            if (help_showing_)
+                imshow(WINDOW_NAME_, get_image(zoom_stack_.top(), true, true));
+            else
+                imshow(WINDOW_NAME_, get_image(zoom_stack_.top(), true, false));
+        } else
+            imshow(WINDOW_NAME_, get_image(zoom_stack_.top(), false, false));
     }
 
     /**
      */
     void zoom_in(int x, int y) {
         //
-        Mat original_image = zoom_stack.top();
+        Mat original_image = zoom_stack_.top();
         int w = original_image.size().width;
         int h = original_image.size().height;
         if (x < 0 || y < 0 || x >= w || y >= h)
@@ -164,8 +191,9 @@ class ImageUnwarpCalibrator {
         //
         if (min_x < max_x && min_y < max_y) {
             Mat zoomed_image = original_image.clone();
-            Rect cropping_dimensions(min_x, min_y, max_x - min_x, max_y - min_y);
-            zoom_stack.push(zoomed_image(cropping_dimensions));
+            Rect crop_dimensions(min_x, min_y, max_x - min_x, max_y - min_y);
+            crop_stack_.push(crop_dimensions);
+            zoom_stack_.push(zoomed_image(crop_dimensions));
             redraw();
         }
     }
@@ -174,28 +202,40 @@ class ImageUnwarpCalibrator {
      */
     void zoom_out(int x, int y) {
         // If only the original image remains we can't zoom out any further
-        if (zoom_stack.size() <= 1)
+        if (crop_stack_.size() <= 0 || zoom_stack_.size() <= 1)
             return;
 
         // Zoom out by going to the last saved image to retain resolution
-        zoom_stack.pop();
+        crop_stack_.pop();
+        zoom_stack_.pop();
         redraw();
     }
 
     /**
      */
     void add_point(int x, int y) {
+        while (crop_stack_.size() > 0) {
+            Rect crop = crop_stack_.top();
+            x += crop.x;
+            y += crop.y;
+            crop_stack_.pop();
+            zoom_stack_.pop();
+        }
+        points_.push_back(Point2f(x, y));
+        redraw();
     }
 
     /**
      */
     void pop_point() {
+        points_.pop_back();
+        redraw();
     }
 } calibrator;
 
 /**
  */
-static void on_mouse_zoom(int event, int x, int y, int flags, void *) {
+static void on_mouse_action(int event, int x, int y, int flags, void *) {
     switch (event) {
         case EVENT_LBUTTONDOWN:
             if (flags == EVENT_FLAG_CTRLKEY)
@@ -216,24 +256,24 @@ int main(int argc, char **argv) {
     // Initialize ROS node
     ros::init(argc, argv, "calibrate");
 
-    //if (!calibrator.setup())
-        //return EXIT_FAILURE;
-    //if (!calibrator.calibrate())
-        //return EXIT_FAILURE;
-    //return EXIT_SUCCESS;
+    if (!calibrator.setup())
+        return EXIT_FAILURE;
+    if (!calibrator.calibrate())
+        return EXIT_FAILURE;
+    return EXIT_SUCCESS;
 
-    ros::NodeHandle nh;
+    //ros::NodeHandle nh;
 
-    // Set calibration parameters
-    std::vector<double> polynomial = std::vector<double>();
-    polynomial.push_back(-0.08001114767);
-    polynomial.push_back(1.274507708);
-    polynomial.push_back(-0.001088811456);
-    polynomial.push_back(0.0000001119609517);
-    polynomial.push_back(0.0000000002040845432);
-    nh.setParam("/image_unwarp/center_x", 999);
-    nh.setParam("/image_unwarp/center_y", 571);
-    nh.setParam("/image_unwarp/width", 2048);
-    nh.setParam("/image_unwarp/height", 1088);
-    nh.setParam("/image_unwarp/polynomial", polynomial);
+    //// Set calibration parameters
+    //std::vector<double> polynomial = std::vector<double>();
+    //polynomial.push_back(-0.08001114767);
+    //polynomial.push_back(1.274507708);
+    //polynomial.push_back(-0.001088811456);
+    //polynomial.push_back(0.0000001119609517);
+    //polynomial.push_back(0.0000000002040845432);
+    //nh.setParam("/image_unwarp/center_x", 999);
+    //nh.setParam("/image_unwarp/center_y", 571);
+    //nh.setParam("/image_unwarp/width", 2048);
+    //nh.setParam("/image_unwarp/height", 1088);
+    //nh.setParam("/image_unwarp/polynomial", polynomial);
 }
