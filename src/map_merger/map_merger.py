@@ -3,7 +3,6 @@ import math
 import rospy
 import tf
 from tf.transformations import euler_from_quaternion
-from tf.transformations import quaternion_from_euler
 import tf.msg
 import geometry_msgs.msg
 from sensor_msgs.msg import LaserScan
@@ -15,8 +14,9 @@ from geometry_msgs.msg import Point
 from geometry_msgs.msg import Quaternion
 from frame_grabber_node.msg import ImageWithTransform
 from vision_control.msg import detectedvision
+from cv_bridge import CvBridge, CvBridgeError
 
-image_resolution = 0 #??????????!!!!!!!!?!?!?!?!?!?!?!?!?!?!
+image_resolution = 0 
 
 def callback_laser_map(msg_in):
     global pub_merged_map
@@ -57,13 +57,18 @@ def callback_image_map(msg_in):
 
     image_height = msg_in.image.all.height
     image_width = msg_in.image.all.width
-    image_data = msg_in.image.all.data
     image_tf = msg_in.tf
+
+    bridge = CvBridge()
+
+    try:
+        image_data = bridge.imgmsg_to_cv2(msg_in.image, "bgr8")
+    except CvBridgeError as e:
+        print e, ": Ros Image to Numpy error" 
 
     for x in range (0, image_width):
         for y in range(0, image_height):
-            index = ((y*width)+x)
-            if image_data[index] = 0: #How are image values stored in ros imag??????????
+            if image_data[x][y][0] == 255: 
                 x_temp = ((x-(image_width/2))*image_resolution)
                 y_temp = ((y-(image_width/2))*image_resolution)
 
@@ -74,7 +79,6 @@ def callback_image_map(msg_in):
                           image_tf.rotation.w]
                 image_angles = euler_from_quaternion(image_quat)
 
-                mapx = image_tf.translation.x - Origin.position.x
                 mapx = mapx + (r*math.cos(image_angles[2]-origin_angles[2]))
                 mapy = image_tf.translation.y - Origin.position.y
                 mapy = mapy + (r*math.sin(image_angles[2]-origin_angles[2]))
