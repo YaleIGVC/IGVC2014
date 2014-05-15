@@ -13,13 +13,13 @@ class LaneDetector():
     def __init__(self):
         rospy.init_node("lane_detector")
         self.output = rospy.Publisher("/detected_lanes", Image)
-        rospy.Subscriber("/raw_image_with_tf", ImageWithTransform, self.callback)
+        rospy.Subscriber("/image_unwarp/output_video", Image, self.callback)
 
         self.bridge = CvBridge()
 
     def callback(self, ros_image):
         try:
-            frame = self.bridge.imgmsg_to_cv2(ros_image.image, "bgr8")
+            frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         except CvBridgeError, e:
             print e
         start_time = time.time()
@@ -86,7 +86,7 @@ class LaneDetector():
             print e
 
         finaloutput = ImageWithTransform()
-        finaloutput.tf = ros_image.tf
+        # finaloutput.tf = ros_image.tf
         finaloutput.image = rosimgpub
         # print new_bgr
         self.output.publish(finaloutput.image)
