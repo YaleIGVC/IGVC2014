@@ -1,6 +1,6 @@
 import socket
 
-Robot_UDP_IP = "192.168.1.110"
+Robot_UDP_IP = "192.168.1.127"
 MY_UDP_IP = ""
 UDP_PORT = 3794
 
@@ -12,4 +12,4 @@ while True:
     sock.sendto(command, (Robot_UDP_IP, UDP_PORT))
 
     response, addr = sock.recvfrom(1024)
-    print "Robot: ", response
+    print "Robot:", response
