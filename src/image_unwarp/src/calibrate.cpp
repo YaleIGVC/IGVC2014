@@ -1,5 +1,7 @@
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <stack>
 #include <vector>
@@ -17,6 +19,7 @@ static void on_mouse_action(int event, int x, int y, int, void *);
 
 class ImageUnwarpCalibrator {
     string WINDOW_NAME_ = "Calibration Image";
+    int MAX_POINT_RADIUS_ = 4;
 
     // ROS node and image transport handles
     ros::NodeHandle *nh_;
@@ -28,8 +31,8 @@ class ImageUnwarpCalibrator {
 
     // Calibration variables used for user input
     stack<Mat> zoom_stack_;
-    stack<Rect> crop_stack_;
-    vector<Point2f> points_;
+    vector<Rect> crop_vector_;
+    vector<Point> points_;
     bool setup_complete_, help_showing_;
 
     /**
@@ -83,11 +86,14 @@ class ImageUnwarpCalibrator {
                     calibration_image_name_.c_str());
             return false;
         }
+        crop_vector_.push_back(Rect(0, 0, zoom_stack_.top().size().width,
+                zoom_stack_.top().size().height));
 
         // Open a window and set its mouse callback
         namedWindow(WINDOW_NAME_, CV_WINDOW_NORMAL);
         setMouseCallback(WINDOW_NAME_, on_mouse_action, NULL);
 
+#include <algorithm>
         setup_complete_ = true;
         return true;
     }
@@ -116,19 +122,42 @@ class ImageUnwarpCalibrator {
 
     /**
      */
+    void redraw() {
+        Mat image;
+        if (zoom_stack_.size() <= 1) {
+            if (help_showing_)
+                image = get_image(zoom_stack_.top(), true, true);
+            else
+                image = get_image(zoom_stack_.top(), true, false);
+        } else {
+            image = get_image(zoom_stack_.top(), false, false);
+        }
+        image = draw_points(image, std::max(0,
+                (int)(MAX_POINT_RADIUS_ - zoom_stack_.size())));
+        imshow(WINDOW_NAME_, image);
+    }
+
+    /**
+     */
     Mat get_image(Mat input_image, bool show_toggle, bool show_help) {
         Mat help_image = input_image.clone();
         int font = FONT_HERSHEY_SIMPLEX;
         int size = 1;
-        Scalar color(0, 255, 0);
+        Scalar color(255, 255, 0);
         int thickness = 3;
         int line = 8;
+
+        //
         if (show_toggle) {
             putText(help_image, "Toggle help: 'h'", Point(10, 40), font, size,
                     color, thickness, line);
-            putText(help_image, "Points added: " + points_.size(), Point(1000, 40), font, size,
+            stringstream converter;
+            converter << "Points added: " << points_.size();
+            putText(help_image, converter.str(), Point(885, 40), font, size,
                     color, thickness, line);
         }
+
+        //
         if (show_help) {
             putText(help_image, "Add point: left click", Point(10, 80), font,
                     size, color, thickness, line);
@@ -148,14 +177,33 @@ class ImageUnwarpCalibrator {
 
     /**
      */
-    void redraw() {
-        if (zoom_stack_.size() <= 1) {
-            if (help_showing_)
-                imshow(WINDOW_NAME_, get_image(zoom_stack_.top(), true, true));
-            else
-                imshow(WINDOW_NAME_, get_image(zoom_stack_.top(), true, false));
-        } else
-            imshow(WINDOW_NAME_, get_image(zoom_stack_.top(), false, false));
+    Mat draw_points(Mat image, int circle_radius) {
+        //
+        Rect current_crop;
+        current_crop.x = current_crop.y = 0;
+        for (int i = 0; i < crop_vector_.size(); i++) {
+            current_crop.x += crop_vector_[i].x;
+            current_crop.y += crop_vector_[i].y;
+        }
+        current_crop.width = crop_vector_.back().width;
+        current_crop.height = crop_vector_.back().height;
+
+        //
+        for (int i = 0; i < points_.size(); i++) {
+            if (points_[i].x >= current_crop.x
+                    && points_[i].x < current_crop.x + current_crop.width
+                    && points_[i].y >= current_crop.y
+                    && points_[i].y < current_crop.y + current_crop.height) {
+                Point point(points_[i].x - current_crop.x,
+                        points_[i].y - current_crop.y);
+                Scalar color(255, 255, 0);
+                if (circle_radius > 0)
+                    circle(image, point, circle_radius, color);
+                else
+                    line(image, point, point, color);
+            }
+        }
+        return image;
     }
 
     /**
@@ -192,7 +240,7 @@ class ImageUnwarpCalibrator {
         if (min_x < max_x && min_y < max_y) {
             Mat zoomed_image = original_image.clone();
             Rect crop_dimensions(min_x, min_y, max_x - min_x, max_y - min_y);
-            crop_stack_.push(crop_dimensions);
+            crop_vector_.push_back(crop_dimensions);
             zoom_stack_.push(zoomed_image(crop_dimensions));
             redraw();
         }
@@ -202,11 +250,11 @@ class ImageUnwarpCalibrator {
      */
     void zoom_out(int x, int y) {
         // If only the original image remains we can't zoom out any further
-        if (crop_stack_.size() <= 0 || zoom_stack_.size() <= 1)
+        if (crop_vector_.size() <= 1 || zoom_stack_.size() <= 1)
             return;
 
         // Zoom out by going to the last saved image to retain resolution
-        crop_stack_.pop();
+        crop_vector_.pop_back();
         zoom_stack_.pop();
         redraw();
     }
@@ -214,22 +262,27 @@ class ImageUnwarpCalibrator {
     /**
      */
     void add_point(int x, int y) {
-        while (crop_stack_.size() > 0) {
-            Rect crop = crop_stack_.top();
+        //
+        while (crop_vector_.size() > 1) {
+            Rect crop = crop_vector_.back();
             x += crop.x;
             y += crop.y;
-            crop_stack_.pop();
+            crop_vector_.pop_back();
             zoom_stack_.pop();
         }
-        points_.push_back(Point2f(x, y));
+
+        //
+        points_.push_back(Point(x, y));
         redraw();
     }
 
     /**
      */
     void pop_point() {
-        points_.pop_back();
-        redraw();
+        if (points_.size() > 0) {
+            points_.pop_back();
+            redraw();
+        }
     }
 } calibrator;
 
