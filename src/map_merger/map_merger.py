@@ -16,7 +16,7 @@ from frame_grabber_node.msg import ImageWithTransform
 from vision_control.msg import detectedvision
 from cv_bridge import CvBridge, CvBridgeError
 
-image_resolution = 0 
+image_resolution = 0.25
 
 def callback_laser_map(msg_in):
     global pub_merged_map
@@ -45,7 +45,7 @@ def callback_laser_map(msg_in):
     combined_map = OccupancyGrid()
     combined_map.info = msg_in.info
     combined_map.header = msg_in.header
-    combined_map.data = [0]*(Width*Height)
+    combined_map.data = [0]*(Width*Height)   
 
     for i in range (0, (Width*Height)-1):
         combined_map.data[i] = max(msg_in.data[i], image_map[i])
@@ -103,7 +103,7 @@ if __name__=='__main__':
 
     pub_merged_map = rospy.Publisher("/merged_map", OccupancyGrid)
 
-    rospy.Subscriber("/map", OccupancyGrid, callback_laser_map)
+    rospy.Subscriber("/ma0.p", OccupancyGrid, callback_laser_map)
 
     initialized = false
 
