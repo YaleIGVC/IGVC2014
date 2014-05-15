@@ -7,9 +7,16 @@ import time
 
 start_time = time.time()
 
-image = cv2.imread('t2.bmp')
+image = cv2.imread('1.jpg')
+template = cv2.imread('template_match.png', 0)
+# pdb.set_trace()
 # image = cv2.resize(image, (0,0), fx=0.5, fy=0.5) 
-image = image[79:870, 545:1556]
+image = image[199:990, 545:1356]
+cv2.imshow('im_bw', image)
+# cv2.imshow('skel', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+# quit(0)
 # cv2.imshow('original_image', image)
 
 # minColor = np.array([0, 0, 200],np.uint8)
@@ -28,6 +35,19 @@ image = image[79:870, 545:1556]
 # exit(0)
 # pdb.set_trace()
 gray_image_blue_channel, g, r = cv2.split(image)
+# w, h = template.shape[::-1]
+# res = cv2.matchTemplate(gray_image_blue_channel, template, cv2.TM_CCOEFF_NORMED)
+# threshold = 0.5
+# loc = np.where( res >= threshold)
+# for pt in zip(*loc[::-1]):
+#     cv2.rectangle(image, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
+
+# cv2.imshow('match', image)
+
+
+
+
+
 # r = cv2.multiply(r, np.array([0.0]))
 # cv2.imshow('merged', cv2.merge((gray_image_blue_channel, g, r)))
 # cv2.waitKey(0)
@@ -40,7 +60,6 @@ ret,thresh = cv2.threshold(blur,100,255,cv2.THRESH_TOZERO)
 kernel = np.ones((5,5),np.uint8)
 # erosion = cv2.erode(thresh, kernel, iterations = 1)
 morph = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
-
 # minLineLength = 100
 # maxLineGap = 10
 # lines = cv2.HoughLinesP(morph,1,np.pi/180,100,minLineLength,maxLineGap)
@@ -57,13 +76,15 @@ morph = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
 # (thresh, im_bw) = cv2.threshold(morph, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
+cv2.imshow('im_bw', morph)
+
 thresh = 50
 im_bw = cv2.threshold(morph, thresh, 255, cv2.THRESH_BINARY)[1]
 dist_transform = cv2.distanceTransform(im_bw,cv2.cv.CV_DIST_L2,5)
-cv2.imwrite('output2.jpg', im_bw)
+# cv2.imwrite('output2.jpg', im_bw)
 contours,hierarchy = cv2.findContours(im_bw, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 # pdb.set_trace()
-# cv2.imshow('contours', hierarchy)
+# cv2.imshow('im_bw', im_bw)
 # j = 0
 # for (x,y), value in np.ndenumerate(dist_transform):
 #     if dist_transform[x][y] < 5:
@@ -95,8 +116,8 @@ contours,hierarchy = cv2.findContours(im_bw, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX
 
 
 # cv2.imshow('skel', skel)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 print time.time() - start_time, "seconds"
 
