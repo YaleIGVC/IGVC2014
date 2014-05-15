@@ -159,13 +159,13 @@ class ImageUnwarpCalibrator {
 
         //
         if (show_help) {
-            putText(help_image, "Add point: left click", Point(10, 80), font,
+            putText(help_image, "Zoom in: left click", Point(10, 80),
+                    font, size, color, thickness, line);
+            putText(help_image, "Zoom out: right click", Point(10, 120),
+                    font, size, color, thickness, line);
+            putText(help_image, "Add point: CTRL + left click", Point(10, 160), font,
                     size, color, thickness, line);
-            putText(help_image, "Remove point: right click", Point(10, 120),
-                    font, size, color, thickness, line);
-            putText(help_image, "Zoom in: CTRL + left click", Point(10, 160),
-                    font, size, color, thickness, line);
-            putText(help_image, "Zoom out: CTRL + right click", Point(10, 200),
+            putText(help_image, "Remove point: CTRL + right click", Point(10, 200),
                     font, size, color, thickness, line);
             putText(help_image, "Finalize selection: ESC", Point(10, 240), font,
                     size, color, thickness, line);
@@ -292,15 +292,15 @@ static void on_mouse_action(int event, int x, int y, int flags, void *) {
     switch (event) {
         case EVENT_LBUTTONDOWN:
             if (flags == EVENT_FLAG_CTRLKEY)
-                calibrator.zoom_in(x, y);
-            else
                 calibrator.add_point(x, y);
+            else
+                calibrator.zoom_in(x, y);
             break;
         case EVENT_RBUTTONDOWN:
             if (flags == EVENT_FLAG_CTRLKEY)
-                calibrator.zoom_out(x, y);
-            else
                 calibrator.pop_point();
+            else
+                calibrator.zoom_out(x, y);
             break;
     }
 }
