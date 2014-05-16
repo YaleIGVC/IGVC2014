@@ -16,7 +16,7 @@ from frame_grabber_node.msg import ImageWithTransform
 from vision_control.msg import detectedvision
 from cv_bridge import CvBridge, CvBridgeError
 
-image_resolution = 0.25
+image_resolution = 0.01
 
 def callback_laser_map(msg_in):
     global pub_merged_map
@@ -29,7 +29,6 @@ def callback_laser_map(msg_in):
     global initialized
 
     if(not initialized):
-        rospy.Subscriber("/flags_and_lanes", detectedvision, callback_image_map)
         initialized = True
         Width = msg_in.info.width
         Height = msg_in.info.height
@@ -40,6 +39,9 @@ def callback_laser_map(msg_in):
                       Origin.orientation.z,
                       Origin.orientation.w]
         origin_angles = euler_from_quaternion(origin_quat)
+        image_map = [0]*(Width*Height)
+        print "sup"
+        rospy.Subscriber("/fake_lines", ImageWithTransform, callback_image_map, queue_size=1, buff_size = 2**24)
 
 
     combined_map = OccupancyGrid()
@@ -51,12 +53,11 @@ def callback_laser_map(msg_in):
         combined_map.data[i] = max(msg_in.data[i], image_map[i])
 
     pub_merged_map.publish(combined_map)
+    rospy.loginfo("Publishing combined_map")
 
 def callback_image_map(msg_in):
     global image_map
 
-    image_height = msg_in.image.all.height
-    image_width = msg_in.image.all.width
     image_tf = msg_in.tf
 
     bridge = CvBridge()
@@ -66,9 +67,13 @@ def callback_image_map(msg_in):
     except CvBridgeError as e:
         print e, ": Ros Image to Numpy error" 
 
+    print image_data.shape
+
+    (image_width, image_height) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
             if image_data[x][y][0] == 255: 
+                print image_data[x][y][0]
                 x_temp = ((x-(image_width/2))*image_resolution)
                 y_temp = ((y-(image_width/2))*image_resolution)
 
@@ -79,9 +84,9 @@ def callback_image_map(msg_in):
                           image_tf.rotation.w]
                 image_angles = euler_from_quaternion(image_quat)
 
-                mapx = mapx + (r*math.cos(image_angles[2]-origin_angles[2]))
+                mapx = x_temp + (r*math.cos(image_angles[2]-origin_angles[2]))
                 mapy = image_tf.translation.y - Origin.position.y
-                mapy = mapy + (r*math.sin(image_angles[2]-origin_angles[2]))
+                mapy = y_temp + (r*math.sin(image_angles[2]-origin_angles[2]))
 
                 x = int(round(mapx*(1/Resolution)))
                 y = int(round(mapy*(1/Resolution)))
@@ -103,11 +108,9 @@ if __name__=='__main__':
 
     pub_merged_map = rospy.Publisher("/merged_map", OccupancyGrid)
 
-    rospy.Subscriber("/ma0.p", OccupancyGrid, callback_laser_map)
+    rospy.Subscriber("/map", OccupancyGrid, callback_laser_map, queue_size=1, buff_size = 2**24)
 
-    initialized = false
-
-    image_map = [0]*(Width*Height)
+    initialized = False
 
     rospy.loginfo("init")
     rospy.spin()
