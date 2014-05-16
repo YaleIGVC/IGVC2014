@@ -1,6 +1,6 @@
 import socket
 
-Robot_UDP_IP = "192.168.1.110"
+Robot_UDP_IP = "192.168.1.127"
 MY_UDP_IP = ""
 UDP_PORT = 3794
 
