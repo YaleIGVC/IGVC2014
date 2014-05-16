@@ -24,59 +24,55 @@ class LaneDetector():
             print e
         start_time = time.time()
 
-        image = frame[79:870, 545:1556]
-        # cv2.imshow('original_image', image)
+        # image = frame[79:870, 545:1556]
+        
+        image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        image = cv2.resize(image, (image.shape[1] / 2, image.shape[0] / 2))
 
-        # minColor = np.array([0, 0, 200],np.uint8)
-        # maxColor = np.array([180, 255, 255],np.uint8)
+        # cv2.imshow('image', image)
+        org_brwn_min = np.array([0, 0, 0], np.uint8)
+        org_brwn_max = np.array([62, 255, 255], np.uint8)
 
-        # hsv_img = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-        # frame_threshed = cv2.inRange(hsv_img, minColor, maxColor)
-        # cv2.imshow('thresed', frame_threshed)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
-        # cv2.imwrite('output2.jpg', frame_threshed)
-        # exit(0)
-        # image = cv2.multiply(image,np.array([3.0]))
-        # cv2.imshow('original_image2', image)
-        # exit(0)
+        org_brwn_thresh = cv2.inRange(image, org_brwn_min, org_brwn_max)
+        org_brwn_thresh = 255 - cv2.cvtColor(org_brwn_thresh, cv2.COLOR_GRAY2RGB)
         # pdb.set_trace()
-        gray_image_blue_channel, g, r = cv2.split(image)
-        # r = cv2.multiply(r, np.array([0.0]))
-        # cv2.imshow('merged', cv2.merge((gray_image_blue_channel, g, r)))
+        new_hsv = np.bitwise_and(org_brwn_thresh, image)
+        # cv2.imshow('org_brwn_thresh', org_brwn_thresh)
+        # cv2.imshow('new', new_hsv)
+
+        # white_min = np.array([0, 0, 140], np.uint8)
+        # white_max = np.array([180, 70, 255], np.uint8)
+
+        # white_thresh = cv2.inRange(new_hsv, white_min, white_max)
+        # white_thresh = cv2.cvtColor(white_thresh, cv2.COLOR_GRAY2RGB)
+        # new_hsv = np.bitwise_and(white_thresh, new_hsv)
+        # cv2.imshow('white_thresh', new_hsv)
+
+
+
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
-        # gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        # blur = cv2.GaussianBlur(gray_image_blue_channel,(11,11),0)
-        blur = cv2.medianBlur(gray_image_blue_channel, 19)
+        # exit(0)
+
+
+        image = cv2.cvtColor(new_hsv, cv2.COLOR_HSV2BGR)
+        # cv2.imshow('new new image', image)
+
+        # cv2.waitKey(0)
+
+        gray_image_blue_channel, g, r = cv2.split(image)
+
+        blur = cv2.medianBlur(gray_image_blue_channel, 11)
 
         ret,thresh = cv2.threshold(blur,100,255,cv2.THRESH_TOZERO)
         kernel = np.ones((5,5),np.uint8)
-        # erosion = cv2.erode(thresh, kernel, iterations = 1)
         morph = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
 
-        # minLineLength = 100
-        # maxLineGap = 10
-        # lines = cv2.HoughLinesP(morph,1,np.pi/180,100,minLineLength,maxLineGap)
-        # for x1,y1,x2,y2 in lines[0]:
-        #     cv2.line(image,(x1,y1),(x2,y2),(0,255,0),2)
-
-        # cv2.imshow('original_image', image)
-        # cv2.imshow('original_image', image)
-        # cv2.imshow('gray_image', gray_image_blue_channel)
-        # cv2.imshow('blurred', blur)
-        # cv2.imshow('threshholded', thresh)
-        # cv2.imshow('eroded', morph)
-        # cv2.imshow('original_image', image)
-
-        # (thresh, im_bw) = cv2.threshold(morph, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+        # cv2.imshow('im_bw', morph)
 
         thresh = 50
         im_bw = cv2.threshold(morph, thresh, 255, cv2.THRESH_BINARY)[1]
-        dist_transform = cv2.distanceTransform(im_bw,cv2.cv.CV_DIST_L2,5)
-        # cv2.imwrite('output2.jpg', im_bw)
-        # contours,hierarchy = cv2.findContours(im_bw, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
 
         new_bgr= cv2.cvtColor(im_bw,cv2.COLOR_GRAY2RGB)
 
