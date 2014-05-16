@@ -9,26 +9,41 @@ from matplotlib import pyplot as plt
 
 start_time = time.time()
 
-image = cv2.imread('t3.bmp')
+image = cv2.imread('1.jpg')
 image = cv2.resize(image, (image.shape[1] / 2, image.shape[0] / 2))
-cv2.imshow('image', image)
+# cv2.imshow('image', image)
 # image = image[199:990, 545:1356]
 image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 # cv2.imshow('image', image)
-white_min = np.array([0, 0, 0], np.uint8)
-white_max = np.array([62, 255, 255], np.uint8)
+org_brwn_min = np.array([0, 0, 0], np.uint8)
+org_brwn_max = np.array([62, 255, 255], np.uint8)
 
-frame_threshed = cv2.inRange(image, white_min, white_max)
-frame_threshed = 255 - cv2.cvtColor(frame_threshed, cv2.COLOR_GRAY2RGB)
+org_brwn_thresh = cv2.inRange(image, org_brwn_min, org_brwn_max)
+org_brwn_thresh = 255 - cv2.cvtColor(org_brwn_thresh, cv2.COLOR_GRAY2RGB)
 # pdb.set_trace()
-new_hsv = np.bitwise_and(frame_threshed, image)
-cv2.imshow('frame_threshed', frame_threshed)
+new_hsv = np.bitwise_and(org_brwn_thresh, image)
+cv2.imshow('org_brwn_thresh', org_brwn_thresh)
 cv2.imshow('new', new_hsv)
 
-image = cv2.cvtColor(new_hsv, cv2.COLOR_HSV2BGR)
-cv2.imshow('new new image', image)
+# white_min = np.array([0, 0, 140], np.uint8)
+# white_max = np.array([180, 70, 255], np.uint8)
 
-cv2.waitKey(0)
+# white_thresh = cv2.inRange(new_hsv, white_min, white_max)
+# white_thresh = cv2.cvtColor(white_thresh, cv2.COLOR_GRAY2RGB)
+# new_hsv = np.bitwise_and(white_thresh, new_hsv)
+# cv2.imshow('white_thresh', new_hsv)
+
+
+
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+# exit(0)
+
+
+image = cv2.cvtColor(new_hsv, cv2.COLOR_HSV2BGR)
+# cv2.imshow('new new image', image)
+
+# cv2.waitKey(0)
 
 gray_image_blue_channel, g, r = cv2.split(image)
 
@@ -48,11 +63,11 @@ im_bw = cv2.threshold(morph, thresh, 255, cv2.THRESH_BINARY)[1]
 # names = ['image','gray_image_blue_channel','blur','thresh','morph','im_bw']
 
 
-cv2.imshow('image', image)
-cv2.imshow('gray_image_blue_channel', gray_image_blue_channel)
-cv2.imshow('blur', blur)
-cv2.imshow('thresh', thresh)
-cv2.imshow('morph', morph)
+# cv2.imshow('image', image)
+# cv2.imshow('gray_image_blue_channel', gray_image_blue_channel)
+# cv2.imshow('blur', blur)
+# cv2.imshow('thresh', thresh)
+# cv2.imshow('morph', morph)
 cv2.imshow('im_bw', im_bw)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
