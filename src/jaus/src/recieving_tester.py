@@ -1,8 +1,9 @@
 import socket
  
 My_UDP_IP = ""
-JTC_UDP_IP = "192.168.1.127"
-UDP_PORT = 3794
+# THIS IS THE IP ADDRESS OF THE JAUS SYSTEM AT COMPETITION
+JTC_UDP_IP = "192.168.1.42"
+UDP_PORT = 3794 # JAUS UDP Port as specified in the manual
  
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
