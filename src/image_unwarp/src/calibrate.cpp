@@ -38,6 +38,7 @@ class ImageUnwarpCalibrator {
     stack<Mat> zoom_stack_;
     vector<Rect> crop_vector_;
     vector<Point> points_;
+    vector<Point> sizing_points_;
     bool setup_complete_, help_showing_;
 
     public:
@@ -65,8 +66,6 @@ class ImageUnwarpCalibrator {
         }
         nh_->getParam("/calibrate/center_x", center_.x);
         nh_->getParam("/calibrate/center_y", center_.y);
-        nh_->setParam("/image_unwarp/center_x", center_.x);
-        nh_->setParam("/image_unwarp/center_y", center_.y);
         nh_->getParam("/calibrate/calibration_image",
                 calibration_image_name_);
         nh_->param("/calibrate/degree", degree_, DEFAULT_DEGREE_);
@@ -80,6 +79,12 @@ class ImageUnwarpCalibrator {
         }
         crop_vector_.push_back(Rect(0, 0, zoom_stack_.top().size().width,
                 zoom_stack_.top().size().height));
+
+        // Set parameters for image_unwarp node
+        nh_->setParam("/image_unwarp/center_x", center_.x);
+        nh_->setParam("/image_unwarp/center_y", center_.y);
+        nh_->setParam("/image_unwarp/width", zoom_stack_.top().size().width);
+        nh_->setParam("/image_unwarp/height", zoom_stack_.top().size().height);
 
         // Open a window and set its mouse callback
         namedWindow(WINDOW_NAME_, CV_WINDOW_NORMAL);
@@ -112,10 +117,20 @@ class ImageUnwarpCalibrator {
             return false;
         }
 
+        // Validate that the 3 sizing points were chosen
+        if (sizing_points_.size() != 3) {
+            ROS_ERROR("3 sizing points must be chosen");
+            return false;
+        }
+
         // Get the distance offset to the center and the distance between the
-        // two points closest to the center
+        // sizing points
         double min_dist = cart_dist(points_[0], center_);
-        double size = cart_dist(points_[0], points_[1]);
+        double size1 = cart_dist(sizing_points_[0], sizing_points_[1]);
+        double size2 = cart_dist(sizing_points_[1], sizing_points_[2]);
+        double size3 = cart_dist(sizing_points_[1], points_[0]);
+        cout << size1 << " " << size2 << " " << size3 << endl;
+        double size = (size1 + size2 + size2) / 3;
 
         // Get a warped image -> calibrated image mapping of distance
         vector<Point2f> scaled_points;
@@ -207,6 +222,10 @@ class ImageUnwarpCalibrator {
             converter << "Points added: " << points_.size();
             putText(help_image, converter.str(), Point(885, 40), font, size,
                     color, thickness, line);
+            converter.str("");
+            converter << "Sizing points added: " << sizing_points_.size();
+            putText(help_image, converter.str(), Point(1685, 40), font, size,
+                    color, thickness, line);
         }
 
         // If the user specifies show the extra help messages
@@ -215,21 +234,32 @@ class ImageUnwarpCalibrator {
                     font, size, color, thickness, line);
             putText(help_image, "Zoom out: right click", Point(10, 120),
                     font, size, color, thickness, line);
-            putText(help_image, "Add point: CTRL + left click", Point(10, 160), font,
-                    size, color, thickness, line);
-            putText(help_image, "Remove point: CTRL + right click", Point(10, 200),
+            putText(help_image, "Add point: CTRL + left click", Point(10, 160),
                     font, size, color, thickness, line);
-            putText(help_image, "Finalize selection: ESC", Point(10, 240), font,
+            putText(help_image, "Remove point: CTRL + right click",
+                    Point(10, 200), font, size, color, thickness, line);
+            putText(help_image, "Add sizing point: SHIFT + left click",
+                    Point(10, 240), font,
                     size, color, thickness, line);
-            putText(help_image, "Hints:", Point(10, 300), font, size, color,
+            putText(help_image, "Remove sizing point: SHIFT + right click",
+                    Point(10, 280), font, size, color, thickness, line);
+            putText(help_image, "Finalize selection: ESC", Point(10, 320), font,
+                    size, color, thickness, line);
+            putText(help_image, "Hints:", Point(10, 380), font, size, color,
                     thickness, line);
             putText(help_image, "* Help text disappears while zoomed in",
-                    Point(10, 340), font, size, color, thickness, line);
+                    Point(10, 420), font, size, color, thickness, line);
             putText(help_image, "* Click the upper left of pixels when adding",
-                    Point(10, 380), font, size, color, thickness, line);
+                    Point(10, 460), font, size, color, thickness, line);
             putText(help_image,
                     "* The points MUST be ordered by proximity to the center",
-                    Point(10, 420), font, size, color, thickness, line);
+                    Point(10, 500), font, size, color, thickness, line);
+            putText(help_image,
+                    "* The sizing points must be the three closest points to",
+                    Point(10, 540), font, size, color, thickness, line);
+            putText(help_image,
+                    "  the center that are perpindicular to regular points",
+                    Point(10, 580), font, size, color, thickness, line);
         }
         return help_image;
     }
@@ -274,6 +304,22 @@ class ImageUnwarpCalibrator {
                 Point point(points_[i].x - current_crop.x,
                         points_[i].y - current_crop.y);
                 Scalar color(255, 255, 0);
+                if (circle_radius > 0)
+                    circle(image, point, circle_radius, color, CV_FILLED);
+                else
+                    line(image, point, point, color);
+            }
+        }
+
+        // Draw the sizing points
+        for (int i = 0; i < sizing_points_.size(); i++) {
+            if (sizing_points_[i].x >= current_crop.x
+                    && sizing_points_[i].x < current_crop.x + current_crop.width
+                    && sizing_points_[i].y >= current_crop.y
+                    && sizing_points_[i].y < current_crop.y + current_crop.height) {
+                Point point(sizing_points_[i].x - current_crop.x,
+                        sizing_points_[i].y - current_crop.y);
+                Scalar color(0, 255, 0);
                 if (circle_radius > 0)
                     circle(image, point, circle_radius, color, CV_FILLED);
                 else
@@ -351,7 +397,7 @@ class ImageUnwarpCalibrator {
      *  x: x coordinate of the point to be added
      *  y: y coordinate of the point to be added
      */
-    void add_point(int x, int y) {
+    void add_point(int x, int y, bool is_sizing_point) {
         // Calculate the zoom offset
         Rect crop;
         for (int i = 0; i < crop_vector_.size(); i++) {
@@ -361,18 +407,22 @@ class ImageUnwarpCalibrator {
         }
 
         // Add the point and redraw so that it is displayed
-        points_.push_back(Point(x, y));
+        if (is_sizing_point)
+            sizing_points_.push_back(Point(x, y));
+        else
+            points_.push_back(Point(x, y));
         redraw();
     }
 
     /**
      * Remoave a point from the points array.
      */
-    void pop_point() {
-        if (points_.size() > 0) {
+    void pop_point(bool is_sizing_point) {
+        if (is_sizing_point && sizing_points_.size() > 0)
+            sizing_points_.pop_back();
+        else if (!is_sizing_point && points_.size() > 0)
             points_.pop_back();
-            redraw();
-        }
+        redraw();
     }
 } calibrator;
 
@@ -390,13 +440,17 @@ static void on_mouse_action(int event, int x, int y, int flags, void *) {
     switch (event) {
         case EVENT_LBUTTONDOWN:
             if (flags == EVENT_FLAG_CTRLKEY)
-                calibrator.add_point(x, y);
+                calibrator.add_point(x, y, false);
+            else if (flags == EVENT_FLAG_SHIFTKEY)
+                calibrator.add_point(x, y, true);
             else
                 calibrator.zoom_in(x, y);
             break;
         case EVENT_RBUTTONDOWN:
             if (flags == EVENT_FLAG_CTRLKEY)
-                calibrator.pop_point();
+                calibrator.pop_point(false);
+            else if (flags == EVENT_FLAG_SHIFTKEY)
+                calibrator.pop_point(true);
             else
                 calibrator.zoom_out();
             break;
@@ -406,7 +460,6 @@ static void on_mouse_action(int event, int x, int y, int flags, void *) {
 int main(int argc, char **argv) {
     // Initialize ROS node
     ros::init(argc, argv, "calibrate");
-<<<<<<< HEAD
 
     // Setup and run the calibrator
     if (!calibrator.setup())
@@ -415,20 +468,5 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
 
     return EXIT_SUCCESS;
-=======
     ros::NodeHandle nh;
-
-    // Set calibration parameters
-    std::vector<double> polynomial = std::vector<double>();
-    polynomial.push_back(-0.08001114767);
-    polynomial.push_back(1.274507708);
-    polynomial.push_back(-0.001088811456);
-    polynomial.push_back(0.0000001119609517);
-    polynomial.push_back(0.0000000002040845432);
-    nh.setParam("/image_unwarp/center_x", 999);
-    nh.setParam("/image_unwarp/center_y", 571);
-    nh.setParam("/image_unwarp/width", 2048);
-    nh.setParam("/image_unwarp/height", 1088);
-    nh.setParam("/image_unwarp/polynomial", polynomial);
->>>>>>> a36965f55227780906fa1a279c160c1412bc029f
 }

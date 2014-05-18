@@ -120,6 +120,7 @@ class ImageUnwarper {
 
         // Get calibration parameters
         if (!(nh_.hasParam("/image_unwarp/center_x") && nh_.hasParam("/image_unwarp/center_y")
+                && nh_.hasParam("/image_unwarp/width") && nh_.hasParam("/image_unwarp/height")
                 && nh_.hasParam("/image_unwarp/polynomial"))) {
             ROS_ERROR("Could not find calibration parameters. Did you run "
                     "image_unwarp calibrate?");
