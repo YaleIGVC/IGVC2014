@@ -71,27 +71,30 @@ def callback_image_map(msg_in):
         for y in range(0, image_height):
             if image_data[x][y][0] == 255: 
                 x_temp = ((x-(image_width/2))*image_resolution)
-                y_temp = ((y-(image_width/2))*image_resolution)
+                y_temp = ((y-(image_height/2))*image_resolution)
 
                 r = math.sqrt(math.pow(x_temp, 2) + math.pow(y_temp, 2))
+                theta = math.atan2(y_temp, x_temp)
+
                 image_quat = [image_tf.rotation.x,
                           image_tf.rotation.y,
                           image_tf.rotation.z,
                           image_tf.rotation.w]
                 image_angles = euler_from_quaternion(image_quat)
 
-                mapx = x_temp + (r*math.cos(image_angles[2]-origin_angles[2]))
+                mapx = image_tf.translation.x - Origin.position.x
+                mapx = mapx + (r*math.cos(theta+image_angles[2]-origin_angles[2]))
                 mapy = image_tf.translation.y - Origin.position.y
-                mapy = y_temp + (r*math.sin(image_angles[2]-origin_angles[2]))
+                mapy = y_temp + (r*math.sin(theta+image_angles[2]-origin_angles[2]))
 
-                x = int(round(mapx*(1/Resolution)))
-                y = int(round(mapy*(1/Resolution)))
-                print x, y
-                if x<0 or x>(Width-1) or y<0 or y>(Height-1):
+                x_cell = int(round(mapx*(1/Resolution)))
+                y_cell = int(round(mapy*(1/Resolution)))
+
+                if x_cell<0 or x_cell>(Width-1) or y_cell<0 or y_cell>(Height-1):
                     print "Outside map bounds!!!!"
 
                 else:
-                    index = ((y*Width)+x)
+                    index = ((y_cell*Width)+x_cell)
                     if image_map[index] < 100:
                         image_map[index] = 100
 
