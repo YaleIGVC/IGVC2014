@@ -16,7 +16,7 @@ from frame_grabber_node.msg import ImageWithTransform
 from vision_control.msg import detectedvision
 from cv_bridge import CvBridge, CvBridgeError
 
-image_resolution = 0.01
+image_resolution = 0.005
 
 def callback_laser_map(msg_in):
     global pub_merged_map
@@ -40,7 +40,6 @@ def callback_laser_map(msg_in):
                       Origin.orientation.w]
         origin_angles = euler_from_quaternion(origin_quat)
         image_map = [0]*(Width*Height)
-        print "sup"
         rospy.Subscriber("/fake_lines", ImageWithTransform, callback_image_map, queue_size=1, buff_size = 2**24)
 
 
@@ -65,15 +64,12 @@ def callback_image_map(msg_in):
     try:
         image_data = bridge.imgmsg_to_cv2(msg_in.image, "bgr8")
     except CvBridgeError as e:
-        print e, ": Ros Image to Numpy error" 
-
-    print image_data.shape
-
-    (image_width, image_height) = image_data.shape
+        print e, ": Ros Image to Numpy error"
+ 
+    (image_width, image_height, _temp_) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
             if image_data[x][y][0] == 255: 
-                print image_data[x][y][0]
                 x_temp = ((x-(image_width/2))*image_resolution)
                 y_temp = ((y-(image_width/2))*image_resolution)
 
@@ -90,14 +86,14 @@ def callback_image_map(msg_in):
 
                 x = int(round(mapx*(1/Resolution)))
                 y = int(round(mapy*(1/Resolution)))
-
+                print x, y
                 if x<0 or x>(Width-1) or y<0 or y>(Height-1):
                     print "Outside map bounds!!!!"
 
                 else:
                     index = ((y*Width)+x)
-                    if mapData[index] < 100:
-                        mapData[index] = 100
+                    if image_map[index] < 100:
+                        image_map[index] = 100
 
 if __name__=='__main__':
     global pub_merged_map
