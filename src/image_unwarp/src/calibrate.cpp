@@ -260,6 +260,9 @@ class ImageUnwarpCalibrator {
             putText(help_image,
                     "  the center that are perpindicular to regular points",
                     Point(10, 580), font, size, color, thickness, line);
+            putText(help_image,
+                    "  where the center point is picked second (order does matter)",
+                    Point(10, 620), font, size, color, thickness, line);
         }
         return help_image;
     }
