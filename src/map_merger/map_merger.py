@@ -70,11 +70,11 @@ def callback_image_map(msg_in):
     for x in range (0, image_width):
         for y in range(0, image_height):
             if image_data[x][y][0] == 255: 
-                x_temp = ((x-(image_width/2))*image_resolution)
-                y_temp = ((y-(image_height/2))*image_resolution)
+                image_x = ((x-(image_width/2))*image_resolution)
+                image_y = ((y-(image_height/2))*image_resolution)
 
                 r = math.sqrt(math.pow(x_temp, 2) + math.pow(y_temp, 2))
-                theta = math.atan2(y_temp, x_temp)
+                image_theta = math.atan2(y_temp, x_temp)
 
                 image_quat = [image_tf.rotation.x,
                           image_tf.rotation.y,
@@ -82,10 +82,12 @@ def callback_image_map(msg_in):
                           image_tf.rotation.w]
                 image_angles = euler_from_quaternion(image_quat)
 
+                map_theta = origin_angles[2] - image_angles[2]
+
                 mapx = image_tf.translation.x - Origin.position.x
-                mapx = mapx + (r*math.cos(theta+image_angles[2]-origin_angles[2]))
+                mapx = mapx + (r*math.cos(image_theta+map_theta)
                 mapy = image_tf.translation.y - Origin.position.y
-                mapy = y_temp + (r*math.sin(theta+image_angles[2]-origin_angles[2]))
+                mapy = y_temp + (r*math.sin(image_theta+map_theta))
 
                 x_cell = int(round(mapx*(1/Resolution)))
                 y_cell = int(round(mapy*(1/Resolution)))
@@ -96,7 +98,7 @@ def callback_image_map(msg_in):
                 else:
                     index = ((y_cell*Width)+x_cell)
                     if image_map[index] < 100:
-                        image_map[index] = 100
+                        image_map[index] = 1007
 
 if __name__=='__main__':
     global pub_merged_map
