@@ -51,7 +51,7 @@ if __name__=="__main__":
         print vels(speed,turn)
         while(1):
             joy = getAxis()
-            x = -1 * joy[0]
+            x = joy[0]
             th = -1 * joy[1]
             twist = Twist()
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0
