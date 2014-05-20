@@ -15,6 +15,8 @@ from frame_grabber_node.msg import ImageWithTransform
 class FrameGrabber():
     def __init__(self):
         rospy.init_node("frame_grabber")
+        self.rate = rospy.Rate(10) # Set frame rate to 10Hz
+
         # start Vimba
         self.vimba = Vimba()
         self.vimba.startup()
@@ -87,11 +89,12 @@ class FrameGrabber():
                                                 1))
 
         debayer = cv2.cvtColor(imgdata, cv.CV_BayerGR2BGR)
+        flipped = cv2.flip(debayer, 1)
         #cv2.imshow('result', debayer), cv2.waitKey(0)
         #cv2.destroyAllWindows()
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(debayer, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(flipped, "bgr8")
         except CvBridgeError, e:
             print e
 
@@ -103,6 +106,7 @@ class FrameGrabber():
         # Publish!!
         self.rawimgtopic.publish(rosimgpub)
         self.tfimgtopic.publish(tfImg)
+        self.rate.sleep() # Should sleep 100 ms
 
     def cleanup(self):
         # clean up after capture self.camera.endCapture()
