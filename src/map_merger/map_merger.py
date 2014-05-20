@@ -45,11 +45,9 @@ def callback_laser_map(msg_in):
 
     combined_map = OccupancyGrid()
     combined_map.info = msg_in.info
-    combined_map.header = msg_in.header
-    combined_map.data = [0]*(Width*Height)   
-
-    for i in range (0, (Width*Height)-1):
-        combined_map.data[i] = max(msg_in.data[i], image_map[i])
+    combined_map.header = msg_in.header   
+    
+    combined_map.data = max(msg_in.data, image_map)
 
     pub_merged_map.publish(combined_map)
     rospy.loginfo("Publishing combined_map")
@@ -69,12 +67,12 @@ def callback_image_map(msg_in):
     (image_width, image_height, _temp_) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
-            if image_data[x][y][0] == 255: 
+            if image_data[x][y][0] == 255:
                 image_x = ((x-(image_width/2))*image_resolution)
                 image_y = ((y-(image_height/2))*image_resolution)
 
-                r = math.sqrt(math.pow(x_temp, 2) + math.pow(y_temp, 2))
-                image_theta = math.atan2(y_temp, x_temp)
+                r = math.sqrt(math.pow(image_x, 2) + math.pow(image_y, 2))
+                image_theta = math.atan2(image_x, image_y)
 
                 image_quat = [image_tf.rotation.x,
                           image_tf.rotation.y,
@@ -85,20 +83,20 @@ def callback_image_map(msg_in):
                 map_theta = origin_angles[2] - image_angles[2]
 
                 mapx = image_tf.translation.x - Origin.position.x
-                mapx = mapx + (r*math.cos(image_theta+map_theta)
+                mapx = mapx + (r*math.cos(image_theta+map_theta))
                 mapy = image_tf.translation.y - Origin.position.y
-                mapy = y_temp + (r*math.sin(image_theta+map_theta))
+                mapy = mapy + (r*math.sin(image_theta+map_theta))
 
                 x_cell = int(round(mapx*(1/Resolution)))
                 y_cell = int(round(mapy*(1/Resolution)))
-
+               
                 if x_cell<0 or x_cell>(Width-1) or y_cell<0 or y_cell>(Height-1):
                     print "Outside map bounds!!!!"
 
                 else:
                     index = ((y_cell*Width)+x_cell)
                     if image_map[index] < 100:
-                        image_map[index] = 1007
+                        image_map[index] = 100
 
 if __name__=='__main__':
     global pub_merged_map
