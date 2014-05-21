@@ -34,6 +34,10 @@
  <node pkg="mapper" type="mapper.py" name="mapper"/>
 
   <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
-   <node pkg="rviz" type="rviz" name="rviz"/>
+  <node pkg="rviz" type="rviz" name="rviz"/>
+
+  <node pkg="gps_kalman" type="utm_odometry_node" name="utm_odometry_node">
+      <remap from="odom" to="odom_utm"/>
+  </node>
 
 </launch>
