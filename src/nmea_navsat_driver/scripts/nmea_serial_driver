@@ -47,6 +47,9 @@ if __name__ == '__main__':
 
     try:
         GPS = serial.Serial(port=serial_port, baudrate=serial_baud, timeout=2)
+        #Start NMEA Logging (http://support.novatel.com/entries/21961065-Configuration-for-NMEA-output-GPGGA-GPVTG-etc-)
+        #ONTIME (1) = time between messages in seconds. Therefore frequency = 1hz. For 10hz, use ONTIME 0.1 (and so on)
+        GPS.write("LOG COM1 GPGGA ONTIME 1")
         driver = libnmea_navsat_driver.driver.RosNMEADriver()
         while not rospy.is_shutdown():
             data = GPS.readline().strip()
