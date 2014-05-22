@@ -40,7 +40,7 @@ class flagmaster():
 
         rospy.loginfo("Waiting for image topic...")
 
-    def image_callback(ros_image):
+    def image_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
         try:
             frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
@@ -55,14 +55,16 @@ class flagmaster():
         processedimgs = self.process_image(frame)
 
 
-        nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
+        #nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
+        nvimg = processedimgs['blue']
 
         try:
             blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
 
-        nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
+        #nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
+        nvimg = processedimgs['red']
 
         try:
             redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
@@ -87,7 +89,7 @@ class flagmaster():
                 # The user has press the q key, so exit
                 rospy.signal_shutdown("User hit q key to quit.")
           
-    def process_image(frame):
+    def process_image(self, frame):
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
         # define range of blue color in HSV
