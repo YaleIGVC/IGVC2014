@@ -55,16 +55,16 @@ class flagmaster():
         processedimgs = self.process_image(frame)
 
 
-        #nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
-        nvimg = processedimgs['blue']
+        nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
+        #nvimg = processedimgs['blue']
 
         try:
             blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
             print e
 
-        #nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
-        nvimg = processedimgs['red']
+        nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
+        #nvimg = processedimgs['red']
 
         try:
             redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
