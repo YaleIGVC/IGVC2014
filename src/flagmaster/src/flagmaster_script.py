@@ -123,7 +123,7 @@ class flagmaster():
         #cv2.imshow('res',res)
         
         #return {'blue':bluemask, 'red':redmask}
-        return {'blue':contoursblue, 'red':contoursred}
+        return {'blue':drawingblue, 'red':drawingred}
     
     def cleanup(self):
         print "Shutting down flag detection node."
