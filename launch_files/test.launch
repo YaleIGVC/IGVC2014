@@ -40,4 +40,6 @@
       <remap from="odom" to="odom_utm"/>
   </node>
 
+  <rosparam command="load" ns="/image_unwarp" file="rosparams/calibration.yaml" />
+
 </launch>
