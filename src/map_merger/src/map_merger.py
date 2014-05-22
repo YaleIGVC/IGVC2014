@@ -4,6 +4,7 @@ import rospy
 import tf
 from tf.transformations import euler_from_quaternion
 import tf.msg
+import numpy
 import geometry_msgs.msg
 from sensor_msgs.msg import LaserScan
 from sensor_msgs.msg import Image
@@ -47,7 +48,8 @@ def callback_laser_map(msg_in):
     combined_map.info = msg_in.info
     combined_map.header = msg_in.header   
     
-    combined_map.data = max(msg_in.data, image_map)
+    combined_map.data = numpy.maximum(msg_in.data, image_map)
+    #combined_map.data = image_map
 
     pub_merged_map.publish(combined_map)
     rospy.loginfo("Publishing combined_map")
@@ -67,12 +69,12 @@ def callback_image_map(msg_in):
     (image_width, image_height, _temp_) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
-            if image_data[x][y][0] == 255:
+            if max(image_data[x][y]) == 255:
                 image_x = ((x-(image_width/2))*image_resolution)
                 image_y = ((y-(image_height/2))*image_resolution)
 
                 r = math.sqrt(math.pow(image_x, 2) + math.pow(image_y, 2))
-                image_theta = math.atan2(image_x, image_y)
+                image_theta = math.atan2(image_y, image_x)
 
                 image_quat = [image_tf.rotation.x,
                           image_tf.rotation.y,
