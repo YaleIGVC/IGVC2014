@@ -11,3 +11,4 @@ devel/
 *.jpeg
 .DS_Store
 *~
+*.exe
