@@ -50,7 +50,9 @@ class flagmaster():
         # Convert the image to a Numpy array since most cv2 functions
         # require Numpy arrays.
         frame = np.array(frame, dtype=np.uint8)
-        
+        frame = cv2.resize(frame, (frame.shape[1] / 2, frame.shape[0] / 2))
+        cv2.imshow(self.node_name + ' blufe mask', frame)
+
         # Process the frame using the process_image() function
         processedimgs = self.process_image(frame)
 
@@ -94,7 +96,7 @@ class flagmaster():
 
         # define range of blue color in HSV
         lower_blue = np.array([80,50,50])
-        upper_blue = np.array([130,255,255])
+        upper_blue = np.array([130,100,255])
 
         # define range of red color in HSV
         lower_red = np.array([0,160,120])
@@ -112,14 +114,17 @@ class flagmaster():
         drawingred = np.zeros(redmask.shape,np.uint8)
         drawingblue = np.zeros(bluemask.shape,np.uint8)
 
-        cv2.drawContours(drawingred, contoursred, -1, (0,255,0), 3)
-        cv2.drawContours(drawingblue, contoursblue, -1, (0,255,0), 3)
+        cv2.drawContours(drawingred, contoursred, -1, (0,255,0), 40)
+        cv2.drawContours(drawingblue, contoursblue, -1, (0,255,0), 40)
+
+        #print contoursred
 
         # Bitwise-AND mask and original image
         #res = cv2.bitwise_and(frame,frame, mask= mask)
 
         #cv2.imshow('frame',frame)
-        #cv2.imshow('mask',mask)
+        cv2.imshow('rmask',redmask)
+        cv2.imshow('bmask',bluemask)
         #cv2.imshow('res',res)
         
         #return {'blue':bluemask, 'red':redmask}
