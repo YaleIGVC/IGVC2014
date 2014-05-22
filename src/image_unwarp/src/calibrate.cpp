@@ -165,6 +165,7 @@ class ImageUnwarpCalibrator {
 
         // Clean up
         destroyWindow(WINDOW_NAME_);
+        return true;
     }
 
     /**
@@ -469,6 +470,9 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     if (!calibrator.calibrate())
         return EXIT_FAILURE;
+
+    // Write the calibration data to file
+    system("cd ~/IGVC2014/launch_files/rosparams; rosparam get /image_unwarp > calibration.yaml");
 
     return EXIT_SUCCESS;
     ros::NodeHandle nh;
