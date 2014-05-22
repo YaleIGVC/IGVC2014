@@ -111,11 +111,11 @@ class flagmaster():
         contoursred, hierarchyred = cv2.findContours(redmask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
         contoursblue, hierarchyblue = cv2.findContours(bluemask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
-        drawingred = np.zeros(redmask.shape,np.uint8)
-        drawingblue = np.zeros(bluemask.shape,np.uint8)
+        #drawingred = np.zeros(redmask.shape,np.uint8)
+        #drawingblue = np.zeros(bluemask.shape,np.uint8)
 
-        cv2.drawContours(drawingred, contoursred, -1, (0,255,0), 40)
-        cv2.drawContours(drawingblue, contoursblue, -1, (0,255,0), 40)
+        #cv2.drawContours(drawingred, contoursred, -1, (0,255,0), 40)
+        #cv2.drawContours(drawingblue, contoursblue, -1, (0,255,0), 40)
 
         #print contoursred
 
@@ -123,12 +123,12 @@ class flagmaster():
         #res = cv2.bitwise_and(frame,frame, mask= mask)
 
         #cv2.imshow('frame',frame)
-        cv2.imshow('rmask',redmask)
-        cv2.imshow('bmask',bluemask)
+        #cv2.imshow('rmask',redmask)
+        #cv2.imshow('bmask',bluemask)
         #cv2.imshow('res',res)
         
-        #return {'blue':bluemask, 'red':redmask}
-        return {'blue':drawingblue, 'red':drawingred}
+        return {'blue':bluemask, 'red':redmask}
+        #return {'blue':drawingblue, 'red':drawingred}
     
     def cleanup(self):
         print "Shutting down flag detection node."
