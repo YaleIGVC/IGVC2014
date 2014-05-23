@@ -136,11 +136,13 @@ class flagmaster():
             npixx = wpixel[0] - self.obstaclelength
             if npixx < 0:
                 npixx = 0
-            cv2.line(bluemask, (npixx, wpixel[1]), wpixel, 255, 1)
+            xrix = npixx, wpixel[1]
+            cv2.line(bluemask, xrix, wpixel, 255, 1)
 
         nonzerop = np.nonzero(redmask)
         for wpixel in nonzerop:
             npixx = wpixel[0] + self.obstaclelength
+            xrix = npixx, wpixel[1]
             cv2.line(redmask, (npixx, wpixel[1]), wpixel, 255, 1)
         
         return {'blue':bluemask, 'red':redmask}
