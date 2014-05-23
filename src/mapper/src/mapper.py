@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import pdb
 import math
 from copy import deepcopy
 import rospy
@@ -134,6 +135,16 @@ if __name__=='__main__':
     Map = OccupancyGrid()
     Map.info = metaData
     mapData = [0]*(Width*Height)
+
+    # draw initial starting boundary
+    startingBoundaryBoolean = rospy.get_param("starting_line_obstacle", False)
+    startLineLength = 6.5/Resolution
+    startWidth = (Width/2) - (startLineLength/2)
+    startHeight = (Height/2) - (1.5/Resolution)
+
+    for i in range(int(startWidth), int(startWidth) + int(startLineLength)):
+        mapData[((int(startHeight)*Width)+i)] = 100
+
 
     
     pub_map = rospy.Publisher("/map", OccupancyGrid)
