@@ -62,6 +62,11 @@ class flagmaster():
         nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
         #nvimg = processedimgs['blue']
 
+        nonzerop = np.nonzero(nvimg)
+        for wpixel in nonzerop:
+            npixx = wpixel[0] + self.obstaclelength
+            cv2.line(nvimg, (npixx, wpixel[1]), wpixel, (255,255,255), 1)
+
         try:
             blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
         except CvBridgeError, e:
@@ -69,6 +74,13 @@ class flagmaster():
 
         nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
         #nvimg = processedimgs['red']
+
+        nonzerop = np.nonzero(nvimg)
+        for wpixel in nonzerop:
+            npixx = wpixel[0] - self.obstaclelength
+            if npixx < 0:
+                npixx = 0
+            cv2.line(nvimg, (npixx, wpixel[1]), wpixel, (255,255,255), 1)
 
         try:
             redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
@@ -130,20 +142,6 @@ class flagmaster():
         #cv2.imshow('res',res)
 
         #set up obstacles for flag guidance
-
-        nonzerop = np.nonzero(bluemask)
-        for wpixel in nonzerop:
-            npixx = wpixel[0] - self.obstaclelength
-            if npixx < 0:
-                npixx = 0
-            xrix = npixx, wpixel[1]
-            cv2.line(bluemask, xrix, wpixel, 255, 1)
-
-        nonzerop = np.nonzero(redmask)
-        for wpixel in nonzerop:
-            npixx = wpixel[0] + self.obstaclelength
-            xrix = npixx, wpixel[1]
-            cv2.line(redmask, (npixx, wpixel[1]), wpixel, 255, 1)
         
         return {'blue':bluemask, 'red':redmask}
         #return {'blue':drawingblue, 'red':drawingred}
