@@ -23,6 +23,8 @@ class flagmaster():
         #Set stream to subscribe to
         camstring = rospy.get_param('~camstream','/raw_image')
 
+        self.obstaclelength = 10
+
         # What we do during shutdown
         rospy.on_shutdown(self.cleanup)
 
@@ -50,8 +52,8 @@ class flagmaster():
         # Convert the image to a Numpy array since most cv2 functions
         # require Numpy arrays.
         frame = np.array(frame, dtype=np.uint8)
-        frame = cv2.resize(frame, (frame.shape[1] / 2, frame.shape[0] / 2))
-        cv2.imshow(self.node_name + ' blufe mask', frame)
+        #frame = cv2.resize(frame, (frame.shape[1] / 2, frame.shape[0] / 2))
+        #cv2.imshow(self.node_name + ' blufe mask', frame)
 
         # Process the frame using the process_image() function
         processedimgs = self.process_image(frame)
@@ -126,6 +128,20 @@ class flagmaster():
         #cv2.imshow('rmask',redmask)
         #cv2.imshow('bmask',bluemask)
         #cv2.imshow('res',res)
+
+        #set up obstacles for flag guidance
+
+        nonzerop = np.nonzero(bluemask)
+        for wpixel in nonzerop:
+            npixx = wpixel[0] - self.obstaclelength
+            if npixx < 0:
+                npixx = 0
+            cv2.line(bluemask, (npixx, wpixel[1]), wpixel, 255, 1)
+
+        nonzerop = np.nonzero(redmask)
+        for wpixel in nonzerop:
+            npixx = wpixel[0] + self.obstaclelength
+            cv2.line(redmask, (npixx, wpixel[1]), wpixel, 255, 1)
         
         return {'blue':bluemask, 'red':redmask}
         #return {'blue':drawingblue, 'red':drawingred}
