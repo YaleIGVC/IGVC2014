@@ -40,7 +40,7 @@ class flagmaster():
 
         rospy.loginfo("Waiting for image topic...")
 
-    def image_callback(ros_image):
+    def image_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
         try:
             frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
@@ -50,12 +50,15 @@ class flagmaster():
         # Convert the image to a Numpy array since most cv2 functions
         # require Numpy arrays.
         frame = np.array(frame, dtype=np.uint8)
-        
+        frame = cv2.resize(frame, (frame.shape[1] / 2, frame.shape[0] / 2))
+        cv2.imshow(self.node_name + ' blufe mask', frame)
+
         # Process the frame using the process_image() function
         processedimgs = self.process_image(frame)
 
 
         nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
+        #nvimg = processedimgs['blue']
 
         try:
             blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
@@ -63,6 +66,7 @@ class flagmaster():
             print e
 
         nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
+        #nvimg = processedimgs['red']
 
         try:
             redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
@@ -87,12 +91,12 @@ class flagmaster():
                 # The user has press the q key, so exit
                 rospy.signal_shutdown("User hit q key to quit.")
           
-    def process_image(frame):
+    def process_image(self, frame):
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
         # define range of blue color in HSV
         lower_blue = np.array([80,50,50])
-        upper_blue = np.array([130,255,255])
+        upper_blue = np.array([130,100,255])
 
         # define range of red color in HSV
         lower_red = np.array([0,160,120])
@@ -102,14 +106,29 @@ class flagmaster():
         bluemask = cv2.inRange(hsv, lower_blue, upper_blue)
         redmask = cv2.inRange(hsv, lower_red, upper_red)
 
+        # Contour detection
+
+        contoursred, hierarchyred = cv2.findContours(redmask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+        contoursblue, hierarchyblue = cv2.findContours(bluemask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+        #drawingred = np.zeros(redmask.shape,np.uint8)
+        #drawingblue = np.zeros(bluemask.shape,np.uint8)
+
+        #cv2.drawContours(drawingred, contoursred, -1, (0,255,0), 40)
+        #cv2.drawContours(drawingblue, contoursblue, -1, (0,255,0), 40)
+
+        #print contoursred
+
         # Bitwise-AND mask and original image
         #res = cv2.bitwise_and(frame,frame, mask= mask)
 
         #cv2.imshow('frame',frame)
-        #cv2.imshow('mask',mask)
+        #cv2.imshow('rmask',redmask)
+        #cv2.imshow('bmask',bluemask)
         #cv2.imshow('res',res)
         
         return {'blue':bluemask, 'red':redmask}
+        #return {'blue':drawingblue, 'red':drawingred}
     
     def cleanup(self):
         print "Shutting down flag detection node."
