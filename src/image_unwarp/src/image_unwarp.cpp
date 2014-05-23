@@ -5,7 +5,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
-
+#include <frame_grabber_node/ImageWithTransform.h>
 #include <iostream>
 #include <ctime>
 #include <sys/time.h>

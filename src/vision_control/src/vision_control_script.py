@@ -48,6 +48,7 @@ class flagmaster():
 
         self.finpub = rospy.Publisher("/flags_and_lanes", detectedvision)
         self.backpub = rospy.Publisher("/image_for_cv", Image)
+        self.kpub = rospy.Publisher("/lanes_and_flags", ImageWithTransform)
 
         rospy.init_node(self.node_name)
 
@@ -84,7 +85,8 @@ class flagmaster():
             pubdet.redflags = self.redimg
             pubdet.blueflags = self.blueimg
             pubdet.lanes = self.laneimg
-            pubdet.all = process_images(self.blueimg, self.redimg, self.laneimg)
+            pubdet.all = process_images(self.laneimg, self.blueimg, self.redimg)
+            self.kpub.publish(pubdet.all)
             pubdet.tf = self.itf
             self.finpub.publish(pubdet)
             self.newflag = False
@@ -101,7 +103,8 @@ class flagmaster():
             pubdet.redflags = self.redimg
             pubdet.blueflags = self.blueimg
             pubdet.lanes = self.laneimg
-            pubdet.all = process_images(self.blueimg, self.redimg, self.laneimg)
+            pubdet.all = process_images(self.laneimg, self.blueimg, self.redimg)
+            self.kpub.publish(pubdet.all)
             pubdet.tf = self.itf
             self.finpub.publish(pubdet)
             self.newflag = False
@@ -129,9 +132,11 @@ class flagmaster():
         except CvBridgeError, e:
             print e
 
-        ibtw = cv2.bitwise_and(imgcv1,imgcv2, mask= mask1)
+        #ibtw = cv2.bitwise_or(imgcv1,imgcv2, mask= mask1)
 
-        res = cv2.bitwise_and(ibtw,imgcv3, mask= mask2)
+        #res = cv2.bitwise_or(ibtw,imgcv3, mask= mask2)
+
+        res = cv2.bitwise_or(imgcv2,imgcv3, mask= mask2)
 
         try:
             resrosimg = self.bridge.cv2_to_imgmsg(res, "bgr8")

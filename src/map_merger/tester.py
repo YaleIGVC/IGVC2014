@@ -11,8 +11,7 @@ import tf
 
 rospy.init_node('map_merger_tester')
 
-img = cv2.imread('/home/inve/IGVC2014/src/map_merger/fake_lines.jpg', 1)
-cv2.imshow('img',img)
+img = cv2.imread('/home/inve14/IGVC2014/src/map_merger/fake_lines.jpg', 1)
 bridge = CvBridge()
 tf_listener  = tf.TransformListener()
 my_img = ImageWithTransform()

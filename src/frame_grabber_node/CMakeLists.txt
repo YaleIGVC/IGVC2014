@@ -7,6 +7,7 @@ project(frame_grabber_node)
 find_package(catkin REQUIRED tf
   rospy
   std_msgs
+  message_generation
 )
 
 # Generate messages in the 'msg' folder
@@ -85,7 +86,7 @@ find_package(catkin REQUIRED tf
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES frame_grabber
-  CATKIN_DEPENDS rospy std_msgs tf sensor_msgs geometry_msgs
+  CATKIN_DEPENDS rospy std_msgs tf sensor_msgs geometry_msgs message_runtime
 #  DEPENDS system_lib
 )
 
