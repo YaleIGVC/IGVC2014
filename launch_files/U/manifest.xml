@@ -1,6 +1,0 @@
-<package>
-  <description brief="RMP 200 Light">RMP 200 Light</description>
-  <depend package="gazebo" />
-  <author>me</author>
-  <license>BSD</license>
-</package>
