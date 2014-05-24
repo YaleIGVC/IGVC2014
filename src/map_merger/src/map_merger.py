@@ -17,7 +17,7 @@ from frame_grabber_node.msg import ImageWithTransform
 from vision_control.msg import detectedvision
 from cv_bridge import CvBridge, CvBridgeError
 
-image_resolution = 0.005
+image_resolution = 0.0078
 
 def callback_laser_map(msg_in):
     global pub_merged_map
