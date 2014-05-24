@@ -23,7 +23,7 @@ class flagmaster():
         #Set stream to subscribe to
         camstring = rospy.get_param('~camstream','/raw_image')
 
-        self.obstaclelength = 10
+        self.obstaclelength = 100000
 
         # What we do during shutdown
         rospy.on_shutdown(self.cleanup)
@@ -41,6 +41,9 @@ class flagmaster():
         self.image_sub = rospy.Subscriber(camstring, Image, self.image_callback)
 
         rospy.loginfo("Waiting for image topic...")
+
+    def bool_img_to_idx(self, img):
+     return np.argwhere( img == 255 )
 
     def image_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
@@ -64,7 +67,17 @@ class flagmaster():
 
 
         nvimg = cv2.cvtColor(processedimgs['blue'], cv2.cv.CV_GRAY2BGR)
+        print nvimg
         #nvimg = processedimgs['blue']
+
+        nonzerop = self.bool_img_to_idx(processedimgs['blue'])
+        for wpixeli in nonzerop:
+            wpixel = wpixeli[0], wpixeli[1]
+            npixx = wpixel[0]# + self.obstaclelength
+            print wpixel
+            xrix = npixx, wpixel[1]
+            #nvimg[npixx, wpixel[1]] = 0,0,255
+            #cv2.rectangle(nvimg, xrix, wpixel, (255,255,255), 255)
 
         try:
             blueimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")
@@ -73,6 +86,15 @@ class flagmaster():
 
         nvimg = cv2.cvtColor(processedimgs['red'], cv2.cv.CV_GRAY2BGR)
         #nvimg = processedimgs['red']
+
+        nonzerop = self.bool_img_to_idx(processedimgs['red'])
+        for wpixeli in nonzerop:
+            wpixel = wpixeli[0], wpixeli[1]
+            npixx = wpixel[0] - self.obstaclelength
+            if npixx < 0:
+                npixx = 0
+            xrix = npixx, wpixel[1]
+            #cv2.line(nvimg, xrix, wpixel, (255,255,255), 255)
 
         try:
             redimgpub = self.bridge.cv2_to_imgmsg(nvimg, "bgr8")

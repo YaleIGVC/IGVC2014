@@ -1,0 +1,43 @@
+<robot
+  name="RMP 200 Light">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.125023452490073 -0.282898566213627 -0.00711344044905081"
+        rpy="0 0 90" />
+      <mass
+        value="62.8997439467478" />
+      <inertia
+        ixx="13.1645664908108"
+        ixy="-0.0622681300792579"
+        ixz="-0.0185631691591961"
+        iyy="6.57406072104929"
+        iyz="3.31968350860984"
+        izz="10.9213782339762" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDF/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.666666666666667 0.694117647058824 0.764705882352941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://URDFmeshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>
