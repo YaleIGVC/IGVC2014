@@ -152,9 +152,4 @@ if __name__=='__main__':
     
     rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size=1, buff_size = 2**24)
     rospy.loginfo("init")
-    #while(True):
-    #    try:
-    #        callback_laser(rospy.wait_for_message("/scan", LaserScan, 1)) 
-    #    except (ROSException, ROSInterruptException) as e:
-    #        print "Mapper not recieving laser scans"
     rospy.spin()
