@@ -1,5 +1,6 @@
  <launch>
-    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" />
+
+    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=/dev/ttyUSB0" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
     <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" >
         <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
@@ -8,7 +9,7 @@
     <node pkg="urg_node" type="urg_node" name="short_range_laser">
         <param name="angle_min" value="-1.4" />
         <param name="angle_max" value="1.4" />
-    </node>
+    </node> 
 
 
     <!--<node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />-->
@@ -31,15 +32,15 @@
         <param name="output_frame" value="odom_combined" />
     </node>
 
- <node pkg="mapper" type="mapper.py" name="mapper"/>
+<node pkg="mapper" type="mapper.py" name="mapper"/>
 
   <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
   <node pkg="rviz" type="rviz" name="rviz"/>
 
-  <node pkg="gps_kalman" type="utm_odometry_node" name="utm_odometry_node">
+  <node pkg="gps_common" type="utm_odometry_node" name="utm_odometry_node">
       <remap from="odom" to="odom_utm"/>
   </node>
 
-  <rosparam command="load" ns="/image_unwarp" file="rosparams/calibration.yaml" />
+ <!-- <rosparam command="load" ns="/image_unwarp" file="rosparams/calibration.yaml" /> -->
 
 </launch>
