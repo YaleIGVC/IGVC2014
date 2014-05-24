@@ -12,3 +12,4 @@ devel/
 .DS_Store
 *~
 *.exe
+*.pyc
