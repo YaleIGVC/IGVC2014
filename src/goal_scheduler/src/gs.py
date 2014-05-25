@@ -19,7 +19,7 @@ class GoalScheduler():
             gpsstring = "/odom_utm"
 
         #ROS
-        self.pubtopic = rospy.Publisher("/goal_coords", PoseStamped)
+        self.pubtopic = rospy.Publisher("move_base_simple/goal", PoseStamped)
         rospy.on_shutdown(self.cleanup)
 
         self.gpssub = rospy.Subscriber(gpsstring, Odomoetry, self.goalie)
