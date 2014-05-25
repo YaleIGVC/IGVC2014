@@ -6,14 +6,14 @@ import pdb
 import time
 import rospy
 from sensor_msgs.msg import Image
-from frame_grabber_node.msg import ImageWithTransform
 from cv_bridge import CvBridge, CvBridgeError
 
 class LaneDetector():
     def __init__(self):
         rospy.init_node("lane_detector")
         self.output = rospy.Publisher("/detected_lanes", Image)
-        rospy.Subscriber("/image_unwarp/output_video", Image, self.callback)
+        #rospy.Subscriber("/image_for_cv", Image, self.callback)
+        rospy.Subscriber("/image_unwarp/output_video2", Image, self.callback)
 
         self.bridge = CvBridge()
 
@@ -25,7 +25,7 @@ class LaneDetector():
         start_time = time.time()
 
         # image = frame[79:870, 545:1556]
-        
+
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         image = cv2.resize(image, (image.shape[1] / 2, image.shape[0] / 2))
 
@@ -76,16 +76,19 @@ class LaneDetector():
 
         new_bgr= cv2.cvtColor(im_bw,cv2.COLOR_GRAY2RGB)
 
+        height, width, depth = new_bgr.shape
+        green = cv2.split(new_bgr)[1]
+        red = np.zeros((height, width), np.uint8)
+        blue = np.zeros((height, width), np.uint8)
+
+        output_array = cv2.merge([blue, green, red])
+
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(new_bgr, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(output_array, "bgr8")
         except CvBridgeError, e:
             print e
 
-        finaloutput = ImageWithTransform()
-        # finaloutput.tf = ros_image.tf
-        finaloutput.image = rosimgpub
-        # print new_bgr
-        self.output.publish(finaloutput.image)
+        self.output.publish(rosimgpub)
         rospy.loginfo("Published lanes")
         print time.time() - start_time, "seconds"
 if __name__=='__main__':
