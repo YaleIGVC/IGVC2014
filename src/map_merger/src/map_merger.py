@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import math
+from operator import add
 import rospy
 import tf
+import cv2
 from tf.transformations import euler_from_quaternion
 import tf.msg
 import numpy
@@ -17,7 +19,7 @@ from frame_grabber_node.msg import ImageWithTransform
 from vision_control.msg import detectedvision
 from cv_bridge import CvBridge, CvBridgeError
 
-image_resolution = 0.0078
+image_resolution = 0.1
 
 def callback_laser_map(msg_in):
     global pub_merged_map
@@ -46,17 +48,19 @@ def callback_laser_map(msg_in):
 
     combined_map = OccupancyGrid()
     combined_map.info = msg_in.info
-    combined_map.header = msg_in.header   
-    
-    combined_map.data = numpy.maximum(msg_in.data, image_map)
-    #combined_map.data = image_map
+    combined_map.header = msg_in.header       
+    print len(image_map), len(msg_in.data)
+    #combined_map.data = numpy.maximum(msg_in.data, image_map)
+    combined_map.data = map(add, image_map, msg_in.data)
 
     pub_merged_map.publish(combined_map)
     rospy.loginfo("Publishing combined_map")
 
 def callback_image_map(msg_in):
     global image_map
-
+    
+    print "here"
+    
     image_tf = msg_in.tf
 
     bridge = CvBridge()
@@ -66,6 +70,13 @@ def callback_image_map(msg_in):
     except CvBridgeError as e:
         print e, ": Ros Image to Numpy error"
  
+    (image_width, image_height, _temp_) = image_data.shape
+    
+    resize_width = 50
+    resize_height = resize_width * (image_height/image_width)
+    
+    image_data = cv2.resize(image_data, (resize_width, resize_height))
+    
     (image_width, image_height, _temp_) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
