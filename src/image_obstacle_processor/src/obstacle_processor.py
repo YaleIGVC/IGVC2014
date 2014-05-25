@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import cv2
 import numpy as np
 import time
@@ -97,7 +98,6 @@ class ImageHandler():
         return red, blue
 
 if __name__=='__main__':
-    print "Hi1"
     rospy.init_node("obstacle_processor")
     ImageHandler()
     rospy.spin()
