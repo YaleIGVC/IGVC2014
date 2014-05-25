@@ -113,7 +113,8 @@ class ImageUnwarper {
      */
     bool setup() {
         // Get private configuration parameters
-        nh_.param<string>("input_topic", input_topic_, "/raw_image");
+        nh_.param<string>("input_topic", input_topic_, "/raw_image_with_tf");
+        cout << "HI" << endl;
         nh_.param<string>("output_topic", output_topic_,
                 "/image_unwarp/output_video");
 

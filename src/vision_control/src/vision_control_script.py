@@ -9,86 +9,57 @@ import cv2.cv as cv
 from sensor_msgs.msg import Image, CameraInfo
 from geometry_msgs.msg import Transform
 from frame_grabber_node.msg import ImageWithTransform
-from flagmaster.msg import detectedflags
-from vision_control.msg import detectedvision
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
 
-class flagmaster():
+class mvc():
     def __init__(self):
 
         #Set stream to subscribe to
-        if(len(sys.argv) > 1):
-            camstring = sys.argv[1]
-        else:
-            camstring = "/raw_image_with_tf"
+        camstring = "/image_unwarp/output_video"
 
-        if(len(sys.argv) > 2):
-            linestring = sys.argv[2]
-        else:
-            linestring = "/detected_lanes"
+        linestring = "/detected_lanes"
 
-        if(len(sys.argv) > 3):
-            flagstring = sys.argv[3]
-        else:
-            flagstring = "/detected_flags"
+        flagstring = "/detected_flags"
 
         self.node_name = "vision_control"
 
         self.newflag = False
         self.newlane = False
-        #self.newimg = False
 
-        self.blueimg = Image()
-        self.redimg = Image()
+        self.flagimg = Image()
         self.laneimg = Image()
 
         self.itf = Transform()
 
-        self.finpub = rospy.Publisher("/flags_and_lanes", detectedvision)
-        self.backpub = rospy.Publisher("/image_for_cv", Image)
-        self.kpub = rospy.Publisher("/lanes_and_flags", ImageWithTransform)
+        self.cv_pub = rospy.Publisher("/image_for_cv", Image)
+        self.output_pub = rospy.Publisher("/lanes_and_flags", ImageWithTransform)
 
         rospy.init_node(self.node_name)
 
-
-
         # What we do during shutdown
         rospy.on_shutdown(self.cleanup)
-
-        # Create the OpenCV display window for the RGB image
-        self.cv_window_name = self.node_name
-        cv.NamedWindow(self.cv_window_name, cv.CV_WINDOW_NORMAL)
-        cv.MoveWindow(self.cv_window_name, 25, 75)
-
 
         # Create the cv_bridge object
         self.bridge = CvBridge()
 
         self.image_sub = rospy.Subscriber(camstring, ImageWithTransform, self.image_callback)
-        self.flag_sub = rospy.Subscriber(flagstring, detectedflags, self.flag_callback)
+        self.flag_sub = rospy.Subscriber(flagstring, Image, self.flag_callback)
         self.lane_sub = rospy.Subscriber(linestring, Image, self.lane_callback)
-
 
         rospy.loginfo("Waiting for camera, flag and lane topics...")
 
-    def flag_callback(self, flag_images):
+    def flag_callback(self, flag_image):
 
-        self.blueimg = flag_images.blueflags
-        self.redimg = flag_images.redflags
-
+        self.flagimg = flag_image
         self.newflag = True
 
         if self.newlane:
-            pubdet = detectedvision()
-            pubdet.redflags = self.redimg
-            pubdet.blueflags = self.blueimg
-            pubdet.lanes = self.laneimg
-            pubdet.all = process_images(self.laneimg, self.blueimg, self.redimg)
-            self.kpub.publish(pubdet.all)
+            pubdet = Image()
+            pubdet = process_images(self.laneimg, self.flagimg)
+            self.output_pub.publish(pubdet.all)
             pubdet.tf = self.itf
-            self.finpub.publish(pubdet)
             self.newflag = False
             self.newlane = False
 
@@ -99,24 +70,23 @@ class flagmaster():
         self.newlane = True
 
         if self.newflag:
-            pubdet = detectedvision()
+            pubdet = Image()
             pubdet.redflags = self.redimg
             pubdet.blueflags = self.blueimg
             pubdet.lanes = self.laneimg
             pubdet.all = process_images(self.laneimg, self.blueimg, self.redimg)
-            self.kpub.publish(pubdet.all)
+            self.output_pub.publish(pubdet.all)
             pubdet.tf = self.itf
-            self.finpub.publish(pubdet)
             self.newflag = False
             self.newlane = False
 
     def image_callback(self, ros_image):
 
-        if 1 not in (self.newblue, self.newred, self.newlane):
-            self.backpub.publish(ros_image.image)
+        if 1 not in (self.newflag, self.newlane):
+            self.cv_pub.publish(ros_image.image)
             self.itf = ros_image.tf
           
-    def process_images(self, img1, img2, img3):
+    def process_images(self, img1, img2):
         try:
             imgcv1 = self.bridge.imgmsg_to_cv2(img1, "bgr8")
         except CvBridgeError, e:
@@ -127,16 +97,11 @@ class flagmaster():
         except CvBridgeError, e:
             print e
 
-        try:
-            imgcv3 = self.bridge.imgmsg_to_cv2(img3, "bgr8")
-        except CvBridgeError, e:
-            print e
-
         #ibtw = cv2.bitwise_or(imgcv1,imgcv2, mask= mask1)
 
         #res = cv2.bitwise_or(ibtw,imgcv3, mask= mask2)
 
-        res = cv2.bitwise_or(imgcv2,imgcv3, mask= mask2)
+        res = cv2.bitwise_or(imgcv1,imgcv2, mask=mask2)
 
         try:
             resrosimg = self.bridge.cv2_to_imgmsg(res, "bgr8")
@@ -151,7 +116,7 @@ class flagmaster():
     
 def main(args):       
     try:
-        flagmaster()
+        mvc()
         rospy.spin()
     except KeyboardInterrupt:
         print "Shutting down vision controller node."

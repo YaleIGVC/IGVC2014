@@ -1,9 +1,7 @@
  <launch>
-    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB0" >
-        <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
-    </node>
-
-  <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
   <node pkg="frame_grabber_node" type="frame_grabber.py" name="frame_grabber_node" />
-
+  <node pkg="image_unwarp" type="image_unwarp" name="image_unwarp" />
+  <node pkg="vision_control" type="vision_control_script.py" name="vision_control" />
+  <node pkg="flagmaster" type="flagmaster_script.py" name="flagmaster" />
+  <node pkg="lane_detection" type="lines.py" name="lane_detection" />
 </launch>

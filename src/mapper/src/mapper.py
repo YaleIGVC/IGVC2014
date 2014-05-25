@@ -144,6 +144,9 @@ if __name__=='__main__':
 
     #for i in range(int(startWidth), int(startWidth) + int(startLineLength)):
         #mapData[((int(startHeight)*Width)+i)] = 100
+    #
+    #for i in range(int(startWidth), int(startWidth) + int(startLineLength)):
+    #    mapData[((int(startHeight)*Width)+i)] = 100
 
 
     
@@ -152,4 +155,9 @@ if __name__=='__main__':
     
     rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size=1, buff_size = 2**24)
     rospy.loginfo("init")
+    #while(True):
+    #    try:
+    #        callback_laser(rospy.wait_for_message("/scan", LaserScan, 1)) 
+    #    except (ROSException, ROSInterruptException) as e:
+    #        print "Mapper not recieving laser scans"
     rospy.spin()

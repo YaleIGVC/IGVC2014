@@ -13,14 +13,9 @@ import numpy as np
 class flagmaster():
     def __init__(self):
 
-        #Set stream to subscribe to
-        if(len(sys.argv) > 1):
-            camstring = sys.argv[1]
-        else:
-            #camstring = "/image_for_cv"
-            camstring = "/image_unwarp/output_video2"
+        camstring = "/image_for_cv"
 
-        self.node_name = "flagmaster_flash"
+        self.node_name = "flagmasteraaa"
         self.output_pub = rospy.Publisher("/detected_flags", Image)
 
         rospy.init_node(self.node_name)

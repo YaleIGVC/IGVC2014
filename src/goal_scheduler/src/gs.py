@@ -3,7 +3,7 @@
 from cv_bridge import CvBridge, CvBridgeError 
 from sensor_msgs.msg import Image, CameraInfo 
 from geometry_msgs.msg import Transform, Pose, Point, Quaternion, PoseStamped, PoseWithCovariance
-from nav_msgs.msg import Odomoetry
+from nav_msgs.msg import Odometry
 from std_msgs.msg import String, Header
 import rospy
 import time
@@ -93,12 +93,8 @@ class GoalScheduler():
 
     def cleanup(self):
         print "Shutting down goal scheduler."
-        
 
-def main(args):       
-    try:
-        GoalScheduler()
-        rospy.spin()
 
 if __name__ == '__main__':
-    main(sys.argv)
+    GoalScheduler()
+    rospy.spin()

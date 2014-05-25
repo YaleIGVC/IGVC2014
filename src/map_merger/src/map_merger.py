@@ -41,15 +41,15 @@ def callback_laser_map(msg_in):
                       Origin.orientation.w]
         origin_angles = euler_from_quaternion(origin_quat)
         image_map = [0]*(Width*Height)
-        rospy.Subscriber("/fake_lines", ImageWithTransform, callback_image_map, queue_size=1, buff_size = 2**30)
+        rospy.Subscriber("/lanes_and_flags", ImageWithTransform, callback_image_map, queue_size=1, buff_size = 2**30)
 
 
     combined_map = OccupancyGrid()
     combined_map.info = msg_in.info
     combined_map.header = msg_in.header   
     
-    #combined_map.data = numpy.maximum(msg_in.data, image_map)
-    combined_map.data = image_map
+    combined_map.data = numpy.maximum(msg_in.data, image_map)
+    #combined_map.data = image_map
 
     pub_merged_map.publish(combined_map)
     rospy.loginfo("Publishing combined_map")

@@ -31,7 +31,7 @@ class FrameGrabber():
         self.listener = tf.TransformListener()
 
         #ROS
-        self.rawimgtopic = rospy.Publisher("/raw_image", Image)
+        #self.rawimgtopic = rospy.Publisher("/raw_image", Image)
         self.tfimgtopic = rospy.Publisher("/raw_image_with_tf", ImageWithTransform)
         rospy.on_shutdown(self.cleanup)
 
@@ -104,7 +104,7 @@ class FrameGrabber():
         tfImg.image = rosimgpub
 
         # Publish!!
-        self.rawimgtopic.publish(rosimgpub)
+        #self.rawimgtopic.publish(rosimgpub)
         self.tfimgtopic.publish(tfImg)
         self.rate.sleep() # Should sleep 100 ms
 
