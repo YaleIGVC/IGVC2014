@@ -1,8 +1,8 @@
  <launch>
 
-    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=/dev/ttyUSB0" />
+     <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=$(env IMU_SERIAL_PORT)" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
-    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" >
+    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=$(env SEGWAY_SERIAL_PORT)" >
         <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
     </node>
 
@@ -12,9 +12,7 @@
     </node> 
 
 
-    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />-->
-    <node pkg="tf" type="static_transform_publisher" name="baselink_laserbase_tf" args=".47 .095 .342 0 0 0 base_link laser_base 1000" />
-    <node pkg="tf" type="static_transform_publisher" name="laserbase_laser_tf" args="0 0 0 0 0 0 laser_base laser 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />
     <!--laser_base reperesents center of pitch rotation of lrf, and laser represents center of lrf-->
 
     <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
@@ -41,6 +39,6 @@
       <remap from="odom" to="odom_utm"/>
   </node>
 
- <!-- <rosparam command="load" ns="/image_unwarp" file="rosparams/calibration.yaml" /> -->
+  <rosparam command="load" ns="/image_unwarp" file="/home/inve14/IGVC2014/launch_files/rosparams/calibration.yaml" />
 
 </launch>
