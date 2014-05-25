@@ -13,6 +13,6 @@ VECTORNAV_TTY=`dmesg | grep $vectornav_usbno | grep -oe 'ttyUSB[0-9]'`
 #gps_usbno=`dmesg | grep $gps_idProduct | grep idProduct | grep -oe '[0-9]-[0-9]'`
 #GPS_TTY=`dmesg | grep $gps_usbno | grep ttyUSB | cut -f13 -d" "`
 
-export segway_serial_port=/dev/$SEGWAY_TTY
-export imu_serial_port=/dev/$VECTORNAV_TTY
-export gps_serial_port=/dev/$GPS_TTY
+export SEGWAY_SERIAL_PORT=/dev/$SEGWAY_TTY
+export IMU_SERIAL_PORT=/dev/$VECTORNAV_TTY
+export GPS_SERIAL_PORT=/dev/$GPS_TTY
