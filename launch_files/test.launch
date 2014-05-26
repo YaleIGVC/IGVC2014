@@ -12,7 +12,7 @@
     </node> 
 
 
-    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args="-0.22 0.0 0.0 3.14159 0 0 base_link laser 1000" />
     <!--laser_base reperesents center of pitch rotation of lrf, and laser represents center of lrf-->
 
     <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
@@ -30,13 +30,14 @@
         <param name="output_frame" value="odom_combined" />
     </node>
 
-<node pkg="mapper" type="mapper.py" name="mapper"/>
+<!--<node pkg="mapper" type="mapper.py" name="mapper"/>-->
 
   <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
   <node pkg="rviz" type="rviz" name="rviz"/>
 
   <node pkg="gps_common" type="utm_odometry_node" name="utm_odometry_node">
       <remap from="odom" to="odom_utm"/>
+      <param name="frame_id" value="gps"/>
   </node>
 
   <rosparam command="load" ns="/image_unwarp" file="/home/inve14/IGVC2014/launch_files/rosparams/calibration.yaml" />
