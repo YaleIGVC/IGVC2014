@@ -6,6 +6,7 @@ from std_msgs.msg import String, Header
 import rospy
 import tf
 import time
+import math
 from vectornav.msg import ins
 
 class Tpub():
@@ -38,13 +39,14 @@ class Tpub():
             self.hasgps = True
 
     def transformatory(self, imumsg):
-	if(not self.hasyaw):
-	    self.gy = (imumsg.LLA.z)
-	    self.hasyaw = True
+        if(not self.hasyaw):
+            self.gy = (imumsg.LLA.z)
+            self.hasyaw = True
+
         if(self.hasgps):
             br = tf.TransformBroadcaster()
-            br.sendTransform((-self.xcoord, -self.ycoord, 0),
-                tf.transformations.quaternion_from_euler(0, 0, self.gy),
+            br.sendTransform((self.xcoord, self.ycoord, 0),
+                tf.transformations.quaternion_from_euler(0, 0, ((-self.gy + 90)*math.pi/180)),
                 rospy.Time.now(),
                 "odom_utm",
                 "odom_combined")
