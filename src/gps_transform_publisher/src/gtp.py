@@ -37,7 +37,7 @@ class Tpub():
         if(self.hasgps):
             br = tf.TransformBroadcaster()
             br.sendTransform((self.xcoord, self.ycoord, 0),
-                tf.transformations.quaternion_from_euler(0, 0, imumsg.LLA.z),
+                tf.transformations.quaternion_from_euler(0, 0, (imumsg.LLA.z + 90 - 13)),
                 rospy.Time.now(),
                 "odom_utm",
                 "odom_combined")
