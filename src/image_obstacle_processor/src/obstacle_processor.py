@@ -11,7 +11,7 @@ class ImageHandler():
     def __init__(self):
         self.output = rospy.Publisher("/lanes_and_flags", ImageWithTransform)
         self.bridge = CvBridge()
-        rospy.Subscriber("/image_unwarp/output_video", ImageWithTransform, self.callback)
+        rospy.Subscriber("/image_unwarp/output_video", ImageWithTransform, self.callback, queue_size=1, buff_size = 2**24)
 
     def callback(self, msg_in):
         output_msg = ImageWithTransform()
