@@ -8,6 +8,7 @@ from std_msgs.msg import String, Header
 import rospy
 import time
 import tf
+import sys
 
 class GoalScheduler():
     def __init__(self):
@@ -19,10 +20,11 @@ class GoalScheduler():
             gpsstring = "/odom_utm"
 
         #ROS
+	self.listener = tf.TransformListener()
         self.pubtopic = rospy.Publisher("/goal_coords", PoseStamped)
         rospy.on_shutdown(self.cleanup)
 
-        self.gpssub = rospy.Subscriber(gpsstring, Odomoetry, self.goalie)
+        self.gpssub = rospy.Subscriber(gpsstring, Odometry, self.goalie)
 
         self.currentgoalnum = 0
         self.firstrun = True
@@ -37,12 +39,11 @@ class GoalScheduler():
         with open('goals.txt') as f:
             self.goals = f.read().splitlines()
 
-    def goalie(gpsdata):
+    def goalie(self, gpsdata):
 
         if(self.firstrun):
-            self.initx = Odomoetry.pose.pose.position.x
-            self.inity = Odomoetry.pose.pose.position.y
-            self.firstrun = False
+            self.initx = gpsdata.pose.pose.position.x
+            self.inity = gpsdata.pose.pose.position.y
 
         xform = Transform()
         tpoint = Point()
@@ -64,18 +65,19 @@ class GoalScheduler():
         tquat.z = rot[2]
         tquat.w = rot[3]
 
-        ogps = goals[self.currentgoalnum].strip().split(",")
+        ogps = self.goals[self.currentgoalnum].strip().split(",")
 
 
 
-        if((abs(xcoord - float(ogps[0])) < self.toleranceradius) and (abs(xcoord - float(ogps[1])) < self.toleranceradius)):
+        if(self.firstrun or ((abs(xcoord - float(ogps[0])) < self.toleranceradius) and (abs(xcoord - float(ogps[1])) < self.toleranceradius))):
             print "Hit goal"
             self.currentgoalnum = self.currentgoalnum + 1
             self.seqcounter = self.seqcounter + 1
+	    self.firstrun = False
 
             #compute new goal
 
-            ncgps = goals[self.currentgoalnum].strip().split(",")
+            ncgps = self.goals[self.currentgoalnum].strip().split(",")
 
             tpoint.x = float(ncgps[0]) - self.initx
             tpoint.y = float(ncgps[1]) - self.inity
@@ -85,8 +87,10 @@ class GoalScheduler():
             theader.frame_id = "1"
 
             tpose.orientation = tquat
+	    tpose.position = tpoint
             tpsm.pose = tpose
             tpsm.header = theader
+	    rospy.loginfo("new goal")
 
             # Publish new goal coords
             self.pubtopic.publish(tpsm)
