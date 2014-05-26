@@ -40,13 +40,13 @@ class Tpub():
 
     def transformatory(self, imumsg):
         if(not self.hasyaw):
-            self.gy = (imumsg.LLA.z)
+            self.gy = (imumsg.RPY.z)
             self.hasyaw = True
 
         if(self.hasgps):
             br = tf.TransformBroadcaster()
             br.sendTransform((self.xcoord, self.ycoord, 0),
-                tf.transformations.quaternion_from_euler(0, 0, ((-self.gy + 90)*math.pi/180)),
+                tf.transformations.quaternion_from_euler(0, 0, ((self.gy+180)*math.pi/180)),
                 rospy.Time.now(),
                 "odom_utm",
                 "odom_combined")
