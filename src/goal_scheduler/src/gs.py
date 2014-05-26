@@ -20,7 +20,7 @@ class GoalScheduler():
             gpsstring = "/odom_utm"
 
         #ROS
-	self.listener = tf.TransformListener()
+	    self.listener = tf.TransformListener()
         self.pubtopic = rospy.Publisher("/goal_coords", PoseStamped)
         rospy.on_shutdown(self.cleanup)
 
@@ -73,7 +73,8 @@ class GoalScheduler():
             print "Hit goal"
             self.currentgoalnum = self.currentgoalnum + 1
             self.seqcounter = self.seqcounter + 1
-	    self.firstrun = False
+
+	        self.firstrun = False
 
             #compute new goal
 
@@ -87,10 +88,10 @@ class GoalScheduler():
             theader.frame_id = "1"
 
             tpose.orientation = tquat
-	    tpose.position = tpoint
+	        tpose.position = tpoint
             tpsm.pose = tpose
             tpsm.header = theader
-	    rospy.loginfo("new goal")
+	        rospy.loginfo("new goal")
 
             # Publish new goal coords
             self.pubtopic.publish(tpsm)
