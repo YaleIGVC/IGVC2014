@@ -8,7 +8,7 @@ from frame_grabber_node.msg import ImageWithTransform
 from cv_bridge import CvBridge, CvBridgeError
 
 class ImageHandler():
-    def __init__(self):
+    def __init__(self): 
         self.output = rospy.Publisher("/lanes_and_flags", ImageWithTransform)
         self.bridge = CvBridge()
         rospy.Subscriber("/image_unwarp/output_video", ImageWithTransform, self.callback)
@@ -21,11 +21,19 @@ class ImageHandler():
             np_input_image = self.bridge.imgmsg_to_cv2(msg_in.image, "bgr8")
         except CvBridgeError, e:
             print e
+
+        #np_input_image = cv2.flip(np_input_image, -1)
+
         green_lane_img = self.lane_handler(np_input_image)
         red_flag_img, blue_flag_img = self.flag_handler(np_input_image)
 
         output_array = cv2.merge([blue_flag_img, green_lane_img, red_flag_img])
-
+        
+        (image_width, image_height, _temp_) = output_array.shape
+        resize_width = 100
+        resize_height = resize_width * (image_height/image_width)
+        output_array = cv2.resize(output_array, (resize_width, resize_height))
+    
         try:
             rosimgpub = self.bridge.cv2_to_imgmsg(output_array, "bgr8")
         except CvBridgeError, e:
@@ -70,7 +78,9 @@ class ImageHandler():
 
         new_bgr= cv2.cvtColor(im_bw,cv2.COLOR_GRAY2RGB)
 
-        green = cv2.split(new_bgr)[1]
+        width, height, depth = new_bgr.shape
+        green = np.zeros((width, height), np.uint8)
+        #green = cv2.split(new_bgr)[1]
 
         return green
 
