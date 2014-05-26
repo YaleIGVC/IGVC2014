@@ -80,7 +80,7 @@ def callback_image_map(msg_in):
     (image_width, image_height, _temp_) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
-            if max(image_data[x][y]) == 255:
+            if (image_data[x][y][0] == 255) or (image_data[x][y][2] == 255):
                 image_x = ((x-(image_width/2))*image_resolution)
                 image_y = ((y-(image_height/2))*image_resolution)
 

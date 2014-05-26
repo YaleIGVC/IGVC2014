@@ -31,7 +31,6 @@ def callback_laser(msg_in):
     global metaData
     global tf_listener
     global Origin
-    global origin_angles
     global Map
     global mapData
 
@@ -41,15 +40,6 @@ def callback_laser(msg_in):
     max_range = msg_in.range_max
     laser_ranges = msg_in.ranges
 
-    if(not initialized):
-        Origin = msg_in.info.origin
-        origin_quat = [Origin.orientation.x,
-                      Origin.orientation.y,
-                      Origin.orientation.z,
-                      Origin.orientation.w]
-        origin_angles = euler_from_quaternion(origin_quat)
-        rospy.Subscriber("/lanes_and_flags", ImageWithTransform, callback_image_map, queue_size=1, buff_size = 2**30)
-
     try:
         tf_listener.waitForTransform("odom_combined", "laser", rospy.Time(0), rospy.Duration(3.0))
         (trans,rot) = tf_listener.lookupTransform("odom_combined", "laser", rospy.Time(0))
@@ -58,13 +48,6 @@ def callback_laser(msg_in):
 
     angles = euler_from_quaternion(rot)
 
-    quat = [Origin.orientation.x,
-            Origin.orientation.y,
-            Origin.orientation.z,
-            Origin.orientation.w]
-
-    originAngles = euler_from_quaternion(quat)
-
     for r in laser_ranges:
         x = 0
         y = 0
@@ -72,20 +55,21 @@ def callback_laser(msg_in):
             x = trans[0] - Origin.position.x
             y = trans[1] - Origin.position.y
 
-            x = x + (r*math.cos(angles[2]+angle_min-originAngles[2]))
-            y = y + (r*math.sin(angles[2]+angle_min-originAngles[2]))
+            x = x + (r*math.cos(angles[2]+angle_min-origin_angles[2]))
+            y = y + (r*math.sin(angles[2]+angle_min-origin_angles[2]))
 
             x = int(round(x*(1/Resolution)))
             y = int(round(y*(1/Resolution))) 
 
             if x<0 or x>(Width-1) or y<0 or y>(Height-1):
-                print "Outside map bounds!!!!"
+                print "Image Outside map bounds!!!!"
 
             else:
                 index = ((y*Width)+x)
                 if mapData[index] < 100:
                     #mapData[index] = mapData[index] + 5
-                    mapData[index] = 100
+                    #mapData[index] = 100
+                    pass
             
         angle_min = angle_min + angle_increment 
 
@@ -115,16 +99,9 @@ def callback_image(msg_in):
         print e, ": Ros Image to Numpy error"
  
     (image_width, image_height, _temp_) = image_data.shape
-    
-    resize_width = 50
-    resize_height = resize_width * (image_height/image_width)
-    
-    image_data = cv2.resize(image_data, (resize_width, resize_height))
-    
-    (image_width, image_height, _temp_) = image_data.shape
     for x in range (0, image_width):
         for y in range(0, image_height):
-            if max(image_data[x][y]) == 255:
+            if max(image_data[x][y]) != 0:
                 image_x = ((x-(image_width/2))*image_resolution)
                 image_y = ((y-(image_height/2))*image_resolution)
 
@@ -161,6 +138,7 @@ if __name__=='__main__':
     global metaData
     global tf_listener
     global Origin
+    global origin_angles
     global Map
     global mapData
     global initialized
@@ -206,6 +184,9 @@ if __name__=='__main__':
     Map = OccupancyGrid()
     Map.info = metaData
     mapData = [0]*(Width*Height)
+
+    origin_angles = [0.0, 0.0, angles[2]]
+    rospy.Subscriber("/lanes_and_flags", ImageWithTransform, callback_image, queue_size=1, buff_size = 2**30)
 
     # draw initial starting boundary
     #startingBoundaryBoolean = rospy.get_param("starting_line_obstacle", False)
