@@ -11,7 +11,7 @@ class ImageHandler():
     def __init__(self): 
         self.output = rospy.Publisher("/lanes_and_flags", ImageWithTransform)
         self.bridge = CvBridge()
-        rospy.Subscriber("/image_unwarp/output_video", ImageWithTransform, self.callback)
+        rospy.Subscriber("/image_unwarp/output_video", ImageWithTransform, self.callback, queue_size=1, buff_size = 2**24)
 
     def callback(self, msg_in):
         output_msg = ImageWithTransform()
@@ -100,8 +100,8 @@ class ImageHandler():
         bluemask = cv2.inRange(hsv, lower_blue, upper_blue)
         redmask = cv2.inRange(hsv, lower_red, upper_red)
 
-        contoursred, hierarchyred = cv2.findContours(redmask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-        contoursblue, hierarchyblue = cv2.findContours(bluemask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+        #contoursred, hierarchyred = cv2.findContours(redmask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+        #contoursblue, hierarchyblue = cv2.findContours(bluemask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
         nvimg_blue = cv2.cvtColor(bluemask, cv2.cv.CV_GRAY2BGR)
         nvimg_red = cv2.cvtColor(redmask, cv2.cv.CV_GRAY2BGR)
