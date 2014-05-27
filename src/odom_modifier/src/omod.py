@@ -48,29 +48,29 @@ class Tpub():
 
     def odomhandler(self, odommsg):
         if(self.hasyaw and self.hasgps):
-            #valtheta = radians(self.gy+90)
+            valtheta = radians(self.gy-90)
 
-            #xprime = (cos(valtheta)*odommsg.pose.pose.position.x) - (sin(valtheta)*odommsg.pose.pose.position.y)
-            #yprime = (sin(valtheta)*odommsg.pose.pose.position.x) + (cos(valtheta)*odommsg.pose.pose.position.y)
+            xprime = (cos(valtheta)*(-odommsg.pose.pose.position.x)) - (sin(valtheta)*(-odommsg.pose.pose.position.y))
+            yprime = (sin(valtheta)*(-odommsg.pose.pose.position.x)) + (cos(valtheta)*(-odommsg.pose.pose.position.y))
 
-            xprime = 0
-            yprime = 0
+            #xprime = odommsg.pose.pose.position.x
+            #yprime = odommsg.pose.pose.position.y
 
             odommsg.pose.pose.position.x = xprime + self.xcoord
             odommsg.pose.pose.position.y = yprime + self.ycoord
             odommsg.pose.pose.position.z = 0
 
-            #orientation_array = tf.transformations.quaternion_from_euler(0, 0, valtheta)
-            #odommsg.pose.pose.orientation.x = orientation_array[0]
-            #odommsg.pose.pose.orientation.y = orientation_array[1]
-            #odommsg.pose.pose.orientation.z = orientation_array[2]
-            #odommsg.pose.pose.orientation.w = orientation_array[3]
+            orientation_array = tf.transformations.quaternion_from_euler(0, 0, valtheta)
+            odommsg.pose.pose.orientation.x = orientation_array[0]
+            odommsg.pose.pose.orientation.y = orientation_array[1]
+            odommsg.pose.pose.orientation.z = orientation_array[2]
+            odommsg.pose.pose.orientation.w = orientation_array[3]
 
-            #xvprime = (cos(valtheta)*odommsg.twist.twist.linear.x) - (sin(valtheta)*odommsg.twist.twist.linear.y)
-            #yvprime = (sin(valtheta)*odommsg.twist.twist.linear.x) + (cos(valtheta)*odommsg.twist.twist.linear.y)
+            xvprime = (cos(valtheta)*odommsg.twist.twist.linear.x) - (sin(valtheta)*odommsg.twist.twist.linear.y)
+            yvprime = (sin(valtheta)*odommsg.twist.twist.linear.x) + (cos(valtheta)*odommsg.twist.twist.linear.y)
 
-            #odommsg.twist.twist.linear.x = xvprime;
-            #odommsg.twist.twist.linear.y = yvprime;
+            odommsg.twist.twist.linear.x = xvprime;
+            odommsg.twist.twist.linear.y = yvprime;
 
             self.pubtopic.publish(odommsg)
 

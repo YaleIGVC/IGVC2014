@@ -22,6 +22,12 @@
     <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args="0 0 0 0 0 0 map odom_combined 1000" />-->
 
 
+    <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_navsat_driver" args="_port:=$(env GPS_SERIAL_PORT) _baud:=9600"/>
+    <node pkg="gps_common" type="utm_odometry_node" name="utm_odometry_node">
+        <remap from="odom" to="odom_utm"/>
+        <param name="frame_id" value="gps"/>
+    </node>
+    <node pkg="odom_modifier" name="odom_modifier" type="omod.py"/>
     <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
         <remap from="odom" to="odom_md"/>
         <param name="sensor_timeout" value="1.0" />
@@ -36,10 +42,6 @@
   <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
   <node pkg="rviz" type="rviz" name="rviz"/>
 
-  <node pkg="gps_common" type="utm_odometry_node" name="utm_odometry_node">
-      <remap from="odom" to="odom_utm"/>
-      <param name="frame_id" value="gps"/>
-  </node>
 
   <rosparam command="load" ns="/image_unwarp" file="/home/inve14/IGVC2014/launch_files/rosparams/calibration.yaml" />
 
