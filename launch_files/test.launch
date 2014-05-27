@@ -3,6 +3,7 @@
      <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=$(env IMU_SERIAL_PORT)" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
     <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=$(env SEGWAY_SERIAL_PORT)" >
+        <param name="reset_odometry" value="true" />
         <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
     </node>
 
