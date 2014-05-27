@@ -1,12 +1,13 @@
 #!/usr/bin/env python  
 import roslib
-from geometry_msgs.msg import Transform, Pose, Point, Quaternion, PoseStamped, PoseWithCovariance, Vector3
+from geometry_msgs.msg import Transform, Pose, Point, Quaternion, PoseStamped, PoseWithCovariance, Vector3, Twist
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String, Header
 import rospy
 import tf
 import time
-from math import sin, cos, degrees
+
+from math import sin, cos, degrees, radians
 from vectornav.msg import ins
 
 class Tpub():
@@ -42,20 +43,25 @@ class Tpub():
 
     def transformatory(self, imumsg):
         if(not self.hasyaw):
-            self.gy = (imumsg.LLA.z)
+            self.gy = (imumsg.RPY.z)
             self.hasyaw = True
 
     def odomhandler(self, odommsg):
         if(self.hasyaw and self.hasgps):
-            valtheta = radians(self.gy)
+            valtheta = radians(self.gy+90)
 
             xprime = (cos(valtheta)*odommsg.pose.pose.position.x) - (sin(valtheta)*odommsg.pose.pose.position.y)
             yprime = (sin(valtheta)*odommsg.pose.pose.position.x) + (cos(valtheta)*odommsg.pose.pose.position.y)
 
             odommsg.pose.pose.position.x = xprime + self.xcoord
             odommsg.pose.pose.position.y = yprime + self.ycoord
+            odommsg.pose.pose.position.z = 0
 
-            odommsg.pose.pose.orientation = tf.transformations.quaternion_from_euler(0, 0, valtheta)
+            orientation_array = tf.transformations.quaternion_from_euler(0, 0, valtheta)
+            odommsg.pose.pose.orientation.x = orientation_array[0]
+            odommsg.pose.pose.orientation.y = orientation_array[1]
+            odommsg.pose.pose.orientation.z = orientation_array[2]
+            odommsg.pose.pose.orientation.w = orientation_array[3]
 
             xvprime = (cos(valtheta)*odommsg.twist.twist.linear.x) - (sin(valtheta)*odommsg.twist.twist.linear.y)
             yvprime = (sin(valtheta)*odommsg.twist.twist.linear.x) + (cos(valtheta)*odommsg.twist.twist.linear.y)
