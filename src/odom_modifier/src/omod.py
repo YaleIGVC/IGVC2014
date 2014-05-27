@@ -46,7 +46,7 @@ class Tpub():
             self.hasyaw = True
 
     def odomhandler(self, odommsg):
-        if(self.hasyaw and hasgps):
+        if(self.hasyaw and self.hasgps):
             valtheta = radians(self.gy)
 
             xprime = (cos(valtheta)*odommsg.pose.pose.position.x) - (sin(valtheta)*odommsg.pose.pose.position.y)
