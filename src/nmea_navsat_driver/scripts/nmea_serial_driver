@@ -44,12 +44,13 @@ if __name__ == '__main__':
     serial_port = rospy.get_param('~port','/dev/ttyUSB0')
     serial_baud = rospy.get_param('~baud',9600)
     message_time = rospy.get_param('~messagetime','0.5')
+    serial_timeout = rospy.get_param('~serialtimeout',0.5)
     frame_id = libnmea_navsat_driver.driver.RosNMEADriver.get_frame_id()
 
     try:
-        GPS = serial.Serial(port=serial_port, baudrate=serial_baud, timeout=0.5)
+        GPS = serial.Serial(port=serial_port, baudrate=serial_baud, timeout=serial_timeout)
         GPS.write("LOG COM1 GPGGA ONTIME " + message_time + "\n")
-	GPS.write("LOG COM1 GPGGA ONTIME " + message_time + "\n")
+        GPS.write("LOG COM1 GPGGA ONTIME " + message_time + "\n")
         driver = libnmea_navsat_driver.driver.RosNMEADriver()
         while not rospy.is_shutdown():
             data = GPS.readline().strip()
