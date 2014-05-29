@@ -12,7 +12,7 @@ class LaneDetector():
     def __init__(self):
         rospy.init_node("lane_detector")
         self.output = rospy.Publisher("/detected_lanes", Image)
-        rospy.Subscriber("/image_for_cv", Image, self.callback)
+        rospy.Subscriber("/image_unwarp/output_video", Image, self.callback)
 
         self.bridge = CvBridge()
 

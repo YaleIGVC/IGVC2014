@@ -1,103 +1,89 @@
 #!/usr/bin/env python
 
-from cv_bridge import CvBridge, CvBridgeError 
-from sensor_msgs.msg import Image, CameraInfo 
 from geometry_msgs.msg import Transform, Pose, Point, Quaternion, PoseStamped, PoseWithCovariance
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String, Header
+from LatLongUTMconversion import LLtoUTM
 import rospy
 import time
 import tf
 import sys
+import actionlib
+from actionlib_msgs.msg import *
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+import roslib
 
 class GoalScheduler():
     def __init__(self):
         rospy.init_node("goal_scheduler")
 
-        if(len(sys.argv) > 1):
-            gpsstring = sys.argv[1]
-        else:
-            gpsstring = "/odom_utm"
-
         #ROS
 	    self.listener = tf.TransformListener()
-        self.pubtopic = rospy.Publisher("/goal_coords", PoseStamped)
+        self.pubtopic = rospy.Publisher("/goal_coords", MoveBaseGoal)
         rospy.on_shutdown(self.cleanup)
 
-        self.gpssub = rospy.Subscriber(gpsstring, Odometry, self.goalie)
+        self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
 
-        self.currentgoalnum = 0
-        self.firstrun = True
-        self.initx = 0
-        self.inity = 0
+        currentgoalnum = 0
 
-        self.seqcounter = 0
+        goal_states = ['PENDING', 'ACTIVE', 'PREEMPTED', 
+                       'SUCCEEDED', 'ABORTED', 'REJECTED',
+                       'PREEMPTING', 'RECALLING', 'RECALLED',
+                       'LOST']
 
-        self.toleranceradius = 2
+        #self.toleranceradius = 2
 
         #Read goals
         with open('goals.txt') as f:
-            self.goals = f.read().splitlines()
+            goals = f.read().splitlines()
 
-    def goalie(self, gpsdata):
+        # Begin the main loop and run through a sequence of locations
+        while not rospy.is_shutdown():
+            cgoallatlon = goals[currentgoalnum].strip().split(",")
+            clat = float(cgoallatlon[0])
+            clon = float(cgoallatlon[1])
+            utm_zone, easting, northing = LLtoUTM(23, clat, clon)
 
-        if(self.firstrun):
-            self.initx = gpsdata.pose.pose.position.x
-            self.inity = gpsdata.pose.pose.position.y
-
-        xform = Transform()
-        tpoint = Point()
-        tquat = Quaternion()
-        tpose = Pose()
-        tpsm = PoseStamped()
-        theader = Header()
-
-        self.listener.waitForTransform("odom_combined", "base_link", rospy.Time(0), rospy.Duration(3.0))
-        (trans,rot) = self.listener.lookupTransform('/odom_combined', '/base_link', rospy.Time(0))
-
-
-
-        xcoord = trans[0]
-        ycoord = trans[1]
-        tpoint.z = trans[2]
-        tquat.x = rot[0]
-        tquat.y = rot[1]
-        tquat.z = rot[2]
-        tquat.w = rot[3]
-
-        ogps = self.goals[self.currentgoalnum].strip().split(",")
-
-
-
-        if(self.firstrun or ((abs(xcoord - float(ogps[0])) < self.toleranceradius) and (abs(xcoord - float(ogps[1])) < self.toleranceradius))):
-            print "Hit goal"
-            self.currentgoalnum = self.currentgoalnum + 1
-            self.seqcounter = self.seqcounter + 1
-
-	        self.firstrun = False
-
-            #compute new goal
-
-            ncgps = self.goals[self.currentgoalnum].strip().split(",")
-
-            tpoint.x = float(ncgps[0]) - self.initx
-            tpoint.y = float(ncgps[1]) - self.inity
-
-            theader.seq = self.seqcounter
+            tpoint = Point()
+            tquat = Quaternion()
+            tpose = Pose()
+            tpsm = PoseStamped()
+            theader = Header()
+            theader.seq = currentgoalnum
             theader.stamp = rospy.Time(0)
-            theader.frame_id = "1"
-
+            theader.frame_id = "map"
+            tpoint.x = easting
+            tpoint.y = northing
+            tpoint.z = 0
+            tquat = tf.transformations.quaternion_from_euler(0,0,0)
+            tpose.position = tpoint
             tpose.orientation = tquat
-	        tpose.position = tpoint
-            tpsm.pose = tpose
-            tpsm.header = theader
-	        rospy.loginfo("new goal")
 
-            # Publish new goal coords
-            self.pubtopic.publish(tpsm)
+            self.goal = MoveBaseGoal()
+            self.goal.target_pose.pose = tpose
+            self.goal.target_pose.header = theader
+
+            finished_within_time = self.move_base.wait_for_result(rospy.Duration(300)) 
+
+            # Check for success or failure
+            if not finished_within_time:
+                self.move_base.cancel_goal()
+                rospy.loginfo("Timed out achieving goal")
+            else:
+                state = self.move_base.get_state()
+                if state == GoalStatus.SUCCEEDED:
+                    currentgoalnum++
+                    rospy.loginfo("Goal succeeded!")
+                    rospy.loginfo("State:" + str(state))
+                else:
+                  rospy.loginfo("Goal failed with error code: " + str(goal_states[state]))
+
+            self.pubtopic.publish(self.goal)
 
     def cleanup(self):
         print "Shutting down goal scheduler."
+        self.move_base.cancel_goal()
+        rospy.sleep(2)
 
 
 if __name__ == '__main__':
