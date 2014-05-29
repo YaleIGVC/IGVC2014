@@ -19,7 +19,7 @@
     <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
     <node pkg="tf" type="static_transform_publisher" name="basefoot_baselink_tf" args="0 0 0.25 0 0 0 base_footprint base_link 1000" />
-    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args="0 0 0 0 0 0 map odom_combined 1000" />-->
+    <node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".508 -.0508 0 0 0 0 base_link camera 1000" />
 
 
     <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_serial_driver" args="_port:=$(env GPS_SERIAL_PORT) _baud:=9600"/>
