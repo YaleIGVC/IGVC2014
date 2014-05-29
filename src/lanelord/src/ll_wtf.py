@@ -17,7 +17,7 @@ class lanelord():
         camstring = rospy.get_param('~camstring','/image_unwarp/output_video')
 
         self.node_name = "lanelord"
-        self.output_pub = rospy.Publisher("/detected_lanes", Image)
+        self.output_pub = rospy.Publisher("/detected_lanes", ImageWithTransform)
 
         rospy.init_node(self.node_name)
 
