@@ -29,7 +29,7 @@ class lanelord():
 
         self.firstrun = True
 
-        self.radiuspadding = 5
+        self.radiuspadding = 15
         self.cxcoord = 0
         self.cycoord = 0
         self.crad = 0
