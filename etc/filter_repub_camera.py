@@ -26,5 +26,6 @@ if __name__=='__main__':
     pub_obstacle2 = rospy.Publisher("/detected_lanes2", Image)
     rospy.Subscriber("/image_unwarp/output_video", ImageWithTransform, callback_unwarp)
     rospy.Subscriber("/lanes_and_flags", ImageWithTransform, callback_obstacle)
+    rospy.Subscriber("/detected_lanes2", ImageWithTransform, callback_obstacle2)
     rospy.loginfo("init")
     rospy.spin()
