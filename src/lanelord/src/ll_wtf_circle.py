@@ -29,6 +29,11 @@ class lanelord():
 
         self.firstrun = 1
 
+        self.radiuspadding = 5
+        self.cxcoord = 0
+        self.cycoord = 0
+        self.crad = 0
+
         # Subscribe to the camera image
         self.image_sub = rospy.Subscriber(camstring, ImageWithTransform, self.image_callback)
 
@@ -71,7 +76,6 @@ class lanelord():
         max_lowThreshold = 300
         ratio = 3
         kernel_size = 5
-        radiuspadding = 5
 
         img = cv2.resize(img, (img.shape[1] / 8, img.shape[0] / 8))
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -82,13 +86,17 @@ class lanelord():
             circles = cv2.HoughCircles(img,cv2.cv.CV_HOUGH_GRADIENT,1,20,
                             param1=50,param2=30,minRadius=23,maxRadius=32)
             circles = np.uint16(np.around(circles))
-            cv2.circle(cimg,(circles[0][0],circles[0][1]),(circles[0][2]+radiuspadding),(0,0,0),-1)
+            self.cxcoord = circles[0][0]
+            self.cycoord = circles[0][1]
+            self.crad = circles[0][2]
+            self.firstrun = False
 
 
         detected_edges = cv2.GaussianBlur(gray,(11,11),0)
         detected_edges = cv2.Canny(detected_edges,lowThreshold,lowThreshold*ratio,apertureSize = kernel_size)
         dst = cv2.bitwise_and(img,img,mask = detected_edges)  # just add some colours to edges from original image.
-        cv2.imshow('edges (canny)',dst)
+        cv2.circle(dst,(self.cxcoord,self.cycoord),(self.crad+self.radiuspadding),(0,0,0),-1)
+        #cv2.imshow('edges (canny)',dst)
 
         return dst
 
