@@ -1,3 +1,3 @@
 <launch>
-	<rosparam command="load" ns="/image_unwarp" file="launch_files/rosparams/calibration.yaml" />
+	<rosparam command="load" ns="/image_unwarp" file="rosparams/calibration.yaml" />
 </launch>
