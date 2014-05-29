@@ -68,7 +68,7 @@ class lanelord():
         rosimagewtfpub.tf = ttf
 
         self.output_pub.publish(rosimagewtfpub)
-        rospy.loginfo("Published output")
+        #rospy.loginfo("Published output")
 
     def process_image(self, img):
 
@@ -86,9 +86,10 @@ class lanelord():
             circles = cv2.HoughCircles(img,cv2.cv.CV_HOUGH_GRADIENT,1,20,
                             param1=50,param2=30,minRadius=23,maxRadius=32)
             circles = np.uint16(np.around(circles))
-            self.cxcoord = circles[0][0]
-            self.cycoord = circles[0][1]
-            self.crad = circles[0][2]
+            print circles
+            #self.cxcoord = circles[0][0]
+            #self.cycoord = circles[0][1]
+            #self.crad = circles[0][2]
             self.firstrun = False
 
 
