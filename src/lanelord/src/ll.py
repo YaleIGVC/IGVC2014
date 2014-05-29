@@ -14,7 +14,7 @@ import numpy as np
 class lanelord():
     def __init__(self):
 
-        camstring = rospy.get_param('~camstring',"/image_unwarp/output_video")
+        camstring = rospy.get_param('~camstring','/image_unwarp/output_video')
 
         self.node_name = "lanelord"
         self.output_pub = rospy.Publisher("/detected_lanes", Image)
@@ -28,14 +28,14 @@ class lanelord():
         self.bridge = CvBridge()
 
         # Subscribe to the camera image
-        self.image_sub = rospy.Subscriber(camstring, ImageWithTransform, self.image_callback)
+        self.image_sub = rospy.Subscriber(camstring, Image, self.image_callback)
 
         rospy.loginfo("Waiting for image topic...")
 
-    def image_callback(self, ros_image_wtf):
+    def image_callback(self, ros_image):
         # Use cv_bridge() to convert the ROS image to OpenCV format
 
-        ros_image = ros_image_wtf.image
+        #ros_image = ros_image_wtf.image
 
         try:
             frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
@@ -51,7 +51,7 @@ class lanelord():
 
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(process_image, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(processedimg, "bgr8")
         except CvBridgeError, e:
             print e
 
