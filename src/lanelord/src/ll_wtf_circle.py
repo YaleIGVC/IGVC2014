@@ -76,14 +76,15 @@ class lanelord():
         max_lowThreshold = 300
         ratio = 3
         kernel_size = 5
+        image_scale = 8
 
-        img = cv2.resize(img, (img.shape[1] / 8, img.shape[0] / 8))
+        img = cv2.resize(img, (img.shape[1] / image_scale, img.shape[0] / image_scale))
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
         if(self.firstrun):
-            img = cv2.medianBlur(gray,51)
-            cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
-            circles = cv2.HoughCircles(img,cv2.cv.CV_HOUGH_GRADIENT,1,20,
+            ximg = cv2.medianBlur(gray,51)
+            cimg = cv2.cvtColor(ximg,cv2.COLOR_GRAY2BGR)
+            circles = cv2.HoughCircles(ximg,cv2.cv.CV_HOUGH_GRADIENT,1,20,
                             param1=50,param2=30,minRadius=23,maxRadius=32)
             #circles = np.uint16(np.around(circles))
             print circles
