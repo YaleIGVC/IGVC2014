@@ -85,7 +85,7 @@ class lanelord():
             ximg = cv2.medianBlur(gray,51)
             cimg = cv2.cvtColor(ximg,cv2.COLOR_GRAY2BGR)
             circles = cv2.HoughCircles(ximg,cv2.cv.CV_HOUGH_GRADIENT,1,20,
-                            param1=50,param2=30,minRadius=23,maxRadius=32)
+                            param1=50,param2=30,minRadius=0,maxRadius=50)
             #circles = np.uint16(np.around(circles))
             print circles
             #self.cxcoord = circles[0][0]
