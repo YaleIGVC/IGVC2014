@@ -27,7 +27,7 @@ class lanelord():
         # Create the cv_bridge object
         self.bridge = CvBridge()
 
-        self.firstrun = 1
+        self.firstrun = True
 
         self.radiuspadding = 5
         self.cxcoord = 0
