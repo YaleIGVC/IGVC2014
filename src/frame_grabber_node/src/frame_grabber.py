@@ -71,8 +71,8 @@ class FrameGrabber():
         # Grab TF!!
         xform = Transform()
 
-        self.listener.waitForTransform("odom_combined", "base_footprint", rospy.Time(0), rospy.Duration(3.0))
-        (trans,rot) = self.listener.lookupTransform('/odom_combined', '/base_footprint', rospy.Time(0))
+        self.listener.waitForTransform("odom_combined", "camera", rospy.Time(0), rospy.Duration(3.0))
+        (trans,rot) = self.listener.lookupTransform('/odom_combined', '/camera', rospy.Time(0))
         xform.translation.x = trans[0]
         xform.translation.y = trans[1]
         xform.translation.z = trans[2]
