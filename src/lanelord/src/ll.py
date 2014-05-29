@@ -7,13 +7,14 @@ import cv2
 import cv2.cv as cv
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
+from frame_grabber_node.msg import ImageWithTransform
 import numpy as np
 
 
 class lanelord():
     def __init__(self):
 
-        camstring = rospy.get_param('~camstring','/unwarped_image')
+        camstring = rospy.get_param('~camstring',"/image_unwarp/output_video")
 
         self.node_name = "lanelord"
         self.output_pub = rospy.Publisher("/detected_lanes", Image)
@@ -27,12 +28,15 @@ class lanelord():
         self.bridge = CvBridge()
 
         # Subscribe to the camera image
-        self.image_sub = rospy.Subscriber(camstring, Image, self.image_callback)
+        self.image_sub = rospy.Subscriber(camstring, ImageWithTransform, self.image_callback)
 
         rospy.loginfo("Waiting for image topic...")
 
-    def image_callback(self, ros_image):
+    def image_callback(self, ros_image_wtf):
         # Use cv_bridge() to convert the ROS image to OpenCV format
+
+        ros_image = ros_image_wtf.image
+
         try:
             frame = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         except CvBridgeError, e:
