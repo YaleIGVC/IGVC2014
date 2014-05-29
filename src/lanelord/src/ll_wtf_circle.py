@@ -86,18 +86,18 @@ class lanelord():
             cimg = cv2.cvtColor(ximg,cv2.COLOR_GRAY2BGR)
             circles = cv2.HoughCircles(ximg,cv2.cv.CV_HOUGH_GRADIENT,1,20,
                             param1=50,param2=30,minRadius=0,maxRadius=100)
-            #circles = np.uint16(np.around(circles))
+            circles = np.uint16(np.around(circles))
             print circles
-            #self.cxcoord = circles[0][0]
-            #self.cycoord = circles[0][1]
-            #self.crad = circles[0][2]
+            self.cxcoord = circles[0][0]
+            self.cycoord = circles[0][1]
+            self.crad = circles[0][2]
             self.firstrun = False
 
 
         detected_edges = cv2.GaussianBlur(gray,(11,11),0)
         detected_edges = cv2.Canny(detected_edges,lowThreshold,lowThreshold*ratio,apertureSize = kernel_size)
         dst = cv2.bitwise_and(img,img,mask = detected_edges)  # just add some colours to edges from original image.
-        #cv2.circle(dst,(self.cxcoord,self.cycoord),(self.crad+self.radiuspadding),(0,0,0),-1)
+        cv2.circle(dst,(self.cxcoord,self.cycoord),(self.crad+self.radiuspadding),(0,0,0),-1)
         #cv2.imshow('edges (canny)',dst)
 
         return dst
