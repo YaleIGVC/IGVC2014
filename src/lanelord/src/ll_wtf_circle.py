@@ -98,6 +98,7 @@ class lanelord():
         detected_edges = cv2.Canny(detected_edges,lowThreshold,lowThreshold*ratio,apertureSize = kernel_size)
         dst = cv2.bitwise_and(img,img,mask = detected_edges)  # just add some colours to edges from original image.
         cv2.circle(dst,(self.cxcoord,self.cycoord),(self.crad+self.radiuspadding),(0,0,0),-1)
+        cv2.rectangle(dst, (self.cxcoord-(self.crad+self.radiuspadding), self.cycoord), (self.cxcoord+(self.crad+self.radiuspadding), 0), (0,0,0), -1)
         #cv2.imshow('edges (canny)',dst)
 
         return dst
