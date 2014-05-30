@@ -76,7 +76,6 @@ class lanelord():
         detected_edges = cv2.GaussianBlur(gray,(11,11),0)
         detected_edges = cv2.Canny(detected_edges,lowThreshold,lowThreshold*ratio,apertureSize = kernel_size)
         dst = cv2.bitwise_and(img,img,mask = detected_edges)  # just add some colours to edges from original image.
-        cv2.imshow('edges (canny)',dst)
 
         return dst
 
