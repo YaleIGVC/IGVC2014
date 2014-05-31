@@ -29,8 +29,8 @@ def getAxis():
     right = right if math.fabs(right) > 0.2 else 0
     return (left,right)
 
-speed = 1
-turn = 1
+speed = 1.5
+turn = 0.5
 
 def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)

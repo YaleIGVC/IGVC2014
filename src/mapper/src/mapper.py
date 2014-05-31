@@ -99,27 +99,30 @@ def callback_image(msg_in):
         print e, ": Ros Image to Numpy error"
  
     (image_width, image_height, _temp_) = image_data.shape
+    
+    mapx = image_tf.translation.x - Origin.position.x
+    mapy = image_tf.translation.y - Origin.position.y
+
+    image_quat = [image_tf.rotation.x,
+                 image_tf.rotation.y,
+                 image_tf.rotation.z,
+                 image_tf.rotation.w]
+    image_angles = euler_from_quaternion(image_quat)
+
+    map_theta = origin_angles[2] - image_angles[2]
+
+    offset_sin = math.sin(map_theta)
+    offset_cos = math.cos(map_theta)
+
     for x in range (0, image_width):
         for y in range(0, image_height):
             if max(image_data[x][y]) != 0:
+
                 image_x = ((x-(image_width/2))*image_resolution)
                 image_y = ((y-(image_height/2))*image_resolution)
 
-                r = math.sqrt(math.pow(image_x, 2) + math.pow(image_y, 2))
-                image_theta = math.atan2(image_y, image_x)
-
-                image_quat = [image_tf.rotation.x,
-                          image_tf.rotation.y,
-                          image_tf.rotation.z,
-                          image_tf.rotation.w]
-                image_angles = euler_from_quaternion(image_quat)
-
-                map_theta = origin_angles[2] - image_angles[2]
-
-                mapx = image_tf.translation.x - Origin.position.x
-                mapx = mapx + (r*math.cos(image_theta+map_theta))
-                mapy = image_tf.translation.y - Origin.position.y
-                mapy = mapy + (r*math.sin(image_theta+map_theta))
+                transformed_x = mapx + (image_x*offset_cos) - (image_y*offset_sin)
+                transformed_y = mapy + (image_x*offset_sin) + (image_y*offset_cos)            
 
                 x_cell = int(round(mapx*(1/Resolution)))
                 y_cell = int(round(mapy*(1/Resolution)))

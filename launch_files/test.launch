@@ -19,17 +19,18 @@
     <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
     <node pkg="tf" type="static_transform_publisher" name="basefoot_baselink_tf" args="0 0 0.25 0 0 0 base_footprint base_link 1000" />
-    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args="0 0 0 0 0 0 map odom_combined 1000" />-->
+    <node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".508 -.0508 0 0 0 0 base_link camera 1000" />
 
 
-    <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_navsat_driver" args="_port:=$(env GPS_SERIAL_PORT) _baud:=9600 _messagetime:=0.5 _serialtimeout:=0.5"/>
+    <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_serial_driver" args="_port:=$(env GPS_SERIAL_PORT) _baud:=9600"/>
     <node pkg="gps_common" type="utm_odometry_node" name="utm_odometry_node">
         <remap from="odom" to="odom_utm"/>
         <param name="frame_id" value="gps"/>
     </node>
     <node pkg="odom_modifier" name="odom_modifier" type="omod.py"/>
     <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-        <remap from="odom" to="odom_md"/>
+        <!--<remap from="odom" to="odom_md"/>-->
+        <remap from="odom" to="segway_rmp_node/odom"/>
         <param name="sensor_timeout" value="1.0" />
         <param name="odom_used" value="true" />
         <param name="imu_used" value="true" />

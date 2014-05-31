@@ -29,7 +29,7 @@ class lanelord():
 
         self.firstrun = True
 
-        self.radiuspadding = 15
+        self.radiuspadding = 3
         self.cxcoord = 0
         self.cycoord = 0
         self.crad = 0
@@ -56,6 +56,8 @@ class lanelord():
 
         # Process the frame using the process_image() function
         processedimg = self.process_image(frame)
+        processedimg = cv2.resize(processedimg, (processedimg.shape[1] / 2, processedimg.shape[0] / 2))
+        print processedimg.shape
 
 
         try:
@@ -82,10 +84,10 @@ class lanelord():
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
         if(self.firstrun):
-            ximg = cv2.medianBlur(gray,51)
+            ximg = cv2.medianBlur(gray,11)
             cimg = cv2.cvtColor(ximg,cv2.COLOR_GRAY2BGR)
             circles = cv2.HoughCircles(ximg,cv2.cv.CV_HOUGH_GRADIENT,1,20,
-                            param1=50,param2=30,minRadius=0,maxRadius=100)
+                            param1=50,param2=30,minRadius=0,maxRadius=350)
             circles = np.uint16(np.around(circles))
             print circles
             self.cxcoord = circles[0][0][0]
@@ -98,6 +100,15 @@ class lanelord():
         detected_edges = cv2.Canny(detected_edges,lowThreshold,lowThreshold*ratio,apertureSize = kernel_size)
         dst = cv2.bitwise_and(img,img,mask = detected_edges)  # just add some colours to edges from original image.
         cv2.circle(dst,(self.cxcoord,self.cycoord),(self.crad+self.radiuspadding),(0,0,0),-1)
+        cv2.rectangle(dst, (self.cxcoord-(self.crad+self.radiuspadding), self.cycoord), (self.cxcoord+(self.crad+self.radiuspadding), dst.shape[0]), (0,0,0), -1)
+        hsv = cv2.cvtColor(dst, cv2.COLOR_BGR2HSV)
+        # define range of required pixels in HSV
+        lower_d = np.array([0,0,0])
+        upper_d = np.array([255,255,100])
+
+        # Thresholding
+        darkmask = cv2.inRange(hsv, lower_d, upper_d)
+        dst = cv2.bitwise_and(img,img,mask = darkmask)
         #cv2.imshow('edges (canny)',dst)
 
         return dst
