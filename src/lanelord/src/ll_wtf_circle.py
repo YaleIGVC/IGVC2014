@@ -56,6 +56,8 @@ class lanelord():
 
         # Process the frame using the process_image() function
         processedimg = self.process_image(frame)
+        processedimg = cv2.resize(processedimg, (processedimg.shape[1] / 2, processedimg.shape[0] / 2))
+        print processedimg.shape
 
 
         try:
