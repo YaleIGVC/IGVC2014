@@ -101,6 +101,14 @@ class lanelord():
         dst = cv2.bitwise_and(img,img,mask = detected_edges)  # just add some colours to edges from original image.
         cv2.circle(dst,(self.cxcoord,self.cycoord),(self.crad+self.radiuspadding),(0,0,0),-1)
         cv2.rectangle(dst, (self.cxcoord-(self.crad+self.radiuspadding), self.cycoord), (self.cxcoord+(self.crad+self.radiuspadding), dst.shape[0]), (0,0,0), -1)
+        hsv = cv2.cvtColor(dst, cv2.COLOR_BGR2HSV)
+        # define range of required pixels in HSV
+        lower_d = np.array([0,0,0])
+        upper_d = np.array([255,255,100])
+
+        # Thresholding
+        darkmask = cv2.inRange(hsv, lower_d, upper_d)
+        dst = cv2.bitwise_and(img,img,mask = darkmask)
         #cv2.imshow('edges (canny)',dst)
 
         return dst
