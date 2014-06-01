@@ -55,13 +55,14 @@ class GoalScheduler():
             tpoint.x = easting
             tpoint.y = northing
             tpoint.z = 0
-            tquat = tf.transformations.quaternion_from_euler(0,0,0)
+            #tquat = tf.transformations.quaternion_from_euler(0,0,0)
             tpose.position = tpoint
             tpose.orientation = tquat
 
             self.goal = MoveBaseGoal()
             self.goal.target_pose.pose = tpose
             self.goal.target_pose.header = theader
+            self.move_base.send_goal(self.goal)
 
             finished_within_time = self.move_base.wait_for_result(rospy.Duration(300)) 
 
