@@ -12,6 +12,14 @@ gps_idProduct=`lsusb | grep PL2303 | cut -f6 -d" " | cut -f1 -d":"`
 gps_usbno=`dmesg | grep $gps_idProduct | grep idProduct | tail -1 | grep -oe '[0-9]-[0-9]'`
 GPS_TTY=`dmesg | grep $gps_usbno | grep ttyUSB | cut -f13 -d" "`
 
+arduino_idProduct=`lsusb | grep Arduino | cut -f6 -d" " | cut -f1 -d":"`
+arduino_usbno=`dmesg | grep $arduino_idProduct | grep idProduct | tail -1 | grep -oe '[0-9]-[0-9]'`
+ARDUINO_TTY=`dmesg | grep $arduino_usbno | grep ttyACM | cut -f13 -d" "`
+
+hokuyo_idProduct=`dmesg | grep Hokuyo | cut -f6 -d" " | cut -f1 -d":"`
+hokuyo_usbno=`dmesg | grep $hokuyo_idProduct | grep idProduct | tail -1 | grep -oe '[0-9]-[0-9]'`
+HOKUYO_TTY=`dmesg | grep $hokuyo_usbno | grep ttyACM | cut -f13 -d" "`
+
 export SEGWAY_SERIAL_PORT=/dev/$SEGWAY_TTY
 export IMU_SERIAL_PORT=/dev/$VECTORNAV_TTY
 export GPS_SERIAL_PORT=/dev/$GPS_TTY

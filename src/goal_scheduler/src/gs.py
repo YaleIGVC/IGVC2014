@@ -23,6 +23,9 @@ class GoalScheduler():
         rospy.on_shutdown(self.cleanup)
 
         self.move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        rospy.loginfo("Waiting for move_base server")
+        self.move_base.wait_for_server()
+
 
         currentgoalnum = 0
 
