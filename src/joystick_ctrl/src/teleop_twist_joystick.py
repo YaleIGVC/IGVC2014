@@ -30,7 +30,7 @@ def getAxis():
     return (left,right)
 
 speed = 1.5
-turn = 0.5
+turn = .6
 
 def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)
