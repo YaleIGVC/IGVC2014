@@ -20,7 +20,7 @@ import cv2
 from cv_bridge import CvBridge, CvBridgeError
 
 Resolution = .05 #meters per cell
-image_resolution = 0.073383458647
+image_resolution = 0.036 / 2 # Scale of 2
 Width = 2000 #100 meters * 20 cells per meter
 Height = 2000 #100 meters * 20 cells per meter
 MinLaserRange = .2 #minimum distance for obstacles to be considered
@@ -73,17 +73,6 @@ def callback_laser(msg_in):
 
         angle_min = angle_min + angle_increment
 
-
-    Map.header.stamp = rospy.get_rostime()
-    Map.header.frame_id = 'map'
-    Map.info.map_load_time = rospy.get_rostime()
-    metaData.map_load_time = rospy.get_rostime()
-    Map.data = mapData
-
-    rospy.loginfo("Publishing a map")
-
-    pub_map.publish(Map)
-    pub_map_metadata.publish(metaData)
 
 def callback_image(msg_in):
     global mapData
@@ -148,6 +137,18 @@ def callback_image(msg_in):
                     index = ((y_cell*Width)+x_cell)
                     if mapData[index] < 100:
                         mapData[index] = 100
+    
+    Map.header.stamp = rospy.get_rostime()
+    Map.header.frame_id = 'map'
+    Map.info.map_load_time = rospy.get_rostime()
+    metaData.map_load_time = rospy.get_rostime()
+    Map.data = mapData
+
+    rospy.loginfo("Publishing a map")
+
+    pub_map.publish(Map)
+    pub_map_metadata.publish(metaData)
+
 
 
 if __name__=='__main__':
@@ -208,11 +209,11 @@ if __name__=='__main__':
     center_x = rospy.get_param("/image_unwarp/center_x")/8
     center_y = rospy.get_param("/image_unwarp/center_y")/8
 
-    center_x = 124
-    center_y = 60
+    center_x = 248 * 2
+    center_y = 120 * 2
 
     origin_angles = [0.0, 0.0, angles[2]]
-    #rospy.Subscriber("/detected_lanes", ImageWithTransform, callback_image, queue_size=1, buff_size = 2**30)
+    rospy.Subscriber("/detected_lanes", ImageWithTransform, callback_image, queue_size=1, buff_size = 2**30)
 
     # draw initial starting boundary
     #startingBoundaryBoolean = rospy.get_param("starting_line_obstacle", False)
@@ -231,7 +232,7 @@ if __name__=='__main__':
     pub_map = rospy.Publisher("/map", OccupancyGrid)
     pub_map_metadata = rospy.Publisher("/map_metadata", MapMetaData)
     
-    rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size=1, buff_size = 2**24)
+    #rospy.Subscriber("/scan", LaserScan, callback_laser, queue_size=1, buff_size = 2**24)
     rospy.loginfo("init")
     #while(True):
     #    try:
