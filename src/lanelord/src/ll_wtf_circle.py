@@ -108,7 +108,7 @@ class lanelord():
 
         # Thresholding
         darkmask = cv2.inRange(hsv, lower_d, upper_d)
-        dst = cv2.bitwise_and(img,img,mask = darkmask)
+        dst = cv2.bitwise_and(dst,dst,mask = darkmask)
         #cv2.imshow('edges (canny)',dst)
 
         return dst
