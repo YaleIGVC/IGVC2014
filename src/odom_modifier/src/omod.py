@@ -57,7 +57,7 @@ class Tpub():
             #yprime = odommsg.pose.pose.position.y
 
             odommsg.pose.pose.position.x = xprime + self.xcoord
-            odommsg.pose.pose.position.y = yprime + self.ycoord
+            odommsg.pose.pose.position.y = -yprime + self.ycoord
             odommsg.pose.pose.position.z = 0
 
             orientation_array = tf.transformations.quaternion_from_euler(0, 0, valtheta)
