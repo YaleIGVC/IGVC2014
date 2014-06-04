@@ -111,10 +111,14 @@ def callback_image(msg_in):
     #offset_sin = math.sin(map_theta)
     #offset_cos = math.cos(map_theta)
 
+    print "Image size is ", (image_width, image_height)
     for x in range (0, image_width):
         for y in range(0, image_height):
             if max(image_data[y][x]) != 0:
 
+                # TODO: Don't hardcode these!
+                center_x = 40
+                center_y = 60
                 image_x = ((x-(center_x))*image_resolution)
                 image_y = ((y-(center_y))*image_resolution)
 
@@ -206,11 +210,11 @@ if __name__=='__main__':
     Map.info = metaData
     mapData = [0]*(Width*Height)
 
-    center_x = rospy.get_param("/image_unwarp/center_x")/8
-    center_y = rospy.get_param("/image_unwarp/center_y")/8
+    #center_x = rospy.get_param("/image_unwarp/center_x")/8
+    #center_y = rospy.get_param("/image_unwarp/center_y")/8
 
-    center_x = 248 * 2
-    center_y = 120 * 2
+    #center_x = 248 * 2
+    #center_y = 120 * 2
 
     origin_angles = [0.0, 0.0, angles[2]]
     rospy.Subscriber("/detected_lanes", ImageWithTransform, callback_image, queue_size=1, buff_size = 2**30)
