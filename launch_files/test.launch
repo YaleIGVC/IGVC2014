@@ -1,29 +1,37 @@
  <launch>
-    <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" />
+
+     <node pkg="vectornav" type="vn200_node" name="vectornav_vn200" args="_serial_port:=$(env IMU_SERIAL_PORT)" />
     <node pkg="vectornav" type="vn_sensor_msgs.py" name="vn_sensor_msgs" args="Imu:=imu_data" />
-    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=/dev/ttyUSB1" >
+    <node pkg="segway_rmp" type="segway_rmp_node" name="segway_rmp_node" args="_serial_port:=$(env SEGWAY_SERIAL_PORT)" >
+        <param name="reset_odometry" value="true" />
         <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
     </node>
 
-    <node pkg="urg_node" type="urg_node" name="short_range_laser">
+    <node pkg="urg_node" type="urg_node" name="short_range_laser">-->
         <param name="angle_min" value="-1.4" />
         <param name="angle_max" value="1.4" />
     </node>
 
 
-    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args=".553 .114 .342 0 0 0 base_link laser 1000" />-->
-    <node pkg="tf" type="static_transform_publisher" name="baselink_laserbase_tf" args=".47 .095 .342 0 0 0 base_link laser_base 1000" />
-    <node pkg="tf" type="static_transform_publisher" name="laserbase_laser_tf" args="0 0 0 0 0 0 laser_base laser 1000" />
+    <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args="-0.22 0.0 0.0 3.14159 0 0 base_link laser 1000" />
     <!--laser_base reperesents center of pitch rotation of lrf, and laser represents center of lrf-->
 
     <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
     <node pkg="tf" type="static_transform_publisher" name="basefoot_baselink_tf" args="0 0 0.25 0 0 0 base_footprint base_link 1000" />
-    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args="0 0 0 0 0 0 map odom_combined 1000" />-->
+    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args="0 0 0 3.1415926 0 0 base_link camera 1000" />-->
+    <node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".488 -.0508 0 3.1415926 0 0 base_link camera 1000" />
+    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".488 -.0508 0 0 0 0 base_link camera 1000" />-->
 
 
+    <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_serial_driver" args="_port:=$(env GPS_SERIAL_PORT) _baud:=9600"/>
+    <node pkg="gps_common" type="utm_odometry_node" name="utm_odometry_node">
+        <remap from="odom" to="odom_utm"/>
+        <param name="frame_id" value="gps"/>
+    </node>
+    <node pkg="odom_modifier" name="odom_modifier" type="omod.py"/>
     <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-        <remap from="odom" to="segway_rmp_node/odom"/>
+        <remap from="odom" to="odom_md"/>
         <param name="sensor_timeout" value="1.0" />
         <param name="odom_used" value="true" />
         <param name="imu_used" value="true" />
@@ -31,9 +39,15 @@
         <param name="output_frame" value="odom_combined" />
     </node>
 
- <node pkg="mapper" type="mapper.py" name="mapper"/>
+    <!--<include file="$(find robot_localization)/launch/inve_ekf_template.launch"/>-->
 
-  <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
-   <node pkg="rviz" type="rviz" name="rviz"/>
+<!--<node pkg="mapper" type="mapper.py" name="mapper"/>-->
+
+  <!--<node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>-->
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard"/>
+  <!--<node pkg="rviz" type="rviz" name="rviz"/>-->
+
+
+  <rosparam command="load" ns="/image_unwarp" file="/home/inve14/IGVC2014/launch_files/rosparams/calibration.yaml" />
 
 </launch>

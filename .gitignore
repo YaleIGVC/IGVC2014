@@ -10,3 +10,6 @@ devel/
 *.bmp
 *.jpeg
 .DS_Store
+*~
+*.exe
+*.pyc

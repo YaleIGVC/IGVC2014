@@ -5,7 +5,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
-
+#include <frame_grabber_node/ImageWithTransform.h>
 #include <iostream>
 #include <ctime>
 #include <sys/time.h>
@@ -17,11 +17,10 @@ using namespace std;
 class ImageUnwarper {
     // ROS node and image transport handles
     ros::NodeHandle nh_;
-    image_transport::ImageTransport it_;
 
     // ROS subscriber and publisher
-    image_transport::Subscriber image_sub_;
-    image_transport::Publisher image_pub_;
+    ros::Subscriber image_sub_;
+    ros::Publisher image_pub_;
 
     // Configuration parameters
     string input_topic_, output_topic_;
@@ -104,7 +103,7 @@ class ImageUnwarper {
     }
 
     public:
-    ImageUnwarper() : nh_("~"), it_(nh_) {}
+    ImageUnwarper() : nh_("~") {}
 
     /**
      * Setup the topics and parameters for the node.
@@ -114,7 +113,8 @@ class ImageUnwarper {
      */
     bool setup() {
         // Get private configuration parameters
-        nh_.param<string>("input_topic", input_topic_, "/raw_image");
+        nh_.param<string>("input_topic", input_topic_, "/raw_image_with_tf");
+        cout << "HI" << endl;
         nh_.param<string>("output_topic", output_topic_,
                 "/image_unwarp/output_video");
 
@@ -134,9 +134,9 @@ class ImageUnwarper {
 
 
         // Subscribe to incoming images and publish unwarped images
-        image_sub_ = it_.subscribe(input_topic_, 1,
+        image_sub_ = nh_.subscribe(input_topic_, 1,
                 &ImageUnwarper::process_image, this);
-        image_pub_ = it_.advertise(output_topic_, 1);
+        image_pub_ = nh_.advertise<frame_grabber_node::ImageWithTransform>(output_topic_, 1);
 
         // Create the transform matrix
         create_transform();
@@ -172,15 +172,15 @@ class ImageUnwarper {
 
     /**
      * Callback function to unwarp a ROS image, then publish it to a new topic.
-     *
+     /
      * Args:
      *  msg: ROS message containing the image to process
      */
-    void process_image(const sensor_msgs::ImageConstPtr &msg) {
+    void process_image(const frame_grabber_node::ImageWithTransform &msg) {
         // Convert the message image to openCV format (7ms)
         cv_bridge::CvImageConstPtr input_image;
         try {
-            input_image = cv_bridge::toCvShare(msg,
+            input_image = cv_bridge::toCvCopy(msg.image,
                     sensor_msgs::image_encodings::BGR8);
         } catch (cv_bridge::Exception& e) {
             ROS_ERROR("cv_bridge exception: %s", e.what());
@@ -190,7 +190,7 @@ class ImageUnwarper {
         // Initialize an output image (7ms)
         cv_bridge::CvImagePtr output_image;
         try {
-            output_image = cv_bridge::toCvCopy(msg,
+            output_image = cv_bridge::toCvCopy(msg.image,
                     sensor_msgs::image_encodings::BGR8);
         } catch (cv_bridge::Exception& e) {
             ROS_ERROR("cv_bridge exception: %s", e.what());
@@ -214,8 +214,11 @@ class ImageUnwarper {
             }
         }
 
-        // Publish the image (6ms)
-        image_pub_.publish(output_image->toImageMsg());
+        // Copy the old image to a new one and publish it (6ms)
+        frame_grabber_node::ImageWithTransform msg_out;
+        msg_out.image = *output_image->toImageMsg().get();
+        msg_out.tf = msg.tf;
+        image_pub_.publish(msg_out);
     }
 };
 

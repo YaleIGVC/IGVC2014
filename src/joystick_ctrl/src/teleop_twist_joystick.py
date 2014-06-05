@@ -29,8 +29,8 @@ def getAxis():
     right = right if math.fabs(right) > 0.2 else 0
     return (left,right)
 
-speed = 1
-turn = 1
+speed = 1.5
+turn = .6
 
 def vels(speed,turn):
     return "currently:\tspeed %s\tturn %s " % (speed,turn)
@@ -51,7 +51,7 @@ if __name__=="__main__":
         print vels(speed,turn)
         while(1):
             joy = getAxis()
-            x = -1 * joy[0]
+            x = joy[0]
             th = -1 * joy[1]
             twist = Twist()
             twist.linear.x = x*speed; twist.linear.y = 0; twist.linear.z = 0

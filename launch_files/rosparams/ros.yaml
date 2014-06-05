@@ -1,0 +1,21 @@
+calibrate: {calibration_image: /home/inve/IGVC2014/1.jpg, center_x: 1058, center_y: 606}
+image_unwarp:
+  center_x: 1058
+  center_y: 606
+  height: 1088
+  output_video:
+    compressed: {format: jpeg, jpeg_quality: 80, png_level: 9}
+    compressedDepth: {depth_max: 10.0, depth_quantization: 100.0, png_level: 9}
+    theora: {keyframe_frequency: 64, optimize_for: 1, quality: 31, target_bitrate: 800000}
+  polynomial: [0.19995535849581714, 1.4676916760360903, -0.0016105593298508655, 8.647944195814737e-07,
+    -1.7785784395944077e-10]
+  width: 2048
+rosdistro: 'hydro
+
+  '
+roslaunch:
+  uris: {host_127_0_0_1__34858: 'http://127.0.0.1:34858/'}
+rosversion: '1.9.54
+
+  '
+run_id: baee07a2-e145-11e3-a33e-8056f2353444

@@ -15,6 +15,8 @@ from frame_grabber_node.msg import ImageWithTransform
 class FrameGrabber():
     def __init__(self):
         rospy.init_node("frame_grabber")
+        self.rate = rospy.Rate(10) # Set frame rate to 10Hz
+
         # start Vimba
         self.vimba = Vimba()
         self.vimba.startup()
@@ -29,7 +31,7 @@ class FrameGrabber():
         self.listener = tf.TransformListener()
 
         #ROS
-        self.rawimgtopic = rospy.Publisher("/raw_image", Image)
+        #self.rawimgtopic = rospy.Publisher("/raw_image", Image)
         self.tfimgtopic = rospy.Publisher("/raw_image_with_tf", ImageWithTransform)
         rospy.on_shutdown(self.cleanup)
 
@@ -69,8 +71,8 @@ class FrameGrabber():
         # Grab TF!!
         xform = Transform()
 
-        self.listener.waitForTransform("odom_combined", "base_footprint", rospy.Time(0), rospy.Duration(3.0))
-        (trans,rot) = self.listener.lookupTransform('/odom_combined', '/base_footprint', rospy.Time(0))
+        self.listener.waitForTransform("odom_combined", "camera", rospy.Time(0), rospy.Duration(3.0))
+        (trans,rot) = self.listener.lookupTransform('/odom_combined', '/camera', rospy.Time(0))
         xform.translation.x = trans[0]
         xform.translation.y = trans[1]
         xform.translation.z = trans[2]
@@ -87,11 +89,12 @@ class FrameGrabber():
                                                 1))
 
         debayer = cv2.cvtColor(imgdata, cv.CV_BayerGR2BGR)
+        flipped = cv2.flip(debayer, 1)
         #cv2.imshow('result', debayer), cv2.waitKey(0)
         #cv2.destroyAllWindows()
 
         try:
-            rosimgpub = self.bridge.cv2_to_imgmsg(debayer, "bgr8")
+            rosimgpub = self.bridge.cv2_to_imgmsg(flipped, "bgr8")
         except CvBridgeError, e:
             print e
 
@@ -101,8 +104,9 @@ class FrameGrabber():
         tfImg.image = rosimgpub
 
         # Publish!!
-        self.rawimgtopic.publish(rosimgpub)
+        #self.rawimgtopic.publish(rosimgpub)
         self.tfimgtopic.publish(tfImg)
+        self.rate.sleep() # Should sleep 100 ms
 
     def cleanup(self):
         # clean up after capture self.camera.endCapture()
