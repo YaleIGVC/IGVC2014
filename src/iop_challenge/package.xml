@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+
+    <name>iop_challenge</name>
+    <version>0.0.0</version>
+    <description>
+        A package to fulfill the IGVC 2014 IOP Challenge using JAUS++.
+    </description>
+
+    <maintainer email="philip@yale.edu">Philip Piper</maintainer>
+
+    <license>BSD</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend>sensor_msgs</build_depend>
+    <build_depend>std_msgs</build_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>sensor_msgs</run_depend>
+    <run_depend>std_msgs</run_depend>
+
+</package>
