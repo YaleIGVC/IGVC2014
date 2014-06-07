@@ -17,5 +17,3 @@ while not rospy.is_shutdown():
         # TODO: Write to Arduino so it knows for how long to turn off light
         ser.write('O') # Tell the arduino to turn off the light for 750 ms
         time.sleep(1.5)
-
-
