@@ -1,6 +1,8 @@
  <launch>
-  <node pkg="frame_grabber_node" type="frame_grabber.py" name="frame_grabber_node" />
+  <!--<node pkg="frame_grabber_node" type="frame_grabber.py" name="frame_grabber_node" />-->
   <node pkg="image_unwarp" type="image_unwarp" name="image_unwarp" />
   <!--<node pkg="image_obstacle_processor" type="obstacle_processor.py" name="obstacle_processor"/>-->
   <node pkg="lanelord" type="ll_wtf_circle.py" name="lanelord" />
+  <node pkg="filters" type="filter_repub_camera.py" name="filters" />
+  <node pkg="rqt_image_view" type="rqt_image_view" name="rqt_image_view" />
 </launch>

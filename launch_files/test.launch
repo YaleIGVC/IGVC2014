@@ -7,10 +7,10 @@
         <remap from="segway_rmp_node/cmd_vel" to="cmd_vel"/>
     </node>
 
-    <node pkg="urg_node" type="urg_node" name="short_range_laser">
+    <node pkg="urg_node" type="urg_node" name="short_range_laser">-->
         <param name="angle_min" value="-1.4" />
         <param name="angle_max" value="1.4" />
-    </node> 
+    </node>
 
 
     <node pkg="tf" type="static_transform_publisher" name="baselink_laser_tf" args="-0.22 0.0 0.0 3.14159 0 0 base_link laser 1000" />
@@ -19,7 +19,9 @@
     <node pkg="tf" type="static_transform_publisher" name="map_odom_tf" args="0 0 0 0 0 0 map odom_combined 1000" />
     <node pkg="tf" type="static_transform_publisher" name="baselink_lla_tf" args="0 0 0 0 0 0 base_link LLA 1000" />
     <node pkg="tf" type="static_transform_publisher" name="basefoot_baselink_tf" args="0 0 0.25 0 0 0 base_footprint base_link 1000" />
-    <node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".508 -.0508 0 0 0 0 base_link camera 1000" />
+    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args="0 0 0 3.1415926 0 0 base_link camera 1000" />-->
+    <node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".488 -.0508 0 3.1415926 0 0 base_link camera 1000" />
+    <!--<node pkg="tf" type="static_transform_publisher" name="baselink_camera_tf" args=".488 -.0508 0 0 0 0 base_link camera 1000" />-->
 
 
     <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_serial_driver" args="_port:=$(env GPS_SERIAL_PORT) _baud:=9600"/>
@@ -37,10 +39,13 @@
         <param name="output_frame" value="odom_combined" />
     </node>
 
+    <!--<include file="$(find robot_localization)/launch/inve_ekf_template.launch"/>-->
+
 <!--<node pkg="mapper" type="mapper.py" name="mapper"/>-->
 
-  <node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>
-  <node pkg="rviz" type="rviz" name="rviz"/>
+  <!--<node pkg="teleop_twist_joystick" type="teleop_twist_joystick.py" name="teleop_twist_joystick"/>-->
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard"/>
+  <!--<node pkg="rviz" type="rviz" name="rviz"/>-->
 
 
   <rosparam command="load" ns="/image_unwarp" file="/home/inve14/IGVC2014/launch_files/rosparams/calibration.yaml" />
